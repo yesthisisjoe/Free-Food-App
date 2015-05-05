@@ -26,8 +26,8 @@
 		D8E864AE1AF84DE7006986B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E864AD1AF84DE7006986B9 /* SystemConfiguration.framework */; };
 		D8E864B01AF84DEF006986B9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E864AF1AF84DEF006986B9 /* libz.dylib */; };
 		D8E864B21AF84DF6006986B9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E864B11AF84DF6006986B9 /* libsqlite3.dylib */; };
-		D8E864B71AF93D3E006986B9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E864B61AF93D3E006986B9 /* Parse.framework */; };
 		D8E864B91AF95496006986B9 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E864B81AF95496006986B9 /* Shared.swift */; };
+		D8E864BB1AF96118006986B9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E864BA1AF96118006986B9 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,8 +64,8 @@
 		D8E864AD1AF84DE7006986B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D8E864AF1AF84DEF006986B9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D8E864B11AF84DF6006986B9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		D8E864B61AF93D3E006986B9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Free Food App/Parse.framework"; sourceTree = "<group>"; };
 		D8E864B81AF95496006986B9 /* Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		D8E864BA1AF96118006986B9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Free Food App/Parse.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +79,7 @@
 				D8E864AC1AF84DE1006986B9 /* StoreKit.framework in Frameworks */,
 				D8E864AA1AF84DDA006986B9 /* Security.framework in Frameworks */,
 				D8E864A81AF84DD0006986B9 /* QuartzCore.framework in Frameworks */,
-				D8E864B71AF93D3E006986B9 /* Parse.framework in Frameworks */,
+				D8E864BB1AF96118006986B9 /* Parse.framework in Frameworks */,
 				D8E864A61AF84DC8006986B9 /* MobileCoreServices.framework in Frameworks */,
 				D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */,
 				D8E864A41AF84DBB006986B9 /* CoreGraphics.framework in Frameworks */,
@@ -102,7 +102,7 @@
 		D8D87AE71AF7F19B00303AB0 = {
 			isa = PBXGroup;
 			children = (
-				D8E864B61AF93D3E006986B9 /* Parse.framework */,
+				D8E864BA1AF96118006986B9 /* Parse.framework */,
 				D8E864B11AF84DF6006986B9 /* libsqlite3.dylib */,
 				D8E864AF1AF84DEF006986B9 /* libz.dylib */,
 				D8E864AD1AF84DE7006986B9 /* SystemConfiguration.framework */,
@@ -409,6 +409,9 @@
 					"$(PROJECT_DIR)/Free",
 					Food,
 					App,
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
 				);
 				INFOPLIST_FILE = "Free Food App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -425,6 +428,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
 					"$(PROJECT_DIR)/Free",
 					Food,
 					App,
