@@ -18,20 +18,20 @@ TODO:
 import UIKit
 import MapKit
 import CoreLocation
+import Parse
 
 class ViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var locationToolbar: UIToolbar!
-    
     var locationManager = CLLocationManager()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         locationManager.requestWhenInUseAuthorization()
 
-    //location button setup
+        //location button setup
         //add button & flexible space
         var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         var trackingButton = MKUserTrackingBarButtonItem(mapView: self.map)
@@ -45,7 +45,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
         self.locationToolbar.setShadowImage(UIImage(),
             forToolbarPosition: UIBarPosition.Any)
         
-    //setup to create initial location of map
+        reloadPosts()
+        
+        //setup to create initial location of map
         var latitude:CLLocationDegrees = 40.7
         var longitude:CLLocationDegrees = -73.9
         var location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
@@ -58,7 +60,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         map.setRegion(region, animated: true)
         
         
-    //creates a test annotation
+        //creates a test annotation
         var annotation = MKPointAnnotation()
         annotation.coordinate = location
         annotation.title = "Test Annotation"
@@ -66,9 +68,38 @@ class ViewController: UIViewController, MKMapViewDelegate {
         map.addAnnotation(annotation)
     }
     
-    func mapViewWillStartLocatingUser(mapView: MKMapView!) {
+    //reloads the arrays of posts
+    func reloadPosts() {
+        var query = PFQuery(className: "Posts")
+        query.findObjectsInBackgroundWithBlock {
+            (posts: [AnyObject]?, error: NSError?) -> Void in
+            
+            
+            if error == nil && posts != nil {
+                //no error and post isn't empty
+                self.postIds.removeAll(keepCapacity: true) //erase old array of posts
+                
+                if let posts = posts as? [PFObject]{
+                    for post in posts {
+                        
+                    }
+                }
+            } else {
+                print("error retrieving posts from Parse")
+            }
+        }
+    }
+    
+    func mapViewWillStartLocatingUser(map: MKMapView!) {
     //deal with what happens when the user hasn't authorized sharing location
+        print("hey!")
+        
         var status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
+            print("hey")
+        } else {
+            print("all good")
+        }
         
     }
     
@@ -76,7 +107,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 
