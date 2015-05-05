@@ -40,5 +40,3 @@ struct Post {
         rating = 0
     }*/
 }
-
-var posts = [Post]()

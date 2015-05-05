@@ -8,11 +8,11 @@
 
 /*
 TODO:
--Format location button
 -Handle denied location sharing
 -Add list view
 -Add new post form
 -Add settings page
+-Check layour on all devices
 */
 
 import UIKit
@@ -25,6 +25,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var locationToolbar: UIToolbar!
     var locationManager = CLLocationManager()
+    var posts = [Post]() //this should definitely be in a different file
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,16 +73,17 @@ class ViewController: UIViewController, MKMapViewDelegate {
     func reloadPosts() {
         var query = PFQuery(className: "Posts")
         query.findObjectsInBackgroundWithBlock {
-            (posts: [AnyObject]?, error: NSError?) -> Void in
+            (currentPosts: [AnyObject]?, error: NSError?) -> Void in
             
             
-            if error == nil && posts != nil {
+            if error == nil && currentPosts != nil {
                 //no error and post isn't empty
-                self.postIds.removeAll(keepCapacity: true) //erase old array of posts
+                self.posts.removeAll(keepCapacity: true) //erase old array of posts
                 
-                if let posts = posts as? [PFObject]{
-                    for post in posts {
-                        
+                if let currentPosts = currentPosts as? [PFObject]{
+                    for post in currentPosts {
+                        var toAppend = Post(id: <#String#>, title: <#String#>, description: <#String#>, type: <#String#>, created: <#NSDate#>, confirmed: <#NSDate#>, latitude: <#Double#>, longitude: <#Double#>, rating: <#Int#>)
+                        self.posts.append(toAppend)
                     }
                 }
             } else {
