@@ -25,11 +25,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var locationToolbar: UIToolbar!
     @IBOutlet weak var buttonsToolbar: UIToolbar!
-    @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var backgroundToolbar: UIView!
     
     var locationManager = CLLocationManager()
     var posts = [Post]() //TODO: this should definitely be in a different file
+    var listActive = false //keeps track of when the list view is active
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,12 +43,25 @@ class ViewController: UIViewController, MKMapViewDelegate {
         self.toolbarItems = [flexibleSpace, trackingButton]
         locationToolbar.setItems(toolbarItems, animated: true)
         
-        //make the toolbar transparent
+        //make the location toolbar transparent
         self.locationToolbar.setBackgroundImage(UIImage(),
             forToolbarPosition: UIBarPosition.Any,
             barMetrics: UIBarMetrics.Default)
         self.locationToolbar.setShadowImage(UIImage(),
             forToolbarPosition: UIBarPosition.Any)
+        
+        //buttons toolbar setup
+        //make the button toolbar transparent
+        self.buttonsToolbar.setBackgroundImage(UIImage(),
+            forToolbarPosition: UIBarPosition.Any,
+            barMetrics: UIBarMetrics.Default)
+        self.buttonsToolbar.setShadowImage(UIImage(),
+            forToolbarPosition: UIBarPosition.Any)
+        
+        //place toolbar & background on the bottom of the screen //TODO group this with similar code?
+        
+        buttonsToolbar.frame.origin = CGPointMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height)
+        backgroundToolbar.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
         
         reloadPosts()
     }
@@ -84,8 +97,21 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     
     @IBAction func linkButton(sender: AnyObject) {
-        buttonsToolbar.frame.origin = CGPointMake(0, 0)
-        tableView.frame.origin = CGPointMake(0, buttonsToolbar.frame.height)
+        var screenSize: CGRect = UIScreen.mainScreen().bounds
+        var statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+        
+        if !listActive { //we transition from map view to list view
+            buttonsToolbar.frame.origin = CGPointMake(0, statusBarHeight)
+            backgroundToolbar.frame = CGRectMake(0, 0, buttonsToolbar.frame.width, buttonsToolbar.frame.height + statusBarHeight)
+            //tableView.frame.origin = CGPointMake(0, buttonsToolbar.frame.height)
+            
+            listActive = true
+        } else { //we transition from list view to map view
+            buttonsToolbar.frame.origin = CGPointMake(0, screenSize.height - buttonsToolbar.frame.height)
+            backgroundToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
+            
+            listActive = false
+        }
     }
     
     
@@ -117,7 +143,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
                         self.posts.append(toAppend)
                     }
                 }
-                print("successfully downloaded posts from Parse\n")
                 self.populateMap()
             } else {
                 print("error retrieving posts from Parse")//TODO: make this an error message
@@ -138,7 +163,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
             annotation.subtitle = post.description
             map.addAnnotation(annotation)
         }
-        print("finished populating map\n")
         centerMap()
     }
     
@@ -178,7 +202,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
             var region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
             map.setRegion(region, animated: true)
         }
-        print("map centered\n")
     }
     
     func mapViewWillStartLocatingUser(map: MKMapView!) {
