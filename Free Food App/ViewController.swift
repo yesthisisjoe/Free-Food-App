@@ -9,6 +9,7 @@
 /*
 TODO:
 -Handle denied location sharing
+-Handle in-call status bar
 -Add list view
 -Add new post form
 -Add settings page
@@ -59,11 +60,16 @@ class ViewController: UIViewController, MKMapViewDelegate {
             forToolbarPosition: UIBarPosition.Any)
         
         //place toolbar & background on the bottom of the screen //TODO group this with similar code?
-        
-        buttonsToolbar.frame.origin = CGPointMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height)
+        buttonsToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
+        backgroundToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
+        buttonsToolbar.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height, UIScreen.mainScreen().bounds.width, buttonsToolbar.frame.height)
         backgroundToolbar.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
         
         reloadPosts()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        //transitionToMapView()
     }
     
     @IBAction func reloadButton(sender: AnyObject) {
@@ -113,7 +119,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
             listActive = false
         }
     }
-    
     
     //reloads the arrays of posts
     func reloadPosts() {

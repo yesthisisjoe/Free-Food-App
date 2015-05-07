@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="CW6-7O-ulj">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CW6-7O-ulj">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="an6-yn-ZtB">
@@ -28,12 +28,12 @@
                                     <barButtonItem systemItem="add" id="bAS-BB-Pv6"/>
                                 </items>
                             </toolbar>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cWQ-jq-YoH">
-                                <rect key="frame" x="0.0" y="221" width="600" height="44"/>
+                            <view alpha="0.995" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cWQ-jq-YoH">
+                                <rect key="frame" x="0.0" y="227" width="600" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1F-96-Pps">
-                                <rect key="frame" x="0.0" y="168" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
                                     <barButtonItem systemItem="refresh" id="yWp-ZH-DOk">
                                         <connections>
@@ -58,23 +58,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="CW6-7O-ulj" secondAttribute="bottom" id="6BK-Rd-KRH"/>
+                            <constraint firstItem="N1F-96-Pps" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="7YO-KE-cbw"/>
                             <constraint firstItem="CW6-7O-ulj" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="9gi-ct-cjf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="N1F-96-Pps" secondAttribute="trailing" constant="-16" id="A3d-l9-L0X"/>
                             <constraint firstAttribute="trailingMargin" secondItem="an6-yn-ZtB" secondAttribute="trailing" constant="-16" id="JjQ-Oc-YHb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cWQ-jq-YoH" secondAttribute="trailing" constant="-16" id="Jyr-NX-JiD"/>
                             <constraint firstItem="CW6-7O-ulj" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="K6R-jh-Lb9"/>
-                            <constraint firstItem="N1F-96-Pps" firstAttribute="top" secondItem="an6-yn-ZtB" secondAttribute="bottom" constant="12" id="KEb-IW-nuT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="cWQ-jq-YoH" secondAttribute="trailing" constant="-16" id="XJu-Dl-hJB"/>
-                            <constraint firstItem="N1F-96-Pps" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="e5o-fR-9a6"/>
+                            <constraint firstItem="cWQ-jq-YoH" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="PJc-EW-YlQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="N1F-96-Pps" secondAttribute="trailing" constant="-16" id="g3H-rc-hqE"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="an6-yn-ZtB" secondAttribute="bottom" constant="56" id="hNR-Zd-v0S"/>
-                            <constraint firstItem="cWQ-jq-YoH" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="nw9-dF-jia"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CW6-7O-ulj" secondAttribute="trailing" constant="-16" id="wDB-kT-KYm"/>
                             <constraint firstItem="an6-yn-ZtB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="zfQ-mG-9dc"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="KEb-IW-nuT"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="backgroundToolbar" destination="cWQ-jq-YoH" id="QdW-f4-EEK"/>
