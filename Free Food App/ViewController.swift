@@ -21,7 +21,7 @@ import MapKit
 import CoreLocation
 import Parse
 
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var locationToolbar: UIToolbar!
@@ -73,8 +73,21 @@ class ViewController: UIViewController, MKMapViewDelegate {
         reloadPosts()
     }
     
+    //sets number of rows in the table
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    //populates each cell of the table
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+        cell.textLabel?.text = posts[indexPath.row].title
+        return cell
+    }
+    
+    //called when the first view appears
     override func viewDidAppear(animated: Bool) {
-        //transitionToMapView()
+        tableView.reloadData()
     }
     
     @IBAction func reloadButton(sender: AnyObject) {
@@ -87,16 +100,13 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         let myLocationAction = UIAlertAction(title: "At my Location", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
-            println("my location!")
             //TODO: check for location services
         })
         let onMapAction = UIAlertAction(title: "Find on Map", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
-            println("on map!")
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
             (alert: UIAlertAction!) -> Void in
-            println("cancelled!")
         })
         
         newPostMenu.addAction(myLocationAction)
@@ -112,14 +122,14 @@ class ViewController: UIViewController, MKMapViewDelegate {
         var statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         
         if !listActive { //we transition from map view to list view
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
+            UIView.animateWithDuration(0.35, animations: { () -> Void in
                 self.buttonsToolbar.frame.origin = CGPointMake(0, statusBarHeight)
                 self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + statusBarHeight)
                 self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, screenSize.height - self.backgroundToolbar.frame.height)
             })
             listActive = true
         } else { //we transition from list view to map view
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
+            UIView.animateWithDuration(0.35, animations: { () -> Void in
                 self.buttonsToolbar.frame.origin = CGPointMake(0, screenSize.height - self.buttonsToolbar.frame.height)
                 self.backgroundToolbar.frame = CGRectMake(0, screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
                 self.tableView.frame = CGRectMake(0, screenSize.height, UIScreen.mainScreen().bounds.width, 0)
@@ -128,6 +138,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
             listActive = false
         }
     }
+    
+    var refresh: UIRefreshControl!
+    
     
     //reloads the arrays of posts
     func reloadPosts() {
@@ -158,6 +171,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
                     }
                 }
                 self.populateMap()
+                self.tableView.reloadData()
             } else {
                 print("error retrieving posts from Parse")//TODO: make this an error message
             }
