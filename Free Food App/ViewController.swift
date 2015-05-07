@@ -28,9 +28,18 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     @IBOutlet weak var buttonsToolbar: UIToolbar!
     @IBOutlet weak var backgroundToolbar: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    @IBOutlet weak var linkButton: UIBarButtonItem!
+    @IBOutlet weak var newPostButton: UIBarButtonItem!
     
     
     var locationManager = CLLocationManager()
+    var screenSize: CGRect = UIScreen.mainScreen().bounds
+    var statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+    var refresher: UIRefreshControl! //pull to refresh
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView() //spinner for refresh button
+    var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+    
     var posts = [Post]() //TODO: this should definitely be in a different file
     var listActive = false //keeps track of when the list view is active
     
@@ -41,7 +50,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
 
         //location button setup
         //add button & flexible space
-        var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         var trackingButton = MKUserTrackingBarButtonItem(mapView: self.map)
         self.toolbarItems = [flexibleSpace, trackingButton]
         locationToolbar.setItems(toolbarItems, animated: true)
@@ -66,11 +74,19 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         backgroundToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
         tableView.setTranslatesAutoresizingMaskIntoConstraints(true)
         
-        buttonsToolbar.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height, UIScreen.mainScreen().bounds.width, buttonsToolbar.frame.height)
-        backgroundToolbar.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
-        tableView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height, UIScreen.mainScreen().bounds.width, 0)
+        buttonsToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, screenSize.width, buttonsToolbar.frame.height)
+        backgroundToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
+        tableView.frame = CGRectMake(0, screenSize.height, screenSize.width, 0)
         
-        reloadPosts()
+        //creates pull to refresh for the table
+        refresher = UIRefreshControl()
+        refresher.addTarget(self, action: "reloadPosts", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refresher)
+        
+        //creates spinner for refresh button
+        
+        
+        reloadPosts() //initial loading of posts
     }
     
     //sets number of rows in the table
@@ -80,8 +96,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     //populates each cell of the table
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
         cell.textLabel?.text = posts[indexPath.row].title
+        cell.detailTextLabel?.text = posts[indexPath.row].description
         return cell
     }
     
@@ -118,32 +135,47 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     
     @IBAction func linkButton(sender: AnyObject) {
-        var screenSize: CGRect = UIScreen.mainScreen().bounds
-        var statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
-        
         if !listActive { //we transition from map view to list view
             UIView.animateWithDuration(0.35, animations: { () -> Void in
-                self.buttonsToolbar.frame.origin = CGPointMake(0, statusBarHeight)
-                self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + statusBarHeight)
-                self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, screenSize.height - self.backgroundToolbar.frame.height)
-            })
-            listActive = true
-        } else { //we transition from list view to map view
-            UIView.animateWithDuration(0.35, animations: { () -> Void in
-                self.buttonsToolbar.frame.origin = CGPointMake(0, screenSize.height - self.buttonsToolbar.frame.height)
-                self.backgroundToolbar.frame = CGRectMake(0, screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
-                self.tableView.frame = CGRectMake(0, screenSize.height, UIScreen.mainScreen().bounds.width, 0)
+                //pull up the list & toolbar
+                self.buttonsToolbar.frame.origin = CGPointMake(0, self.statusBarHeight)
+                self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + self.statusBarHeight)
+                self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, self.screenSize.height - self.backgroundToolbar.frame.height)
+                
+                self.linkButton.title = "Map" //change button text to map
             })
             
-            listActive = false
+            listActive = true //tracks whether the list view is active
+        } else { //we transition from list view to map view
+            UIView.animateWithDuration(0.35, animations: { () -> Void in
+                //drop down the list & toolbar
+                self.buttonsToolbar.frame.origin = CGPointMake(0, self.screenSize.height - self.buttonsToolbar.frame.height)
+                self.backgroundToolbar.frame = CGRectMake(0, self.screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
+                self.tableView.frame = CGRectMake(0, self.screenSize.height, self.screenSize.width, 0)
+                
+                self.linkButton.title = "List" //change button text to list
+            })
+            
+            listActive = false //tracks whether the list view is active
         }
     }
     
-    var refresh: UIRefreshControl!
-    
-    
     //reloads the arrays of posts
     func reloadPosts() {
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        //create an activity spinner
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
+        activityIndicator.sizeToFit()
+        activityIndicator.autoresizingMask = UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleBottomMargin | UIViewAutoresizing.FlexibleTopMargin
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        activityIndicator.startAnimating()
+        
+        //replace the refresh button with the spinner
+        var loadingView = UIBarButtonItem(customView: activityIndicator)
+        self.buttonsToolbar.setItems([loadingView, flexibleSpace, linkButton, flexibleSpace, newPostButton], animated: true)
+        
+        //parse query
         var query = PFQuery(className: "Posts")
         query.findObjectsInBackgroundWithBlock {
             (currentPosts: [AnyObject]?, error: NSError?) -> Void in
@@ -173,9 +205,15 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                 self.populateMap()
                 self.tableView.reloadData()
             } else {
-                print("error retrieving posts from Parse")//TODO: make this an error message
+                print("error retrieving posts from Parse") //TODO: make this an error message
             }
         }
+        self.refresher.endRefreshing() //ends pull to refresh spinner
+        
+        //replaces activity spinner in toolbar with button
+        self.activityIndicator.stopAnimating()
+        self.buttonsToolbar.setItems([refreshButton, flexibleSpace, linkButton, flexibleSpace, newPostButton], animated: true)
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
     }
     
     //places annotations on map for all downloaded posts

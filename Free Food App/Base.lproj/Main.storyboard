@@ -58,10 +58,24 @@
                                 <rect key="frame" x="0.0" y="271" width="600" height="329"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="LRw-T4-0Ap">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="z1j-LO-xrR" detailTextLabel="Lm0-lr-Wda" style="IBUITableViewCellStyleSubtitle" id="LRw-T4-0Ap">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LRw-T4-0Ap" id="Z7x-YU-Jdo">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z1j-LO-xrR">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lm0-lr-Wda">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -89,8 +103,11 @@
                     <connections>
                         <outlet property="backgroundToolbar" destination="cWQ-jq-YoH" id="QdW-f4-EEK"/>
                         <outlet property="buttonsToolbar" destination="N1F-96-Pps" id="ixa-ad-jPQ"/>
+                        <outlet property="linkButton" destination="QTm-li-LJ1" id="YpT-Xa-HAe"/>
                         <outlet property="locationToolbar" destination="an6-yn-ZtB" id="ZWJ-fo-Qt0"/>
                         <outlet property="map" destination="CW6-7O-ulj" id="bJp-V5-pX6"/>
+                        <outlet property="newPostButton" destination="KXg-NO-La8" id="Ezw-x8-AfQ"/>
+                        <outlet property="refreshButton" destination="yWp-ZH-DOk" id="rFf-QH-H5z"/>
                         <outlet property="tableView" destination="Xmr-Jb-bP2" id="IOU-rC-9bB"/>
                     </connections>
                 </viewController>
