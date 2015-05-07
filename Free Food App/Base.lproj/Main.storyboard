@@ -54,6 +54,10 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Xmr-Jb-bP2">
+                                <rect key="frame" x="0.0" y="271" width="600" height="329"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -75,6 +79,7 @@
                         <outlet property="buttonsToolbar" destination="N1F-96-Pps" id="ixa-ad-jPQ"/>
                         <outlet property="locationToolbar" destination="an6-yn-ZtB" id="ZWJ-fo-Qt0"/>
                         <outlet property="map" destination="CW6-7O-ulj" id="bJp-V5-pX6"/>
+                        <outlet property="tableView" destination="Xmr-Jb-bP2" id="eSm-ZC-Xjb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

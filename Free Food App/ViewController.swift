@@ -27,6 +27,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var locationToolbar: UIToolbar!
     @IBOutlet weak var buttonsToolbar: UIToolbar!
     @IBOutlet weak var backgroundToolbar: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    
     
     var locationManager = CLLocationManager()
     var posts = [Post]() //TODO: this should definitely be in a different file
@@ -62,8 +64,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
         //place toolbar & background on the bottom of the screen //TODO group this with similar code?
         buttonsToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
         backgroundToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
+        tableView.setTranslatesAutoresizingMaskIntoConstraints(true)
+        
         buttonsToolbar.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height, UIScreen.mainScreen().bounds.width, buttonsToolbar.frame.height)
         backgroundToolbar.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
+        tableView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height, UIScreen.mainScreen().bounds.width, 0)
         
         reloadPosts()
     }
@@ -107,14 +112,18 @@ class ViewController: UIViewController, MKMapViewDelegate {
         var statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         
         if !listActive { //we transition from map view to list view
-            buttonsToolbar.frame.origin = CGPointMake(0, statusBarHeight)
-            backgroundToolbar.frame = CGRectMake(0, 0, buttonsToolbar.frame.width, buttonsToolbar.frame.height + statusBarHeight)
-            //tableView.frame.origin = CGPointMake(0, buttonsToolbar.frame.height)
-            
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.buttonsToolbar.frame.origin = CGPointMake(0, statusBarHeight)
+                self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + statusBarHeight)
+                self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, screenSize.height - self.backgroundToolbar.frame.height)
+            })
             listActive = true
         } else { //we transition from list view to map view
-            buttonsToolbar.frame.origin = CGPointMake(0, screenSize.height - buttonsToolbar.frame.height)
-            backgroundToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.buttonsToolbar.frame.origin = CGPointMake(0, screenSize.height - self.buttonsToolbar.frame.height)
+                self.backgroundToolbar.frame = CGRectMake(0, screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
+                self.tableView.frame = CGRectMake(0, screenSize.height, UIScreen.mainScreen().bounds.width, 0)
+            })
             
             listActive = false
         }
