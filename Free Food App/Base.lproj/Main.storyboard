@@ -30,7 +30,16 @@
                             </toolbar>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cWQ-jq-YoH">
                                 <rect key="frame" x="0.0" y="227" width="600" height="44"/>
+                                <subviews>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="jXd-tL-4of">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="3"/>
+                                    </progressView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="jXd-tL-4of" firstAttribute="leading" secondItem="cWQ-jq-YoH" secondAttribute="leading" id="27N-rX-gab"/>
+                                    <constraint firstAttribute="trailing" secondItem="jXd-tL-4of" secondAttribute="trailing" id="Uin-vv-wfo"/>
+                                </constraints>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1F-96-Pps">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
@@ -107,6 +116,7 @@
                         <outlet property="locationToolbar" destination="an6-yn-ZtB" id="ZWJ-fo-Qt0"/>
                         <outlet property="map" destination="CW6-7O-ulj" id="bJp-V5-pX6"/>
                         <outlet property="newPostButton" destination="KXg-NO-La8" id="Ezw-x8-AfQ"/>
+                        <outlet property="progressView" destination="jXd-tL-4of" id="sie-2T-5h5"/>
                         <outlet property="refreshButton" destination="yWp-ZH-DOk" id="rFf-QH-H5z"/>
                         <outlet property="tableView" destination="Xmr-Jb-bP2" id="IOU-rC-9bB"/>
                     </connections>

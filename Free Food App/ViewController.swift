@@ -10,7 +10,7 @@
 TODO:
 -Handle denied location sharing
 -Handle in-call status bar
--Add list view
+-Activity indicator doesn't appear?
 -Add new post form
 -Add settings page
 -Check layour on all devices
@@ -31,6 +31,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var linkButton: UIBarButtonItem!
     @IBOutlet weak var newPostButton: UIBarButtonItem!
+    @IBOutlet weak var progressView: UIProgressView!
     
     
     var locationManager = CLLocationManager()
@@ -69,7 +70,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         self.buttonsToolbar.setShadowImage(UIImage(),
             forToolbarPosition: UIBarPosition.Any)
         
-        //place toolbar & background on the bottom of the screen //TODO group this with similar code?
+        //place toolbar & background on the bottom of the screen
         buttonsToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
         backgroundToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
         tableView.setTranslatesAutoresizingMaskIntoConstraints(true)
@@ -83,7 +84,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         refresher.addTarget(self, action: "reloadPosts", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refresher)
         
-        //creates spinner for refresh button
+        //recognize the drag gesture on the toolbar
+        var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
+        buttonsToolbar.addGestureRecognizer(gesture)
+        //backgroundToolbar.addGestureRecognizer(gesture)
+        buttonsToolbar.userInteractionEnabled = true
+        //backgroundToolbar.userInteractionEnabled = true
         
         
         reloadPosts() //initial loading of posts
@@ -133,39 +139,101 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         self.presentViewController(newPostMenu, animated: true, completion: nil)
     }
     
-    
     @IBAction func linkButton(sender: AnyObject) {
         if !listActive { //we transition from map view to list view
-            UIView.animateWithDuration(0.35, animations: { () -> Void in
-                //pull up the list & toolbar
-                self.buttonsToolbar.frame.origin = CGPointMake(0, self.statusBarHeight)
-                self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + self.statusBarHeight)
-                self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, self.screenSize.height - self.backgroundToolbar.frame.height)
-                
-                self.linkButton.title = "Map" //change button text to map
-            })
-            
-            listActive = true //tracks whether the list view is active
+            toolbarUp()
         } else { //we transition from list view to map view
-            UIView.animateWithDuration(0.35, animations: { () -> Void in
-                //drop down the list & toolbar
-                self.buttonsToolbar.frame.origin = CGPointMake(0, self.screenSize.height - self.buttonsToolbar.frame.height)
-                self.backgroundToolbar.frame = CGRectMake(0, self.screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
-                self.tableView.frame = CGRectMake(0, self.screenSize.height, self.screenSize.width, 0)
-                
-                self.linkButton.title = "List" //change button text to list
-            })
+            toolbarDown()
+        }
+    }
+    
+    //animates the toolbar up (map->list)
+    func toolbarUp() {
+        UIView.animateWithDuration(0.35, animations: { () -> Void in
+            //pull up the list & toolbar
+            self.buttonsToolbar.frame.origin = CGPointMake(0, self.statusBarHeight)
+            self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + self.statusBarHeight)
+            self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, self.screenSize.height - self.backgroundToolbar.frame.height)
             
-            listActive = false //tracks whether the list view is active
+            self.linkButton.title = "Map" //change button text to map
+        })
+        
+        listActive = true //tracks whether the list view is active
+    }
+    
+    //animates the toolbar down (list->map)
+    func toolbarDown() {
+        UIView.animateWithDuration(0.35, animations: { () -> Void in
+            //drop down the list & toolbar
+            self.buttonsToolbar.frame.origin = CGPointMake(0, self.screenSize.height - self.buttonsToolbar.frame.height)
+            self.backgroundToolbar.frame = CGRectMake(0, self.screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
+            self.tableView.frame = CGRectMake(0, self.screenSize.height, self.screenSize.width, 0)
+            
+            self.linkButton.title = "List" //change button text to list
+        })
+        
+        listActive = false //tracks whether the list view is active
+    }
+    
+    //called when we drag the toolbar around
+    func wasDragged(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translationInView(self.view)
+        
+        //moves toolbar & table while we drag it
+        buttonsToolbar.center = CGPoint(
+            x: buttonsToolbar.center.x,
+            y: buttonsToolbar.center.y + translation.y
+        )
+        
+        backgroundToolbar.frame = CGRect(
+            x: backgroundToolbar.frame.origin.x,
+            y: backgroundToolbar.frame.origin.y + translation.y + (translation.y * (statusBarHeight / screenSize.height)),
+            width: backgroundToolbar.frame.width,
+            height: backgroundToolbar.frame.height - (translation.y * (statusBarHeight / screenSize.height))
+        )
+        
+        tableView.frame = CGRect(
+            x: tableView.frame.origin.x,
+            y: tableView.frame.origin.y + translation.y,
+            width: screenSize.width,
+            height: tableView.frame.height - translation.y
+        )
+        
+        gesture.setTranslation(CGPointZero, inView: self.view) //resets gesture
+        /*
+        //change these variables to change the physics of moving the toolbar
+        let throwingThreshold: CGFloat = 1000
+        let throwingVelocityPadding: CGFloat = 35
+        
+        //velocity stuff
+        var velocity = gesture.velocityInView(self.view)
+        var magnitude = velocity.y
+        
+        if (magnitude > throwingThreshold) {
+            var pushBehavior = UIPushBehavior(items: [buttonsToolbar, backgroundToolbar, tableView], mode: UIPushBehaviorMode.Instantaneous)
+            pushBehavior.pushDirection = CGVectorMake(0, (velocity.y / 10))
+            pushBehavior.magnitude = (magnitude / throwingVelocityPadding)
+            
+            //self.pushBehavior = pushBehavior //not sure about this one
+        }
+        */
+        
+        if gesture.state == UIGestureRecognizerState.Ended {
+            if buttonsToolbar.center.y < (screenSize.height / 2) {
+                //button was let go closer to top
+                toolbarUp()
+            } else {
+                //button was let go closer to bottom
+                toolbarDown()
+            }
         }
     }
     
     //reloads the arrays of posts
     func reloadPosts() {
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        
+        self.progressView.setProgress(0.5, animated: true)
         //create an activity spinner
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
+        /*activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
         activityIndicator.sizeToFit()
         activityIndicator.autoresizingMask = UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleBottomMargin | UIViewAutoresizing.FlexibleTopMargin
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
@@ -173,7 +241,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         
         //replace the refresh button with the spinner
         var loadingView = UIBarButtonItem(customView: activityIndicator)
-        self.buttonsToolbar.setItems([loadingView, flexibleSpace, linkButton, flexibleSpace, newPostButton], animated: true)
+        self.buttonsToolbar.setItems([loadingView, flexibleSpace, linkButton, flexibleSpace, newPostButton], animated: true)*/
         
         //parse query
         var query = PFQuery(className: "Posts")
@@ -186,6 +254,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                 self.posts.removeAll(keepCapacity: true) //erase old array of posts
                 
                 if let currentPosts = currentPosts as? [PFObject]{
+                    let max = currentPosts.count
+                    
                     for post in currentPosts {
                         //create a post object from Parse then append it
                         var toAppend = Post(
@@ -207,13 +277,19 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             } else {
                 print("error retrieving posts from Parse") //TODO: make this an error message
             }
-        }
-        self.refresher.endRefreshing() //ends pull to refresh spinner
-        
         //replaces activity spinner in toolbar with button
-        self.activityIndicator.stopAnimating()
-        self.buttonsToolbar.setItems([refreshButton, flexibleSpace, linkButton, flexibleSpace, newPostButton], animated: true)
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+        /*self.buttonsToolbar.setItems([self.refreshButton, self.flexibleSpace, self.linkButton,
+        self.flexibleSpace, self.newPostButton], animated: true)
+        self.activityIndicator.stopAnimating()*/
+
+        self.refresher.endRefreshing() //ends pull to refresh spinner
+        self.progressView.setProgress(1, animated: true)
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.55, target: self, selector: Selector("resetRefresh"), userInfo: nil, repeats: false)
+        }
+    }
+    
+    func resetRefresh() {
+        self.progressView.setProgress(0, animated: false)
     }
     
     //places annotations on map for all downloaded posts
