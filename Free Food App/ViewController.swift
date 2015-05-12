@@ -10,7 +10,7 @@
 TODO:
 -Handle denied location sharing
 -Handle in-call status bar
--Activity indicator doesn't appear?
+-If progress bar is in middle (airplane mode) and view is switched, it is on the wrong side
 -Add new post form
 -Add settings page
 -Check layour on all devices
@@ -31,8 +31,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var linkButton: UIBarButtonItem!
     @IBOutlet weak var newPostButton: UIBarButtonItem!
-    @IBOutlet weak var progressView: UIProgressView!
-    
+    @IBOutlet weak var progressViewTop: UIProgressView!
+    @IBOutlet weak var progressViewBottom: UIProgressView!
     
     var locationManager = CLLocationManager()
     var screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -149,28 +149,27 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     //animates the toolbar up (map->list)
     func toolbarUp() {
-        UIView.animateWithDuration(0.35, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
             //pull up the list & toolbar
             self.buttonsToolbar.frame.origin = CGPointMake(0, self.statusBarHeight)
             self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + self.statusBarHeight)
             self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, self.screenSize.height - self.backgroundToolbar.frame.height)
             
             self.linkButton.title = "Map" //change button text to map
-        })
-        
+            }, completion: nil)
         listActive = true //tracks whether the list view is active
     }
     
     //animates the toolbar down (list->map)
     func toolbarDown() {
-        UIView.animateWithDuration(0.35, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
             //drop down the list & toolbar
             self.buttonsToolbar.frame.origin = CGPointMake(0, self.screenSize.height - self.buttonsToolbar.frame.height)
             self.backgroundToolbar.frame = CGRectMake(0, self.screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
             self.tableView.frame = CGRectMake(0, self.screenSize.height, self.screenSize.width, 0)
             
             self.linkButton.title = "List" //change button text to list
-        })
+        }, completion: nil)
         
         listActive = false //tracks whether the list view is active
     }
@@ -231,7 +230,17 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     //reloads the arrays of posts
     func reloadPosts() {
-        self.progressView.setProgress(0.5, animated: true)
+        var progressView: UIProgressView
+        
+        //decide which progress view to use
+        if (listActive == true) {
+            progressView = progressViewBottom
+        } else {
+            progressView = progressViewTop
+        }
+        
+        progressView.alpha = 1.0
+        progressView.setProgress(0.5, animated: true)
         //create an activity spinner
         /*activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
         activityIndicator.sizeToFit()
@@ -275,7 +284,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                 self.populateMap()
                 self.tableView.reloadData()
             } else {
-                print("error retrieving posts from Parse") //TODO: make this an error message
+                //give an alert that there was an error loading posts
+                var alert = UIAlertController(title: "Error Retrieving Posts", message: "Could not download posts from server. Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                print("error retrieving posts from Parse")
             }
         //replaces activity spinner in toolbar with button
         /*self.buttonsToolbar.setItems([self.refreshButton, self.flexibleSpace, self.linkButton,
@@ -283,13 +297,23 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         self.activityIndicator.stopAnimating()*/
 
         self.refresher.endRefreshing() //ends pull to refresh spinner
-        self.progressView.setProgress(1, animated: true)
+            
+            
+        progressView.setProgress(1, animated: true)
         var timer = NSTimer.scheduledTimerWithTimeInterval(0.55, target: self, selector: Selector("resetRefresh"), userInfo: nil, repeats: false)
         }
     }
     
+    //resets progress views after reload is complete
     func resetRefresh() {
-        self.progressView.setProgress(0, animated: false)
+        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.progressViewBottom.alpha = 0.0
+            self.progressViewTop.alpha = 0.0
+        }, completion: {
+            (value: Bool) in
+            self.progressViewTop.setProgress(0, animated: false)
+            self.progressViewBottom.setProgress(0, animated: false)
+        })
     }
     
     //places annotations on map for all downloaded posts
