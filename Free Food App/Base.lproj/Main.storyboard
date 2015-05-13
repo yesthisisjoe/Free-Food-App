@@ -17,10 +17,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CW6-7O-ulj">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CW6-7O-ulj">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="an6-yn-ZtB">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="an6-yn-ZtB">
                                 <rect key="frame" x="0.0" y="500" width="600" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.05901211760903291" blue="0.96882401048656586" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <items>
@@ -67,15 +67,48 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Xmr-Jb-bP2">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Xmr-Jb-bP2">
                                 <rect key="frame" x="0.0" y="271" width="600" height="329"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="LRw-T4-0Ap">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="tableCell" rowHeight="80" id="LRw-T4-0Ap" customClass="cell" customModule="Free_Food_App" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LRw-T4-0Ap" id="Z7x-YU-Jdo">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="60" translatesAutoresizingMaskIntoConstraints="NO" id="fmN-tB-obg" userLabel="Rating">
+                                                    <rect key="frame" x="8" y="16" width="50" height="47"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="31"/>
+                                                    <color key="textColor" red="0.19182224977192808" green="0.38117896934559342" blue="0.73691998106060608" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXb-Qz-Bmr" userLabel="Title">
+                                                    <rect key="frame" x="73" y="8" width="540" height="21"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last confirmed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQn-Q1-rk9" userLabel="Confirmed">
+                                                    <rect key="frame" x="73" y="22" width="540" height="41"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="15"/>
+                                                    <color key="textColor" red="0.28596511994949492" green="0.28596511994949492" blue="0.28596511994949492" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="RQn-Q1-rk9" firstAttribute="leading" secondItem="Z7x-YU-Jdo" secondAttribute="leadingMargin" constant="65" id="4FO-9B-xvj"/>
+                                                <constraint firstItem="RQn-Q1-rk9" firstAttribute="leading" secondItem="fmN-tB-obg" secondAttribute="trailing" constant="10" id="QYa-Jh-Pf9"/>
+                                                <constraint firstAttribute="centerY" secondItem="fmN-tB-obg" secondAttribute="centerY" id="Uad-Kl-Vm9"/>
+                                                <constraint firstItem="fXb-Qz-Bmr" firstAttribute="top" secondItem="Z7x-YU-Jdo" secondAttribute="topMargin" id="fUq-s4-xFH"/>
+                                                <constraint firstItem="fXb-Qz-Bmr" firstAttribute="leading" secondItem="Z7x-YU-Jdo" secondAttribute="leadingMargin" constant="65" id="imd-Hb-C4Q"/>
+                                                <constraint firstItem="RQn-Q1-rk9" firstAttribute="top" secondItem="Z7x-YU-Jdo" secondAttribute="topMargin" constant="24" id="inl-e9-Vx3"/>
+                                                <constraint firstItem="fmN-tB-obg" firstAttribute="leading" secondItem="Z7x-YU-Jdo" secondAttribute="leadingMargin" id="um8-KJ-qYY"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="lastConfirmedLabel" destination="RQn-Q1-rk9" id="tIR-6Y-WsW"/>
+                                            <outlet property="ratingLabel" destination="fmN-tB-obg" id="3PQ-be-f5T"/>
+                                            <outlet property="titleLabel" destination="fXb-Qz-Bmr" id="7Ry-4B-UyZ"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -101,6 +134,8 @@
                             <constraint firstItem="an6-yn-ZtB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="zfQ-mG-9dc"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="backgroundToolbar" destination="cWQ-jq-YoH" id="QdW-f4-EEK"/>
                         <outlet property="buttonsToolbar" destination="N1F-96-Pps" id="ixa-ad-jPQ"/>

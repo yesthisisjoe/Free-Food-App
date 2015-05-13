@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D8059AB71B025C8F00200348 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8059AB61B025C8F00200348 /* Parse.framework */; };
+		D8059AFE1B03D8EF00200348 /* cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8059AFD1B03D8EF00200348 /* cell.swift */; };
 		D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */; };
+		D897B2321B04014700127BE2 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D897B2311B04014700127BE2 /* Parse.framework */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AF91AF7F19B00303AB0 /* Free_Food_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF71AF7F19B00303AB0 /* Free_Food_App.xcdatamodeld */; };
 		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
@@ -41,8 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D8059AB61B025C8F00200348 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Free Food App/Parse.framework"; sourceTree = "<group>"; };
+		D8059AFD1B03D8EF00200348 /* cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cell.swift; sourceTree = "<group>"; };
 		D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D897B2311B04014700127BE2 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Free Food App/Parse.framework"; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,7 +81,7 @@
 				D8E864AC1AF84DE1006986B9 /* StoreKit.framework in Frameworks */,
 				D8E864AA1AF84DDA006986B9 /* Security.framework in Frameworks */,
 				D8E864A81AF84DD0006986B9 /* QuartzCore.framework in Frameworks */,
-				D8059AB71B025C8F00200348 /* Parse.framework in Frameworks */,
+				D897B2321B04014700127BE2 /* Parse.framework in Frameworks */,
 				D8E864A61AF84DC8006986B9 /* MobileCoreServices.framework in Frameworks */,
 				D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */,
 				D8E864A41AF84DBB006986B9 /* CoreGraphics.framework in Frameworks */,
@@ -102,7 +104,7 @@
 		D8D87AE71AF7F19B00303AB0 = {
 			isa = PBXGroup;
 			children = (
-				D8059AB61B025C8F00200348 /* Parse.framework */,
+				D897B2311B04014700127BE2 /* Parse.framework */,
 				D8E864B11AF84DF6006986B9 /* libsqlite3.dylib */,
 				D8E864AF1AF84DEF006986B9 /* libz.dylib */,
 				D8E864AD1AF84DE7006986B9 /* SystemConfiguration.framework */,
@@ -132,6 +134,7 @@
 		D8D87AF21AF7F19B00303AB0 /* Free Food App */ = {
 			isa = PBXGroup;
 			children = (
+				D8059AFD1B03D8EF00200348 /* cell.swift */,
 				D8E864B81AF95496006986B9 /* Shared.swift */,
 				D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */,
 				D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */,
@@ -273,6 +276,7 @@
 				D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */,
 				D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */,
 				D8E864B91AF95496006986B9 /* Shared.swift in Sources */,
+				D8059AFE1B03D8EF00200348 /* cell.swift in Sources */,
 				D8D87AF91AF7F19B00303AB0 /* Free_Food_App.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,6 +431,16 @@
 					"$(PROJECT_DIR)/Free",
 					Food,
 					App,
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
 				);
 				INFOPLIST_FILE = "Free Food App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -458,6 +472,16 @@
 					"$(PROJECT_DIR)/Free",
 					Food,
 					App,
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
+					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Free",
 					Food,
 					App,

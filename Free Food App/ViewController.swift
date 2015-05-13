@@ -102,10 +102,69 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     //populates each cell of the table
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
-        cell.textLabel?.text = posts[indexPath.row].title
-        cell.detailTextLabel?.text = posts[indexPath.row].description
-        return cell
+        var tableCell:cell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! cell
+        var fade: CGFloat
+        
+        //adds text info
+        tableCell.titleLabel.text = posts[indexPath.row].title
+        tableCell.lastConfirmedLabel.text = "Last confirmed: \(dateSimplifier(posts[indexPath.row].confirmed))"
+        tableCell.ratingLabel.text = String(posts[indexPath.row].rating)
+                
+        //color cell based on rating
+        if (posts[indexPath.row].rating > 0) {
+            //fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.5)
+            //tableCell.contentView.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
+            
+            tableCell.titleLabel.alpha = 1.0
+            tableCell.lastConfirmedLabel.alpha = 1.0
+            tableCell.ratingLabel.alpha = 1.0
+        } else {
+            fade = 0.5//max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
+            //tableCell.contentView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            
+            //fade out text
+            tableCell.titleLabel.alpha = fade
+            tableCell.lastConfirmedLabel.alpha = fade
+            tableCell.ratingLabel.alpha = fade
+        }
+        
+        return tableCell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        //color cell based on rating
+        var fade: CGFloat
+        
+        if (posts[indexPath.row].rating > 0) {
+            fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.02), 0.5)
+            cell.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
+        } else {
+            //fade = max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
+            cell.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            
+            //fade out text
+            //cell.titleLabel.alpha = fade
+            //cell.lastConfirmedLabel.alpha = fade
+            //tableCell.ratingLabel.alpha = fade
+        }
+
+    }
+    
+    func dateSimplifier(sinceDate: NSDate) -> String {
+        var elapsedTime = Int(NSDate().timeIntervalSinceDate(sinceDate))
+        var simplifiedDate = ""
+        
+        if (elapsedTime < 60) { //less than a minute
+            simplifiedDate = "less than 1m ago"
+        } else if (elapsedTime >= 60 && elapsedTime < 60*60) { //less than an hour
+            simplifiedDate = "\(elapsedTime / 60)m ago"
+        } else if (elapsedTime >= 60*60 && elapsedTime < 60*60*24) { //less than a day
+            simplifiedDate = "\(elapsedTime / 60 / 60)h ago"
+        } else { //over a day
+            simplifiedDate = "\(elapsedTime / 60 / 60 / 24)d ago"
+        }
+        
+        return simplifiedDate
     }
     
     //called when the first view appears
@@ -281,6 +340,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                         self.posts.append(toAppend)
                     }
                 }
+                self.posts.sort({$0.rating > $1.rating})
+                
                 self.populateMap()
                 self.tableView.reloadData()
             } else {
