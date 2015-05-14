@@ -79,6 +79,23 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         backgroundToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
         tableView.frame = CGRectMake(0, screenSize.height, screenSize.width, 0)
         
+        for family in UIFont.familyNames()
+        {
+            println("\(family)")
+            for name in UIFont.fontNamesForFamilyName(family as! String)
+            {
+                println("  \(name)")
+            }
+        }
+        
+        //set font of link button
+        if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
+            println("worked")
+            linkButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+        } else {
+            println("didn't work")
+        }
+        
         //creates pull to refresh for the table
         refresher = UIRefreshControl()
         refresher.addTarget(self, action: "reloadPosts", forControlEvents: UIControlEvents.ValueChanged)
@@ -90,7 +107,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         //backgroundToolbar.addGestureRecognizer(gesture)
         buttonsToolbar.userInteractionEnabled = true
         //backgroundToolbar.userInteractionEnabled = true
-        
         
         reloadPosts() //initial loading of posts
     }
@@ -105,19 +121,47 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         var tableCell:cell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! cell
         var fade: CGFloat
         
-        //adds text info
-        tableCell.titleLabel.text = posts[indexPath.row].title
-        tableCell.lastConfirmedLabel.text = "Last confirmed: \(dateSimplifier(posts[indexPath.row].confirmed))"
+        //sets up formatted string for last confirmed
+        var lastConfirmed = dateSimplifier(posts[indexPath.row].confirmed)
+        var boldLastConfirmed = NSMutableAttributedString()
+        boldLastConfirmed = NSMutableAttributedString(string: "last confirmed: \(lastConfirmed)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-Italic", size: 15.0)!])
+        boldLastConfirmed.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBoldItalic", size: 15.0)!, range: NSRange(location: 16, length: count(lastConfirmed)))
+        
+        //sets up formatted string for posted date
+        var posted = dateSimplifier(posts[indexPath.row].posted)
+        var boldPosted = NSMutableAttributedString()
+        boldPosted = NSMutableAttributedString(string: "posted: \(posted)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-Italic", size: 15.0)!])
+        boldPosted.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBoldItalic", size: 15.0)!, range: NSRange(location: 8, length: count(posted)))
+        
+        //sets up formatted string for title & type
+        var title = posts[indexPath.row].title
+        var type = posts[indexPath.row].type
+        var boldTitle = NSMutableAttributedString()
+        boldTitle = NSMutableAttributedString(string: "\(title)  \(type)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-DemiBold", size: 18.0)!])
+        boldTitle.addAttribute(NSFontAttributeName, value: UIFont(name: "BodoniSvtyTwoSCITCTT-Book", size: 18.0)!, range: NSRange(location: count(title) + 2, length: count(type)))
+        if (type == "free") {
+            boldTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0), range: NSRange(location: count(title) + 2, length: count(type)))
+        } else if (type == "cheap") {
+            boldTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.0, green: 0.75, blue: 1.0, alpha: 1.0), range: NSRange(location: count(title) + 2, length: count(type)))
+        }
+        
+        
+        //sets values for strings in cells
+        tableCell.titleLabel.attributedText = boldTitle
+        tableCell.lastConfirmedLabel.attributedText = boldLastConfirmed
+        tableCell.postedLabel.attributedText = boldPosted
         tableCell.ratingLabel.text = String(posts[indexPath.row].rating)
-                
+        
         //color cell based on rating
         if (posts[indexPath.row].rating > 0) {
-            //fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.5)
+            fade = min(0.2 + (CGFloat(posts[indexPath.row].rating) * 0.1), 0.9)
             //tableCell.contentView.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
             
             tableCell.titleLabel.alpha = 1.0
             tableCell.lastConfirmedLabel.alpha = 1.0
+            tableCell.postedLabel.alpha = 1.0
             tableCell.ratingLabel.alpha = 1.0
+            tableCell.ratingLabel.textColor = UIColor(red: 0.2, green: fade, blue: 0.2, alpha: 1.0)
         } else {
             fade = 0.5//max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
             //tableCell.contentView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -125,7 +169,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             //fade out text
             tableCell.titleLabel.alpha = fade
             tableCell.lastConfirmedLabel.alpha = fade
+            tableCell.postedLabel.alpha = fade
             tableCell.ratingLabel.alpha = fade
+            tableCell.ratingLabel.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
         }
         
         return tableCell
@@ -136,9 +182,11 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         var fade: CGFloat
         
         if (posts[indexPath.row].rating > 0) {
-            fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.02), 0.5)
+            //positive rating
+            fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.8)
             cell.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
         } else {
+            //negative rating
             //fade = max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
             cell.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             
@@ -182,7 +230,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         
         let myLocationAction = UIAlertAction(title: "At my Location", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
-            //TODO: check for location services
+            
+            var location = self.locationManager.location.coordinate
+            var span:MKCoordinateSpan = MKCoordinateSpanMake(0.001, 0.001)
+            
+            var region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+            self.map.setRegion(region, animated: true)
         })
         let onMapAction = UIAlertAction(title: "Find on Map", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -214,7 +267,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + self.statusBarHeight)
             self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, self.screenSize.height - self.backgroundToolbar.frame.height)
             
-            self.linkButton.title = "Map" //change button text to map
+            self.linkButton.title = "MAP" //change button text to map
             }, completion: nil)
         listActive = true //tracks whether the list view is active
     }
@@ -227,7 +280,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             self.backgroundToolbar.frame = CGRectMake(0, self.screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
             self.tableView.frame = CGRectMake(0, self.screenSize.height, self.screenSize.width, 0)
             
-            self.linkButton.title = "List" //change button text to list
+            self.linkButton.title = "LIST" //change button text to list
         }, completion: nil)
         
         listActive = false //tracks whether the list view is active
@@ -331,7 +384,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                             title: post["Title"] as! String,
                             description: post["Description"] as! String,
                             type: post["FoodType"] as! String,
-                            created: post.createdAt!,
+                            posted: post.createdAt!,
                             confirmed: post["LastConfirmed"] as! NSDate,
                             latitude: post["Latitude"] as! Double,
                             longitude: post["Longitude"] as! Double,
@@ -340,6 +393,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                         self.posts.append(toAppend)
                     }
                 }
+                //decides the order of the posts in list view
                 self.posts.sort({$0.rating > $1.rating})
                 
                 self.populateMap()

@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		D8059AFE1B03D8EF00200348 /* cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8059AFD1B03D8EF00200348 /* cell.swift */; };
+		D812ED6B1B0435AB009287DA /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D812ED6A1B0435AB009287DA /* Parse.framework */; };
+		D812ED6E1B0533F6009287DA /* VoteDown.png in Resources */ = {isa = PBXBuildFile; fileRef = D812ED6C1B0533F6009287DA /* VoteDown.png */; };
+		D812ED6F1B0533F6009287DA /* VoteUp.png in Resources */ = {isa = PBXBuildFile; fileRef = D812ED6D1B0533F6009287DA /* VoteUp.png */; };
 		D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */; };
-		D897B2321B04014700127BE2 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D897B2311B04014700127BE2 /* Parse.framework */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AF91AF7F19B00303AB0 /* Free_Food_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF71AF7F19B00303AB0 /* Free_Food_App.xcdatamodeld */; };
 		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
@@ -43,8 +45,10 @@
 
 /* Begin PBXFileReference section */
 		D8059AFD1B03D8EF00200348 /* cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cell.swift; sourceTree = "<group>"; };
+		D812ED6A1B0435AB009287DA /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		D812ED6C1B0533F6009287DA /* VoteDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VoteDown.png; sourceTree = "<group>"; };
+		D812ED6D1B0533F6009287DA /* VoteUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VoteUp.png; sourceTree = "<group>"; };
 		D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		D897B2311B04014700127BE2 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Free Food App/Parse.framework"; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,7 +85,7 @@
 				D8E864AC1AF84DE1006986B9 /* StoreKit.framework in Frameworks */,
 				D8E864AA1AF84DDA006986B9 /* Security.framework in Frameworks */,
 				D8E864A81AF84DD0006986B9 /* QuartzCore.framework in Frameworks */,
-				D897B2321B04014700127BE2 /* Parse.framework in Frameworks */,
+				D812ED6B1B0435AB009287DA /* Parse.framework in Frameworks */,
 				D8E864A61AF84DC8006986B9 /* MobileCoreServices.framework in Frameworks */,
 				D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */,
 				D8E864A41AF84DBB006986B9 /* CoreGraphics.framework in Frameworks */,
@@ -104,7 +108,6 @@
 		D8D87AE71AF7F19B00303AB0 = {
 			isa = PBXGroup;
 			children = (
-				D897B2311B04014700127BE2 /* Parse.framework */,
 				D8E864B11AF84DF6006986B9 /* libsqlite3.dylib */,
 				D8E864AF1AF84DEF006986B9 /* libz.dylib */,
 				D8E864AD1AF84DE7006986B9 /* SystemConfiguration.framework */,
@@ -119,6 +122,8 @@
 				D8D87AF21AF7F19B00303AB0 /* Free Food App */,
 				D8D87B0B1AF7F19B00303AB0 /* Free Food AppTests */,
 				D8D87AF11AF7F19B00303AB0 /* Products */,
+				D812ED6C1B0533F6009287DA /* VoteDown.png */,
+				D812ED6D1B0533F6009287DA /* VoteUp.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,6 +139,7 @@
 		D8D87AF21AF7F19B00303AB0 /* Free Food App */ = {
 			isa = PBXGroup;
 			children = (
+				D812ED6A1B0435AB009287DA /* Parse.framework */,
 				D8059AFD1B03D8EF00200348 /* cell.swift */,
 				D8E864B81AF95496006986B9 /* Shared.swift */,
 				D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */,
@@ -254,6 +260,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */,
+				D812ED6E1B0533F6009287DA /* VoteDown.png in Resources */,
+				D812ED6F1B0533F6009287DA /* VoteUp.png in Resources */,
 				D8D87B031AF7F19B00303AB0 /* LaunchScreen.xib in Resources */,
 				D8D87B001AF7F19B00303AB0 /* Images.xcassets in Resources */,
 			);
@@ -441,6 +449,9 @@
 					"$(PROJECT_DIR)/Free",
 					Food,
 					App,
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
 				);
 				INFOPLIST_FILE = "Free Food App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -482,6 +493,9 @@
 					Food,
 					App,
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Free",
+					Food,
+					App,
 					"$(PROJECT_DIR)/Free",
 					Food,
 					App,

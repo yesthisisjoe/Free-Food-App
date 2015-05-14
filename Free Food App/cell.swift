@@ -12,4 +12,5 @@ class cell: UITableViewCell {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var lastConfirmedLabel: UILabel!
+    @IBOutlet weak var postedLabel: UILabel!
 }
