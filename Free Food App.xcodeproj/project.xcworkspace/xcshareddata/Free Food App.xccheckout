@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>EF447CC9-858B-4CED-8463-F19638A533F9</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Free Food App</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>46C284DC4113C21FD45C0158F7152C61531604AD</key>
 		<string>https://github.com/yesthisisjoe/Free-Food-App.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Free Food App.xcodeproj/project.xcworkspace</string>
+	<string>Free Food App.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>46C284DC4113C21FD45C0158F7152C61531604AD</key>

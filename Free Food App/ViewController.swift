@@ -43,6 +43,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     var posts = [Post]() //TODO: this should definitely be in a different file
     var listActive = false //keeps track of when the list view is active
+    var showFree = false //tracks whether or not user wants to see free food posts
+    var showCheap = false //tracks whether or not user wants to see cheap food posts
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +118,27 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         return posts.count
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        //if the table is empty we diplay a message
+        if (count(posts) > 0) {
+            return 1
+        } else {
+            var messageLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            
+            messageLabel.text = "There are no food postings right now." //TODO: update this label so it checks what filters you have on, and what notifications you enabled
+            messageLabel.textColor = UIColor.blackColor()
+            messageLabel.numberOfLines = 0
+            messageLabel.textAlignment = NSTextAlignment.Center
+            messageLabel.font = UIFont(name: "AvenirNext-Italic", size: 15.0)
+            messageLabel.sizeToFit()
+            
+            self.tableView.backgroundView = messageLabel;
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+            
+            return 0
+        }
+    }
+    
     //populates each cell of the table
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var tableCell:cell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! cell
@@ -183,8 +206,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         
         if (posts[indexPath.row].rating > 0) {
             //positive rating
-            fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.8)
-            cell.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
+            //fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.8)
+            //cell.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
         } else {
             //negative rating
             //fade = max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
@@ -379,18 +402,20 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                     
                     for post in currentPosts {
                         //create a post object from Parse then append it
-                        var toAppend = Post(
-                            id: post.objectId!,
-                            title: post["Title"] as! String,
-                            description: post["Description"] as! String,
-                            type: post["FoodType"] as! String,
-                            posted: post.createdAt!,
-                            confirmed: post["LastConfirmed"] as! NSDate,
-                            latitude: post["Latitude"] as! Double,
-                            longitude: post["Longitude"] as! Double,
-                            rating: post["Rating"] as! Int
-                        )
-                        self.posts.append(toAppend)
+                        if ((self.showFree == true && post["FoodType"] as! String == "free") || (self.showCheap == true && post["FoodType"] as! String == "cheap")) {
+                            var toAppend = Post(
+                                id: post.objectId!,
+                                title: post["Title"] as! String,
+                                description: post["Description"] as! String,
+                                type: post["FoodType"] as! String,
+                                posted: post.createdAt!,
+                                confirmed: post["LastConfirmed"] as! NSDate,
+                                latitude: post["Latitude"] as! Double,
+                                longitude: post["Longitude"] as! Double,
+                                rating: post["Rating"] as! Int
+                            )
+                            self.posts.append(toAppend)
+                        }
                     }
                 }
                 //decides the order of the posts in list view
@@ -435,7 +460,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     func populateMap() {
         map.removeAnnotations(map.annotations)
         for post in self.posts {
-            //creates a test annotation
+            //populate map with pins from what we have downloaded
             var annotation = MKPointAnnotation()
             var latitude:CLLocationDegrees = post.latitude
             var longitude:CLLocationDegrees = post.longitude
