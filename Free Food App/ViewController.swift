@@ -53,7 +53,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
 
         //location button setup
         //add button & flexible space
-        var trackingButton = MKUserTrackingBarButtonItem(mapView: self.map)
+        let trackingButton = MKUserTrackingBarButtonItem(mapView: self.map)
         self.toolbarItems = [flexibleSpace, trackingButton]
         locationToolbar.setItems(toolbarItems, animated: true)
         
@@ -73,9 +73,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             forToolbarPosition: UIBarPosition.Any)
         
         //place toolbar & background on the bottom of the screen
-        buttonsToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
-        backgroundToolbar.setTranslatesAutoresizingMaskIntoConstraints(true)
-        tableView.setTranslatesAutoresizingMaskIntoConstraints(true)
+        buttonsToolbar.translatesAutoresizingMaskIntoConstraints = true
+        backgroundToolbar.translatesAutoresizingMaskIntoConstraints = true
+        tableView.translatesAutoresizingMaskIntoConstraints = true
         
         buttonsToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, screenSize.width, buttonsToolbar.frame.height)
         backgroundToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
@@ -83,19 +83,19 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         
         for family in UIFont.familyNames()
         {
-            println("\(family)")
-            for name in UIFont.fontNamesForFamilyName(family as! String)
+            print("\(family)")
+            for name in UIFont.fontNamesForFamilyName(family as String)
             {
-                println("  \(name)")
+                print("  \(name)")
             }
         }
         
         //set font of link button
         if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
-            println("worked")
+            print("worked")
             linkButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         } else {
-            println("didn't work")
+            print("didn't work")
         }
         
         //creates pull to refresh for the table
@@ -104,7 +104,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         self.tableView.addSubview(refresher)
         
         //recognize the drag gesture on the toolbar
-        var gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
+        let gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
         buttonsToolbar.addGestureRecognizer(gesture)
         //backgroundToolbar.addGestureRecognizer(gesture)
         buttonsToolbar.userInteractionEnabled = true
@@ -120,10 +120,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         //if the table is empty we diplay a message
-        if (count(posts) > 0) {
+        if (posts.count > 0) {
             return 1
         } else {
-            var messageLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            let messageLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
             
             messageLabel.text = "There are no food postings right now." //TODO: update this label so it checks what filters you have on, and what notifications you enabled
             messageLabel.textColor = UIColor.blackColor()
@@ -141,31 +141,31 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     //populates each cell of the table
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var tableCell:cell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! cell
+        let tableCell:cell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! cell
         var fade: CGFloat
         
         //sets up formatted string for last confirmed
-        var lastConfirmed = dateSimplifier(posts[indexPath.row].confirmed)
+        let lastConfirmed = dateSimplifier(posts[indexPath.row].confirmed)
         var boldLastConfirmed = NSMutableAttributedString()
         boldLastConfirmed = NSMutableAttributedString(string: "last confirmed: \(lastConfirmed)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-Italic", size: 15.0)!])
-        boldLastConfirmed.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBoldItalic", size: 15.0)!, range: NSRange(location: 16, length: count(lastConfirmed)))
+        boldLastConfirmed.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBoldItalic", size: 15.0)!, range: NSRange(location: 16, length: lastConfirmed.characters.count))
         
         //sets up formatted string for posted date
-        var posted = dateSimplifier(posts[indexPath.row].posted)
+        let posted = dateSimplifier(posts[indexPath.row].posted)
         var boldPosted = NSMutableAttributedString()
         boldPosted = NSMutableAttributedString(string: "posted: \(posted)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-Italic", size: 15.0)!])
-        boldPosted.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBoldItalic", size: 15.0)!, range: NSRange(location: 8, length: count(posted)))
+        boldPosted.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBoldItalic", size: 15.0)!, range: NSRange(location: 8, length: posted.characters.count))
         
         //sets up formatted string for title & type
-        var title = posts[indexPath.row].title
-        var type = posts[indexPath.row].type
+        let title = posts[indexPath.row].title
+        let type = posts[indexPath.row].type
         var boldTitle = NSMutableAttributedString()
         boldTitle = NSMutableAttributedString(string: "\(title)  \(type)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-DemiBold", size: 18.0)!])
-        boldTitle.addAttribute(NSFontAttributeName, value: UIFont(name: "BodoniSvtyTwoSCITCTT-Book", size: 18.0)!, range: NSRange(location: count(title) + 2, length: count(type)))
+        boldTitle.addAttribute(NSFontAttributeName, value: UIFont(name: "BodoniSvtyTwoSCITCTT-Book", size: 18.0)!, range: NSRange(location: title.characters.count + 2, length: type.characters.count))
         if (type == "free") {
-            boldTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0), range: NSRange(location: count(title) + 2, length: count(type)))
+            boldTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 1.0, green: 0.5, blue: 0.5, alpha: 1.0), range: NSRange(location: title.characters.count + 2, length: type.characters.count))
         } else if (type == "cheap") {
-            boldTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.0, green: 0.75, blue: 1.0, alpha: 1.0), range: NSRange(location: count(title) + 2, length: count(type)))
+            boldTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.0, green: 0.75, blue: 1.0, alpha: 1.0), range: NSRange(location: title.characters.count + 2, length: type.characters.count))
         }
         
         
@@ -222,7 +222,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     }
     
     func dateSimplifier(sinceDate: NSDate) -> String {
-        var elapsedTime = Int(NSDate().timeIntervalSinceDate(sinceDate))
+        let elapsedTime = Int(NSDate().timeIntervalSinceDate(sinceDate))
         var simplifiedDate = ""
         
         if (elapsedTime < 60) { //less than a minute
@@ -244,7 +244,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     }
     
     @IBAction func reloadButton(sender: AnyObject) {
-        reloadPosts()
+        performSegueWithIdentifier("settings", sender: self)
+        //reloadPosts()
     }
     
     //when we hit the new post button we decide if we want to add at our location or on the map
@@ -461,9 +462,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         map.removeAnnotations(map.annotations)
         for post in self.posts {
             //populate map with pins from what we have downloaded
-            var annotation = MKPointAnnotation()
-            var latitude:CLLocationDegrees = post.latitude
-            var longitude:CLLocationDegrees = post.longitude
+            let annotation = MKPointAnnotation()
+            let latitude:CLLocationDegrees = post.latitude
+            let longitude:CLLocationDegrees = post.longitude
             annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
             annotation.title = post.title
             annotation.subtitle = post.description
@@ -476,7 +477,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     func centerMap() {
         if posts.count > 0 {
             //set initial max and min values to the first member
-            var firstPost = posts[0]
+            let firstPost = posts[0]
             var maxLat = firstPost.latitude
             var minLat = firstPost.latitude
             var maxLon = firstPost.longitude
@@ -491,34 +492,34 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             }
             
             //calculate center and delta
-            var centerLat = (maxLat + minLat) / 2
-            var centerLon = (maxLon + minLon) / 2
-            var deltaLat = abs(maxLat - minLat) * 1.5
-            var deltaLon = abs(maxLon - minLon) * 1.5
+            let centerLat = (maxLat + minLat) / 2
+            let centerLon = (maxLon + minLon) / 2
+            let deltaLat = abs(maxLat - minLat) * 1.5
+            let deltaLon = abs(maxLon - minLon) * 1.5
             
             //set the new region
-            var latitude:CLLocationDegrees = centerLat
-            var longitude:CLLocationDegrees = centerLon
-            var location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+            let latitude:CLLocationDegrees = centerLat
+            let longitude:CLLocationDegrees = centerLon
+            let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
             
-            var latDelta:CLLocationDegrees = deltaLat
-            var lonDelta:CLLocationDegrees = deltaLon
-            var span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+            let latDelta:CLLocationDegrees = deltaLat
+            let lonDelta:CLLocationDegrees = deltaLon
+            let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
             
-            var region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+            let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
             map.setRegion(region, animated: true)
         }
     }
     
-    func mapViewWillStartLocatingUser(map: MKMapView!) {
+    func mapViewWillStartLocatingUser(map: MKMapView) {
     //deal with what happens when the user hasn't authorized sharing location
-        print("hey!")
+        print("hey!", appendNewline: false)
         
-        var status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        let status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
         if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
-            print("hey")
+            print("hey", appendNewline: false)
         } else {
-            print("all good")
+            print("all good", appendNewline: false)
         }
         
     }
