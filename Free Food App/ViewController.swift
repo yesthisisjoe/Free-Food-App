@@ -202,21 +202,27 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         //color cell based on rating
-        var fade: CGFloat
+        var _: CGFloat //this is fade. change back if you use fade
         
         if (posts[indexPath.row].rating > 0) {
+            /*
             //positive rating
-            //fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.8)
-            //cell.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
+            fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.8)
+            cell.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
+            */
         } else {
+            /*
             //negative rating
-            //fade = max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
+            fade = max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
+            */
             cell.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             
+            /*
             //fade out text
-            //cell.titleLabel.alpha = fade
-            //cell.lastConfirmedLabel.alpha = fade
-            //tableCell.ratingLabel.alpha = fade
+            cell.titleLabel.alpha = fade
+            cell.lastConfirmedLabel.alpha = fade
+            tableCell.ratingLabel.alpha = fade
+            */
         }
 
     }
@@ -244,8 +250,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     }
     
     @IBAction func reloadButton(sender: AnyObject) {
-        performSegueWithIdentifier("settings", sender: self)
-        //reloadPosts()
+        //performSegueWithIdentifier("settings", sender: self)
+        reloadPosts()
     }
     
     //when we hit the new post button we decide if we want to add at our location or on the map
@@ -255,10 +261,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         let myLocationAction = UIAlertAction(title: "At my Location", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            var location = self.locationManager.location.coordinate
-            var span:MKCoordinateSpan = MKCoordinateSpanMake(0.001, 0.001)
+            let location = self.locationManager.location!.coordinate
+            let span:MKCoordinateSpan = MKCoordinateSpanMake(0.001, 0.001)
             
-            var region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+            let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
             self.map.setRegion(region, animated: true)
         })
         let onMapAction = UIAlertAction(title: "Find on Map", style: .Default, handler: {
@@ -389,7 +395,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         self.buttonsToolbar.setItems([loadingView, flexibleSpace, linkButton, flexibleSpace, newPostButton], animated: true)*/
         
         //parse query
-        var query = PFQuery(className: "Posts")
+        let query = PFQuery(className: "Posts")
         query.findObjectsInBackgroundWithBlock {
             (currentPosts: [AnyObject]?, error: NSError?) -> Void in
             
@@ -399,12 +405,11 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                 self.posts.removeAll(keepCapacity: true) //erase old array of posts
                 
                 if let currentPosts = currentPosts as? [PFObject]{
-                    let max = currentPosts.count
                     
                     for post in currentPosts {
                         //create a post object from Parse then append it
                         if ((self.showFree == true && post["FoodType"] as! String == "free") || (self.showCheap == true && post["FoodType"] as! String == "cheap")) {
-                            var toAppend = Post(
+                            let toAppend = Post(
                                 id: post.objectId!,
                                 title: post["Title"] as! String,
                                 description: post["Description"] as! String,
@@ -420,13 +425,13 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                     }
                 }
                 //decides the order of the posts in list view
-                self.posts.sort({$0.rating > $1.rating})
+                self.posts.sortInPlace({$0.rating > $1.rating})
                 
                 self.populateMap()
                 self.tableView.reloadData()
             } else {
                 //give an alert that there was an error loading posts
-                var alert = UIAlertController(title: "Error Retrieving Posts", message: "Could not download posts from server. Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Error Retrieving Posts", message: "Could not download posts from server. Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
                 
@@ -441,7 +446,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             
             
         progressView.setProgress(1, animated: true)
-        var timer = NSTimer.scheduledTimerWithTimeInterval(0.55, target: self, selector: Selector("resetRefresh"), userInfo: nil, repeats: false)
+        _ = NSTimer.scheduledTimerWithTimeInterval(0.55, target: self, selector: Selector("resetRefresh"), userInfo: nil, repeats: false)
         }
     }
     
