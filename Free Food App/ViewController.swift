@@ -43,8 +43,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     var posts = [Post]() //TODO: this should definitely be in a different file
     var listActive = false //keeps track of when the list view is active
-    var showFree = false //tracks whether or not user wants to see free food posts
-    var showCheap = false //tracks whether or not user wants to see cheap food posts
+    var showFree = true //tracks whether or not user wants to see free food posts
+    var showCheap = true //tracks whether or not user wants to see cheap food posts
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,21 +81,21 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         backgroundToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
         tableView.frame = CGRectMake(0, screenSize.height, screenSize.width, 0)
         
-        for family in UIFont.familyNames()
+        //use this to find font names
+        /*for family in UIFont.familyNames()
         {
             print("\(family)")
             for name in UIFont.fontNamesForFamilyName(family as String)
             {
                 print("  \(name)")
             }
-        }
+        }*/
         
         //set font of link button
         if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
-            print("worked")
             linkButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         } else {
-            print("didn't work")
+            print("error setting font of link button")
         }
         
         //creates pull to refresh for the table
@@ -475,6 +475,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             annotation.subtitle = post.description
             map.addAnnotation(annotation)
         }
+        
+        
         centerMap()
     }
     

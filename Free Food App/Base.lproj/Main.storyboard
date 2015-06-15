@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="AvenirNext.ttc">
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-DemiBold</string>
+            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Regular</string>
+            <string>AvenirNext-Regular</string>
+            <string>AvenirNext-Regular</string>
+            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Regular</string>
+            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Regular</string>
+            <string>AvenirNext-Regular</string>
+            <string>AvenirNext-Regular</string>
+            <string>AvenirNext-Regular</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Map View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -18,12 +35,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CW6-7O-ulj">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CW6-7O-ulj">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <animations/>
                             </mapView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="an6-yn-ZtB">
-                                <rect key="frame" x="0.0" y="500" width="375" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="an6-yn-ZtB">
+                                <rect key="frame" x="0.0" y="523" width="375" height="44"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="0.05901211760903291" blue="0.96882401048656586" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <items>
@@ -35,12 +52,15 @@
                                 <rect key="frame" x="0.0" y="227" width="375" height="44"/>
                                 <subviews>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="jXd-tL-4of" userLabel="Top Progress View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="3"/>
+                                        <rect key="frame" x="0.0" y="-2" width="375" height="3"/>
                                         <animations/>
                                     </progressView>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="oqf-z6-8g4" userLabel="Bottom Progress View">
-                                        <rect key="frame" x="0.0" y="44" width="600" height="3"/>
+                                        <rect key="frame" x="0.0" y="42" width="600" height="3"/>
                                         <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="600" id="uVt-KJ-dN2"/>
+                                        </constraints>
                                     </progressView>
                                 </subviews>
                                 <animations/>
@@ -49,6 +69,8 @@
                                     <constraint firstItem="jXd-tL-4of" firstAttribute="leading" secondItem="cWQ-jq-YoH" secondAttribute="leading" id="27N-rX-gab"/>
                                     <constraint firstAttribute="trailing" secondItem="jXd-tL-4of" secondAttribute="trailing" id="Uin-vv-wfo"/>
                                     <constraint firstAttribute="bottom" secondItem="oqf-z6-8g4" secondAttribute="bottom" constant="1" id="YgG-La-xNf"/>
+                                    <constraint firstItem="oqf-z6-8g4" firstAttribute="leading" secondItem="jXd-tL-4of" secondAttribute="leading" id="Ymf-rO-Epq"/>
+                                    <constraint firstItem="oqf-z6-8g4" firstAttribute="top" secondItem="jXd-tL-4of" secondAttribute="bottom" constant="42.5" id="iyR-av-3yP"/>
                                 </constraints>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1F-96-Pps">
@@ -89,28 +111,28 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="102.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="60" translatesAutoresizingMaskIntoConstraints="NO" id="fmN-tB-obg" userLabel="Rating">
-                                                    <rect key="frame" x="8" y="27" width="50" height="47"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="60" translatesAutoresizingMaskIntoConstraints="NO" id="fmN-tB-obg" userLabel="Rating">
+                                                    <rect key="frame" x="8" y="30" width="55" height="42"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="31"/>
                                                     <color key="textColor" red="0.28596511990000001" green="0.28596511990000001" blue="0.28596511990000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXb-Qz-Bmr" userLabel="Title">
-                                                    <rect key="frame" x="73" y="8" width="540" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXb-Qz-Bmr" userLabel="Title">
+                                                    <rect key="frame" x="73" y="8" width="36" height="25"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last confirmed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQn-Q1-rk9" userLabel="Confirmed">
-                                                    <rect key="frame" x="73" y="22" width="540" height="41"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last confirmed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQn-Q1-rk9" userLabel="Confirmed">
+                                                    <rect key="frame" x="73" y="32" width="100" height="20"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" red="0.28596511994949492" green="0.28596511994949492" blue="0.28596511994949492" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Posted" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7b-HL-ba9">
-                                                    <rect key="frame" x="73" y="47" width="540" height="41"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posted" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7b-HL-ba9">
+                                                    <rect key="frame" x="73" y="53" width="46" height="20"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" red="0.28596511990000001" green="0.28596511990000001" blue="0.28596511990000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -156,12 +178,28 @@
                             <constraint firstItem="CW6-7O-ulj" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="K6R-jh-Lb9"/>
                             <constraint firstItem="cWQ-jq-YoH" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="PJc-EW-YlQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Xmr-Jb-bP2" secondAttribute="trailing" constant="-16" id="PZE-qH-efF"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="N1F-96-Pps" secondAttribute="bottom" constant="23" id="Uke-Ym-2YK"/>
+                            <constraint firstItem="cWQ-jq-YoH" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="207" id="WQ9-0i-DDk"/>
                             <constraint firstItem="Xmr-Jb-bP2" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="fuI-aL-28f"/>
                             <constraint firstAttribute="trailingMargin" secondItem="N1F-96-Pps" secondAttribute="trailing" constant="-16" id="g3H-rc-hqE"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="an6-yn-ZtB" secondAttribute="bottom" constant="56" id="hNR-Zd-v0S"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CW6-7O-ulj" secondAttribute="trailing" constant="-16" id="wDB-kT-KYm"/>
                             <constraint firstItem="an6-yn-ZtB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="zfQ-mG-9dc"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Jyr-NX-JiD"/>
+                                <exclude reference="PJc-EW-YlQ"/>
+                                <exclude reference="WQ9-0i-DDk"/>
+                                <exclude reference="PZE-qH-efF"/>
+                                <exclude reference="fuI-aL-28f"/>
+                                <exclude reference="JjQ-Oc-YHb"/>
+                                <exclude reference="zfQ-mG-9dc"/>
+                                <exclude reference="7YO-KE-cbw"/>
+                                <exclude reference="g3H-rc-hqE"/>
+                                <exclude reference="Uke-Ym-2YK"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
