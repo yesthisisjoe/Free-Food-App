@@ -10,6 +10,8 @@
 		D8059AFE1B03D8EF00200348 /* cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8059AFD1B03D8EF00200348 /* cell.swift */; };
 		D812ED731B06BFEF009287DA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D812ED721B06BFEF009287DA /* SettingsViewController.swift */; };
 		D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */; };
+		D85022B81B2F805F00CA1118 /* NewPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */; };
+		D85022BA1B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AF91AF7F19B00303AB0 /* Free_Food_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF71AF7F19B00303AB0 /* Free_Food_App.xcdatamodeld */; };
 		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
@@ -47,6 +49,8 @@
 		D8059AFD1B03D8EF00200348 /* cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cell.swift; sourceTree = "<group>"; };
 		D812ED721B06BFEF009287DA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; };
+		D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 				D8E864B81AF95496006986B9 /* Shared.swift */,
 				D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */,
 				D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */,
+				D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */,
+				D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */,
 				D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */,
 				D812ED721B06BFEF009287DA /* SettingsViewController.swift */,
 				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
@@ -281,11 +287,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D85022BA1B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift in Sources */,
 				D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */,
 				D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */,
 				D8E864B91AF95496006986B9 /* Shared.swift in Sources */,
 				D8059AFE1B03D8EF00200348 /* cell.swift in Sources */,
 				D8D87AF91AF7F19B00303AB0 /* Free_Food_App.xcdatamodeld in Sources */,
+				D85022B81B2F805F00CA1118 /* NewPostNotificationSettingsTableViewController.swift in Sources */,
 				D812ED731B06BFEF009287DA /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -249,9 +249,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         tableView.reloadData()
     }
     
+    //reload button (or settings) TODO: decide which
     @IBAction func reloadButton(sender: AnyObject) {
-        //performSegueWithIdentifier("settings", sender: self)
-        reloadPosts()
+        performSegueWithIdentifier("settings", sender: self)
+        //reloadPosts()
     }
     
     //when we hit the new post button we decide if we want to add at our location or on the map
@@ -281,6 +282,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         self.presentViewController(newPostMenu, animated: true, completion: nil)
     }
     
+    //used to switch between map & list view
     @IBAction func linkButton(sender: AnyObject) {
         if !listActive { //we transition from map view to list view
             toolbarUp()
