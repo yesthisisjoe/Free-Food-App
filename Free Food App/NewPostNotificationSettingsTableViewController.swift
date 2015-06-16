@@ -13,30 +13,30 @@ class NewPostNotificationSettingsTableViewController: UITableViewController {
     @IBOutlet weak var freeFoodSwitch: UISwitch!
     @IBOutlet weak var cheapFoodSwitch: UISwitch!
     @IBOutlet weak var cheapFoodLabel: UILabel!
-    
-    let user = User.sharedInstance //necessary to access data in Shared
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
         //disable the cheap food cell if cheap food is disabled
-        if (user.onlyFree == true) {
+        if (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == true) {
             cheapFoodLabel.enabled = false
             cheapFoodSwitch.enabled = false
         }
         //set default switch state
-        freeFoodSwitch.setOn(user.freePostNotifications, animated: false)
-        cheapFoodSwitch.setOn(user.cheapPostNotifications, animated: false)
+        freeFoodSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("freePostNotifications") as! Bool, animated: false)
+        cheapFoodSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("cheapPostNotifications") as! Bool, animated: false)
     }
     
     @IBAction func freeFoodSwitchAction(sender: AnyObject) {
-        user.freePostNotifications = freeFoodSwitch.on
+        let switchOn = freeFoodSwitch.on
+        NSUserDefaults.standardUserDefaults().setObject(switchOn, forKey: "freePostNotifications")
     }
     
     @IBAction func cheapFoodSwitchAction(sender: AnyObject) {
-        user.cheapPostNotifications = cheapFoodSwitch.on
+        let switchOn = cheapFoodSwitch.on
+        NSUserDefaults.standardUserDefaults().setObject(switchOn, forKey: "cheapPostNotifications")
     }
 
     override func didReceiveMemoryWarning() {

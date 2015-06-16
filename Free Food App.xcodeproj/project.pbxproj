@@ -12,6 +12,7 @@
 		D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */; };
 		D85022B81B2F805F00CA1118 /* NewPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */; };
 		D85022BA1B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */; };
+		D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = D85022FD1B3097E500CA1118 /* DefaultSettings.plist */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
 		D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */; };
@@ -46,10 +47,11 @@
 
 /* Begin PBXFileReference section */
 		D8059AFD1B03D8EF00200348 /* cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cell.swift; sourceTree = "<group>"; };
-		D812ED721B06BFEF009287DA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D812ED721B06BFEF009287DA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; };
-		D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; };
+		D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NewPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NearbyPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D85022FD1B3097E500CA1118 /* DefaultSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultSettings.plist; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -146,10 +148,11 @@
 				D8E864B81AF95496006986B9 /* Shared.swift */,
 				D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */,
 				D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */,
+				D812ED721B06BFEF009287DA /* SettingsViewController.swift */,
 				D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */,
 				D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */,
+				D85022FD1B3097E500CA1118 /* DefaultSettings.plist */,
 				D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */,
-				D812ED721B06BFEF009287DA /* SettingsViewController.swift */,
 				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
 				D8D87B011AF7F19B00303AB0 /* LaunchScreen.xib */,
 				D8E8649B1AF84D84006986B9 /* Bolts.framework */,
@@ -265,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */,
+				D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */,
 				D8D87B031AF7F19B00303AB0 /* LaunchScreen.xib in Resources */,
 				D8D87B001AF7F19B00303AB0 /* Images.xcassets in Resources */,
 			);

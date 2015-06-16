@@ -15,9 +15,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var sortCell: UITableViewCell!
     @IBOutlet weak var newPostNotificationText: UILabel!
     @IBOutlet weak var nearbyPostNotificationText: UILabel!
-    
-    let user = User.sharedInstance //necessary to access data in Shared
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,12 +24,12 @@ class SettingsViewController: UITableViewController {
         sortCell.selectionStyle = UITableViewCellSelectionStyle.None
         
         //set the value of buttons to reflect existing values
-        onlyFreeSwitch.setOn(user.onlyFree, animated: false)
-        if (user.sortBy == "confirmed") {
+        onlyFreeSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool, animated: false)
+        if (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String == "confirmed") {
             segmentedControl.selectedSegmentIndex = 0
-        } else if (user.sortBy == "posted") {
+        } else if (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String == "posted") {
             segmentedControl.selectedSegmentIndex = 1
-        } else if (user.sortBy == "rating") {
+        } else if (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String == "rating") {
             segmentedControl.selectedSegmentIndex = 2
         }
     }
@@ -42,28 +40,28 @@ class SettingsViewController: UITableViewController {
     
     //set the right detail of the notifications settings to their state
     func updateRightDetail() {
-        if (user.freePostNotifications == true) {
-            if (user.cheapPostNotifications == true) {
+        if (NSUserDefaults.standardUserDefaults().objectForKey("freePostNotifications") as! Bool == true) {
+            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapPostNotifications") as! Bool == true) {
                 newPostNotificationText.text = "Free & Cheap"
             } else {
                 newPostNotificationText.text = "Free"
             }
         } else {
-            if (user.cheapPostNotifications == true) {
+            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapPostNotifications") as! Bool == true) {
                 newPostNotificationText.text = "Cheap"
             } else {
                 newPostNotificationText.text = "Off"
             }
         }
         
-        if (user.freeNearbyNotifications == true) {
-            if (user.cheapNearbyNotifications == true) {
+        if (NSUserDefaults.standardUserDefaults().objectForKey("freeNearbyNotifications") as! Bool == true) {
+            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapNearbyNotifications") as! Bool == true) {
                 nearbyPostNotificationText.text = "Free & Cheap"
             } else {
                 nearbyPostNotificationText.text = "Free"
             }
         } else {
-            if (user.cheapNearbyNotifications == true) {
+            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapNearbyNotifications") as! Bool == true) {
                 nearbyPostNotificationText.text = "Cheap"
             } else {
                 nearbyPostNotificationText.text = "Off"
@@ -85,11 +83,11 @@ class SettingsViewController: UITableViewController {
     @IBAction func valueChanged(sender: AnyObject) {
         switch segmentedControl.selectedSegmentIndex {
             case 0:
-                user.sortBy = "confirmed"
+                NSUserDefaults.standardUserDefaults().setObject("confirmed", forKey: "sortBy")
             case 1:
-                user.sortBy = "posted"
+                NSUserDefaults.standardUserDefaults().setObject("posted", forKey: "sortBy")
             case 2:
-                user.sortBy = "rating"
+                NSUserDefaults.standardUserDefaults().setObject("rating", forKey: "sortBy")
             default:
                 break
         }
@@ -102,7 +100,7 @@ class SettingsViewController: UITableViewController {
         if (onlyFreeSwitch.on == true) {
             
             //user has cheap food notifications on
-            if (user.cheapPostNotifications || user.cheapNearbyNotifications) {
+            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapPostNotifications") as! Bool || NSUserDefaults.standardUserDefaults().objectForKey("cheapNearbyNotifications") as! Bool) {
                 
                 //confirm with the user that this will turn off their cheap food notifications
                 let alert = UIAlertController(title: "Turn Off Cheap Food Notifications?", message: "Only showing free food will turn off cheap food notifications. You will have to manually turn these back on if you change your mind later.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -110,9 +108,9 @@ class SettingsViewController: UITableViewController {
                 //the user is OK with this, so turn off cheap food and cheap food notifications
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {
                     (alert: UIAlertAction!) -> Void in
-                    self.user.onlyFree = true
-                    self.user.cheapPostNotifications = false
-                    self.user.cheapNearbyNotifications = false
+                    NSUserDefaults.standardUserDefaults().setObject(true, forKey: "onlyFree")
+                    NSUserDefaults.standardUserDefaults().setObject(false, forKey: "cheapPostNotifications")
+                    NSUserDefaults.standardUserDefaults().setObject(false, forKey: "cheapNearbyNotifications")
                     self.updateRightDetail()
                 }))
                 
@@ -126,12 +124,13 @@ class SettingsViewController: UITableViewController {
                 
             //user doesn't have any cheap food notifications. we turn on only free food
             } else {
-                user.onlyFree = true
+                NSUserDefaults.standardUserDefaults().setObject(true, forKey: "onlyFree")
+                //ViewController.reloadPosts()
             }
             
         //user is turning off only free food
         } else {
-            user.onlyFree = false
+            NSUserDefaults.standardUserDefaults().setObject(false, forKey: "onlyFree")
         }
     }
     

@@ -8,33 +8,6 @@
 
 import Foundation
 
-//this class holds data that needs to be shared between view controllers
-class User {
-    class var sharedInstance: User {
-        struct Static {
-            static var instance: User?
-            static var token: dispatch_once_t = 0
-        }
-        
-        dispatch_once(&Static.token) {
-            Static.instance = User()
-        }
-        
-        return Static.instance!
-    }
-    
-    var posts = [Post]() //stores free food posts
-    
-    var onlyFree = false //toggles only showing free food
-    var sortBy = "rating" //how the list view is sorted
-    
-    var freePostNotifications = false //toggles notifications for new free food posts
-    var cheapPostNotifications = false //toggles notifications for new cheap food posts
-    var freeNearbyNotifications = false //toggles notifications for nearby free food posts
-    var cheapNearbyNotifications = false //toggles notifications for nearby cheap food posts
-    
-}
-
 struct Post {
     var id, title, description, type: String
     var posted, confirmed: NSDate

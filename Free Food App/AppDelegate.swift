@@ -26,6 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
+        //load default settings from plist
+        var defaultSettings: NSDictionary
+        if let defaultSettingsPath = NSBundle.mainBundle().pathForResource("DefaultSettings", ofType: "plist") {
+            defaultSettings = NSDictionary(contentsOfFile: defaultSettingsPath)!
+            NSUserDefaults.standardUserDefaults().registerDefaults(defaultSettings as! [String : AnyObject])
+        }
+        
         return true
     }
 
