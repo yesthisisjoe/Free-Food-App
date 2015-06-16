@@ -41,7 +41,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView() //spinner for refresh button
     var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
     
-    var posts = [Post]() //TODO: this should definitely be in a different file
+    let user = User.sharedInstance //necessary to access data in Shared
+    
     var listActive = false //keeps track of when the list view is active
     var showFree = true //tracks whether or not user wants to see free food posts
     var showCheap = true //tracks whether or not user wants to see cheap food posts
@@ -115,12 +116,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     //sets number of rows in the table
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return user.posts.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         //if the table is empty we diplay a message
-        if (posts.count > 0) {
+        if (user.posts.count > 0) {
             return 1
         } else {
             let messageLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
@@ -145,20 +146,20 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         var fade: CGFloat
         
         //sets up formatted string for last confirmed
-        let lastConfirmed = dateSimplifier(posts[indexPath.row].confirmed)
+        let lastConfirmed = dateSimplifier(user.posts[indexPath.row].confirmed)
         var boldLastConfirmed = NSMutableAttributedString()
         boldLastConfirmed = NSMutableAttributedString(string: "last confirmed: \(lastConfirmed)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-Italic", size: 15.0)!])
         boldLastConfirmed.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBoldItalic", size: 15.0)!, range: NSRange(location: 16, length: lastConfirmed.characters.count))
         
         //sets up formatted string for posted date
-        let posted = dateSimplifier(posts[indexPath.row].posted)
+        let posted = dateSimplifier(user.posts[indexPath.row].posted)
         var boldPosted = NSMutableAttributedString()
         boldPosted = NSMutableAttributedString(string: "posted: \(posted)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-Italic", size: 15.0)!])
         boldPosted.addAttribute(NSFontAttributeName, value: UIFont(name: "AvenirNext-DemiBoldItalic", size: 15.0)!, range: NSRange(location: 8, length: posted.characters.count))
         
         //sets up formatted string for title & type
-        let title = posts[indexPath.row].title
-        let type = posts[indexPath.row].type
+        let title = user.posts[indexPath.row].title
+        let type = user.posts[indexPath.row].type
         var boldTitle = NSMutableAttributedString()
         boldTitle = NSMutableAttributedString(string: "\(title)  \(type)", attributes: [NSFontAttributeName:UIFont(name: "AvenirNext-DemiBold", size: 18.0)!])
         boldTitle.addAttribute(NSFontAttributeName, value: UIFont(name: "BodoniSvtyTwoSCITCTT-Book", size: 18.0)!, range: NSRange(location: title.characters.count + 2, length: type.characters.count))
@@ -173,11 +174,11 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         tableCell.titleLabel.attributedText = boldTitle
         tableCell.lastConfirmedLabel.attributedText = boldLastConfirmed
         tableCell.postedLabel.attributedText = boldPosted
-        tableCell.ratingLabel.text = String(posts[indexPath.row].rating)
+        tableCell.ratingLabel.text = String(user.posts[indexPath.row].rating)
         
         //color cell based on rating
-        if (posts[indexPath.row].rating > 0) {
-            fade = min(0.2 + (CGFloat(posts[indexPath.row].rating) * 0.1), 0.9)
+        if (user.posts[indexPath.row].rating > 0) {
+            fade = min(0.2 + (CGFloat(user.posts[indexPath.row].rating) * 0.1), 0.9)
             //tableCell.contentView.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
             
             tableCell.titleLabel.alpha = 1.0
@@ -204,7 +205,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         //color cell based on rating
         var _: CGFloat //this is fade. change back if you use fade
         
-        if (posts[indexPath.row].rating > 0) {
+        if (user.posts[indexPath.row].rating > 0) {
             /*
             //positive rating
             fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.8)
@@ -404,7 +405,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
             
             if error == nil && currentPosts != nil {
                 //no error and post isn't empty
-                self.posts.removeAll(keepCapacity: true) //erase old array of posts
+                self.user.posts.removeAll(keepCapacity: true) //erase old array of posts
                 
                 if let currentPosts = currentPosts as? [PFObject]{
                     
@@ -422,12 +423,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
                                 longitude: post["Longitude"] as! Double,
                                 rating: post["Rating"] as! Int
                             )
-                            self.posts.append(toAppend)
+                            self.user.posts.append(toAppend)
                         }
                     }
                 }
                 //decides the order of the posts in list view
-                self.posts.sortInPlace({$0.rating > $1.rating})
+                self.user.posts.sortInPlace({$0.rating > $1.rating})
                 
                 self.populateMap()
                 self.tableView.reloadData()
@@ -467,7 +468,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     //places annotations on map for all downloaded posts
     func populateMap() {
         map.removeAnnotations(map.annotations)
-        for post in self.posts {
+        for post in self.user.posts {
             //populate map with pins from what we have downloaded
             let annotation = MKPointAnnotation()
             let latitude:CLLocationDegrees = post.latitude
@@ -484,16 +485,16 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     
     //sets the location of the map to show all pins
     func centerMap() {
-        if posts.count > 0 {
+        if user.posts.count > 0 {
             //set initial max and min values to the first member
-            let firstPost = posts[0]
+            let firstPost = user.posts[0]
             var maxLat = firstPost.latitude
             var minLat = firstPost.latitude
             var maxLon = firstPost.longitude
             var minLon = firstPost.longitude
             
             //find max and min latitude and longitude
-            for post in self.posts {
+            for post in self.user.posts {
                 if post.latitude > maxLat {maxLat = post.latitude}
                 if post.latitude < minLat {minLat = post.latitude}
                 if post.longitude > maxLon {maxLon = post.longitude}

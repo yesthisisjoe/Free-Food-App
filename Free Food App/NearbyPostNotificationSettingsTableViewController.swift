@@ -12,24 +12,32 @@ class NearbyPostNotificationSettingsTableViewController: UITableViewController {
     
     @IBOutlet weak var freeFoodSwitch: UISwitch!
     @IBOutlet weak var cheapFoodSwitch: UISwitch!
+    @IBOutlet weak var cheapFoodLabel: UILabel!
 
-    var freeNearbyNotifications = false
-    var cheapNearbyNotifications = true
+    let user = User.sharedInstance //necessary to access data in Shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        //disable cheap food cell if cheap food is disabled
+        if (user.onlyFree == true) {
+            cheapFoodLabel.enabled = false
+            cheapFoodSwitch.enabled = false
+        }
         
         //set default switch state
-        freeFoodSwitch.setOn(freeNearbyNotifications, animated: false)
-        cheapFoodSwitch.setOn(cheapNearbyNotifications, animated: false)
+        freeFoodSwitch.setOn(user.freeNearbyNotifications, animated: false)
+        cheapFoodSwitch.setOn(user.cheapNearbyNotifications, animated: false)
     }
     
     @IBAction func freeFoodSwitchAction(sender: AnyObject) {
-        freeNearbyNotifications = freeFoodSwitch.on
+        user.freeNearbyNotifications = freeFoodSwitch.on
     }
     
     @IBAction func cheapFoodSwitchAction(sender: AnyObject) {
-        cheapNearbyNotifications = cheapFoodSwitch.on
+        user.cheapNearbyNotifications = cheapFoodSwitch.on
     }
     
     override func didReceiveMemoryWarning() {

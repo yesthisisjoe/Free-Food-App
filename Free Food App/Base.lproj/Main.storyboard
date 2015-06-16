@@ -13,9 +13,9 @@
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
-            <string>AvenirNext-Italic</string>
             <string>AvenirNext-Regular</string>
-            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Regular</string>
+            <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
@@ -322,10 +322,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Free &amp; Cheap" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cZ2-c8-ILz">
-                                                    <rect key="frame" x="240.5" y="11" width="99.5" height="22"/>
+                                                    <rect key="frame" x="240" y="11" width="100" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -350,10 +350,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U7a-G1-rHK">
-                                                    <rect key="frame" x="317.5" y="11" width="22.5" height="22"/>
+                                                    <rect key="frame" x="317" y="11" width="23" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Italic" family="Avenir Next" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -379,6 +379,8 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="nearbyPostNotificationText" destination="U7a-G1-rHK" id="3d1-pw-8x9"/>
+                        <outlet property="newPostNotificationText" destination="cZ2-c8-ILz" id="uQF-Rg-gfa"/>
                         <outlet property="onlyFreeCell" destination="FtR-7p-wfj" id="oI3-R3-sNe"/>
                         <outlet property="onlyFreeSwitch" destination="b3M-m9-WaQ" id="KrT-4f-wRi"/>
                         <outlet property="segmentedControl" destination="7q8-s0-nlv" id="gXm-Kt-R1n"/>
@@ -474,6 +476,7 @@
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="cheapFoodLabel" destination="bfy-ff-rBp" id="x7g-O1-O3F"/>
                         <outlet property="cheapFoodSwitch" destination="Nd2-fN-NvV" id="Lp2-Qk-bhN"/>
                         <outlet property="freeFoodSwitch" destination="uhv-SK-29p" id="ZdS-HZ-DYk"/>
                     </connections>
@@ -564,6 +567,7 @@
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="cheapFoodLabel" destination="cHn-xt-e1B" id="mCa-cq-hzR"/>
                         <outlet property="cheapFoodSwitch" destination="AGJ-YA-suw" id="DCb-du-6QX"/>
                         <outlet property="freeFoodSwitch" destination="uXq-uf-kok" id="aS3-fk-ogI"/>
                     </connections>
