@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class SettingsViewController: UITableViewController {
     @IBOutlet weak var onlyFreeSwitch: UISwitch!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -79,6 +78,7 @@ class SettingsViewController: UITableViewController {
         } else if (indexPath.section == 1 && indexPath.row == 1) {
             self.performSegueWithIdentifier("NearbyPost", sender: self)
         }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     //gets data from segmented control
