@@ -8,12 +8,12 @@
 
 /*
 TODO:
+-Progress bar is too long when rotating
 -Handle denied location sharing
 -Handle in-call status bar
 -If progress bar is in middle (airplane mode) and view is switched, it is on the wrong side
 -Add new post form
--Add settings page
--Check layour on all devices
+-Check layout on all devices
 */
 
 import UIKit
@@ -21,7 +21,7 @@ import MapKit
 import CoreLocation
 import Parse
 
-class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate {
     
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var locationToolbar: UIToolbar!
@@ -535,5 +535,22 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "settings") {
+            let nc = segue.destinationViewController as! UINavigationController
+            let vc = nc.topViewController as! SettingsViewController
+            
+            //pass some variables to the settings view controller before it opens
+            vc.settingsChanged = false
+            vc.initialSortBy = (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String)
+            vc.initialOnlyFree = (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool)
+            vc.delegate = self
+        }
+    }
+    
+    func editSettingsDidFinish(settingsChanged:Bool) {
+        if (settingsChanged) {
+            self.reloadPosts()
+        }
+    }
 }
-

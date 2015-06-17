@@ -15,10 +15,15 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var sortCell: UITableViewCell!
     @IBOutlet weak var newPostNotificationText: UILabel!
     @IBOutlet weak var nearbyPostNotificationText: UILabel!
-        
+    
+    var settingsChanged: Bool? //do we need to refresh pins/list when we exit settings?
+    var initialSortBy: String? //when we open the view controller what is the sort by option?
+    var initialOnlyFree: Bool? //what is the initial only free option?
+    var delegate: SettingsViewDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //make sure the first 2 cells don't get highlighted when they are tapped
         onlyFreeCell.selectionStyle = UITableViewCellSelectionStyle.None
         sortCell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -135,6 +140,13 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func doneButton(sender: AnyObject) {
+        //if the sort by or only free settings changed we tell the view controller to reload posts
+        if (initialOnlyFree != (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool) ||
+            initialSortBy != (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String)) {
+            settingsChanged = true
+        }
+        
+        delegate?.editSettingsDidFinish(settingsChanged!)
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -142,4 +154,8 @@ class SettingsViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
     
+}
+
+protocol SettingsViewDelegate{
+    func editSettingsDidFinish(settingsChanged: Bool)
 }
