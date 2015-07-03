@@ -33,8 +33,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSUserDefaults.standardUserDefaults().registerDefaults(defaultSettings as! [String : AnyObject])
         }
         
+        //push notification prep
+        let notificationType: UIUserNotificationType = [.Alert, .Sound, .Badge]
+        let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationType, categories: nil)
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        
         return true
     }
+    
+    //notifications stuff
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let currentInstallation:PFInstallation = PFInstallation.currentInstallation()
+        currentInstallation.setDeviceTokenFromData(deviceToken)
+        currentInstallation.save()
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        let notification:NSDictionary = userInfo["aps"] as! NSDictionary
+        if (notification["content-available"] != nil){
+            if notification.objectForKey("content-available")!.isEqualToNumber(1){
+                NSNotificationCenter.defaultCenter().postNotificationName("reloadTimeline", object: nil)
+            }
+        }else{
+            PFPush.handlePush(userInfo)
+        }   }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
