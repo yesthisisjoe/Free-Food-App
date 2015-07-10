@@ -21,7 +21,7 @@ import MapKit
 import CoreLocation
 import Parse
 
-class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var locationToolbar: UIToolbar!
@@ -33,6 +33,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     @IBOutlet weak var newPostButton: UIBarButtonItem!
     @IBOutlet weak var progressViewTop: UIProgressView!
     @IBOutlet weak var progressViewBottom: UIProgressView!
+    @IBOutlet weak var instructionsLabel: UILabel!
+    @IBOutlet weak var cancelToolbar: UIToolbar!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
     
     var locationManager = CLLocationManager()
     var screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -41,6 +45,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView() //spinner for refresh button
     var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
     var listActive = false //keeps track of when the list view is active
+    var newPostAnywhereActive = false //keeps track of when the user is in the hold to post mode
     var posts = [Post]()
     
     override func viewDidLoad() {
@@ -91,8 +96,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         //set font of link button
         if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
             linkButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+            cancelButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         } else {
-            print("error setting font of link button")
+            print("error setting fonts of buttons")
         }
         
         //creates pull to refresh for the table
@@ -108,6 +114,62 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         //backgroundToolbar.userInteractionEnabled = true
         
         reloadPosts() //initial loading of posts
+        
+        //create the gestures that we will recognize on the map
+        let pinch = UIPinchGestureRecognizer(target: self, action: "checkZoomGesture:")
+        pinch.delegate = self
+        
+        /*let doubleTap = UITapGestureRecognizer(target: self, action: "checkZoomGesture:")
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.delegate = self
+        
+        let twoFingerTap = UITapGestureRecognizer(target: self, action: "checkZoomGesture:")
+        twoFingerTap.numberOfTouchesRequired = 2
+        twoFingerTap.delegate = self*/
+        
+        let uilpgr = UILongPressGestureRecognizer(target: self, action: "longPress:")
+        uilpgr.minimumPressDuration = 0.5
+        
+        //add these gestures
+        map.addGestureRecognizer(pinch)
+        //map.addGestureRecognizer(doubleTap)
+        //map.addGestureRecognizer(twoFingerTap)
+        map.addGestureRecognizer(uilpgr)
+        
+        map.delegate = self
+    }
+    
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        checkZoom()
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func checkZoomGesture(gestureRecognizer: UIGestureRecognizer) {
+        checkZoom()
+    }
+    
+    func checkZoom(){
+        if self.newPostAnywhereActive == true {
+            if self.map.region.span.latitudeDelta > 0.0025 {
+                instructionsLabel.text = "Zoom in closer to the location of your post"
+            } else {
+                instructionsLabel.text = "Tap and hold where you want your post to be created"            }
+        }
+    }
+    
+    func longPress(gestureRecognizer: UIGestureRecognizer) {
+        print("long press")
     }
     
     //sets number of rows in the table
@@ -256,20 +318,44 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     @IBAction func newPost(sender: AnyObject) {
         let newPostMenu = UIAlertController(title: nil, message: "Where would you like to create a new post?", preferredStyle: .ActionSheet)
         
+        //user wants to make a post at their location
         let myLocationAction = UIAlertAction(title: "At my Location", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
+            
+            //go to map mode if we are in list mode
+            if self.listActive == true {
+                self.toolbarDown()
+            }
             
             let location = self.locationManager.location!.coordinate
             let span:MKCoordinateSpan = MKCoordinateSpanMake(0.001, 0.001)
             
             let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
             self.map.setRegion(region, animated: true)
+            
+            //drop an annotation at our location
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            annotation.title = "New Post"
+            annotation.subtitle = "This is a bug. Please report it"
+            self.map.addAnnotation(annotation)
+            
+            self.performSegueWithIdentifier("newPost", sender: self)
         })
+        
+        //user wants to find a location on the map for a new post
         let onMapAction = UIAlertAction(title: "Find on Map", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
+            
+            //go to map mode if we are in list mode
+            if self.listActive == true {
+                self.toolbarDown()
+            }
+            self.newPostAnywhere()
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
             (alert: UIAlertAction!) -> Void in
+            print("cancelled")
         })
         
         newPostMenu.addAction(myLocationAction)
@@ -277,6 +363,22 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         newPostMenu.addAction(cancelAction)
         
         self.presentViewController(newPostMenu, animated: true, completion: nil)
+    }
+    
+    func newPostAnywhere(){
+        self.newPostAnywhereActive = true
+        checkZoom()
+        self.instructionsLabel.hidden = false
+        self.buttonsToolbar.hidden = true
+        self.cancelToolbar.hidden = false
+    }
+    
+    @IBAction func cancelButton(sender: AnyObject) {
+        //TODO: cancels new post anywhere
+        self.newPostAnywhereActive = false
+        self.instructionsLabel.hidden = true
+        self.buttonsToolbar.hidden = false
+        self.cancelToolbar.hidden = true
     }
     
     //used to switch between map & list view
@@ -464,6 +566,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     //places annotations on map for all downloaded posts
     func populateMap() {
         map.removeAnnotations(map.annotations)
+        
         for post in self.posts {
             //populate map with pins from what we have downloaded
             let annotation = MKPointAnnotation()
