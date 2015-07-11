@@ -46,10 +46,14 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
     var listActive = false //keeps track of when the list view is active
     var newPostAnywhereActive = false //keeps track of when the user is in the hold to post mode
+    var tapAndHoldActive = false //keeps track of when the user is zoomed in enough to tap & hold
+    var confirmLocationActive = false //keeps track of when the user is confirming their pin drop
     var posts = [Post]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        map.delegate = self
 
         locationManager.requestWhenInUseAuthorization()
 
@@ -119,28 +123,32 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         let pinch = UIPinchGestureRecognizer(target: self, action: "checkZoomGesture:")
         pinch.delegate = self
         
-        /*let doubleTap = UITapGestureRecognizer(target: self, action: "checkZoomGesture:")
-        doubleTap.numberOfTapsRequired = 2
-        doubleTap.delegate = self
-        
-        let twoFingerTap = UITapGestureRecognizer(target: self, action: "checkZoomGesture:")
-        twoFingerTap.numberOfTouchesRequired = 2
-        twoFingerTap.delegate = self*/
-        
         let uilpgr = UILongPressGestureRecognizer(target: self, action: "longPress:")
         uilpgr.minimumPressDuration = 0.5
         
         //add these gestures
         map.addGestureRecognizer(pinch)
-        //map.addGestureRecognizer(doubleTap)
-        //map.addGestureRecognizer(twoFingerTap)
         map.addGestureRecognizer(uilpgr)
-        
-        map.delegate = self
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         checkZoom()
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if (annotation is MKUserLocation) {
+            //if annotation is not an MKPointAnnotation (eg. MKUserLocation),
+            //return nil so map draws default view for it (eg. blue dot)...
+            return nil
+        }
+        
+        let pinView:MKPinAnnotationView = MKPinAnnotationView()
+        pinView.annotation = annotation
+        pinView.pinTintColor = UIColor.purpleColor()
+        pinView.animatesDrop = true
+        pinView.canShowCallout = true
+        
+        return pinView
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
@@ -160,16 +168,35 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     }
     
     func checkZoom(){
-        if self.newPostAnywhereActive == true {
+        if self.newPostAnywhereActive && !confirmLocationActive {
             if self.map.region.span.latitudeDelta > 0.0025 {
                 instructionsLabel.text = "Zoom in closer to the location of your post"
+                tapAndHoldActive = false
             } else {
-                instructionsLabel.text = "Tap and hold where you want your post to be created"            }
+                instructionsLabel.text = "Tap and hold to mark a location"
+                tapAndHoldActive = true
+            }
         }
     }
     
     func longPress(gestureRecognizer: UIGestureRecognizer) {
-        print("long press")
+        if gestureRecognizer.state == UIGestureRecognizerState.Began {
+            if tapAndHoldActive {
+                //create an annotation under the pressed area
+                let touchPoint = gestureRecognizer.locationInView(self.map)
+                let newCoordinate: CLLocationCoordinate2D = map.convertPoint(touchPoint, toCoordinateFromView: self.map)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = newCoordinate
+                map.addAnnotation(annotation)
+                
+                //center the map on the coordinate and freeze it until the user confirms or cancels
+                map.setCenterCoordinate(newCoordinate, animated: true)
+                map.userInteractionEnabled = false
+                
+                confirmLocationActive = true
+                instructionsLabel.text = "Create your post here?"
+            }
+        }
     }
     
     //sets number of rows in the table
@@ -336,8 +363,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             //drop an annotation at our location
             let annotation = MKPointAnnotation()
             annotation.coordinate = location
-            annotation.title = "New Post"
-            annotation.subtitle = "This is a bug. Please report it"
             self.map.addAnnotation(annotation)
             
             self.performSegueWithIdentifier("newPost", sender: self)
