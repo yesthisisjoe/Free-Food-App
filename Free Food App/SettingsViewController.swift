@@ -130,7 +130,6 @@ class SettingsViewController: UITableViewController {
             //user doesn't have any cheap food notifications. we turn on only free food
             } else {
                 NSUserDefaults.standardUserDefaults().setObject(true, forKey: "onlyFree")
-                //ViewController.reloadPosts()
             }
             
         //user is turning off only free food

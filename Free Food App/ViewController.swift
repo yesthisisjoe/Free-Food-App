@@ -8,12 +8,15 @@
 
 /*
 TODO:
--Progress bar is too long when rotating
 -Handle denied location sharing
 -Handle in-call status bar
 -If progress bar is in middle (airplane mode) and view is switched, it is on the wrong side
--Add new post form
 -Check layout on all devices
+-Add support for uploading photos (also means looking at how you download)
+
+MINOR BUGS:
+-cancel button is underneath list view when creating a post from there (rather than moving with the toolbar)
+-zooming in and out quickly between the zoom in and tap and hold instructions might cause one to display when it should be the other
 */
 
 import UIKit
@@ -21,21 +24,28 @@ import MapKit
 import CoreLocation
 import Parse
 
-class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate, UIGestureRecognizerDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate, UIGestureRecognizerDelegate, NewPostFormViewControllerDelegate {
     
     @IBOutlet weak var map: MKMapView!
+    
     @IBOutlet weak var locationToolbar: UIToolbar!
     @IBOutlet weak var buttonsToolbar: UIToolbar!
     @IBOutlet weak var backgroundToolbar: UIView!
+    
     @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var linkButton: UIBarButtonItem!
     @IBOutlet weak var newPostButton: UIBarButtonItem!
+    
     @IBOutlet weak var progressViewTop: UIProgressView!
     @IBOutlet weak var progressViewBottom: UIProgressView!
+    
     @IBOutlet weak var instructionsLabel: UILabel!
+    
     @IBOutlet weak var cancelToolbar: UIToolbar!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
     
     
     var locationManager = CLLocationManager()
@@ -46,8 +56,11 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
     var listActive = false //keeps track of when the list view is active
     var newPostAnywhereActive = false //keeps track of when the user is in the hold to post mode
+    var fadingInstructions = false //keeps track of when the instructions label is being faded
     var tapAndHoldActive = false //keeps track of when the user is zoomed in enough to tap & hold
-    var confirmLocationActive = false //keeps track of when the user is confirming their pin drop
+    var confirmPostLocationActive = false //keeps track of when the user is confirming that a pin is correct
+    var newCoordinate: CLLocationCoordinate2D! //these are the coordinates of a post created when we tap & hold
+    var newAnnotation: MKPointAnnotation! //stores the last annotation so we can remove it
     var posts = [Post]()
     
     override func viewDidLoad() {
@@ -168,33 +181,67 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     }
     
     func checkZoom(){
-        if self.newPostAnywhereActive && !confirmLocationActive {
+        if self.newPostAnywhereActive && !self.confirmPostLocationActive {
             if self.map.region.span.latitudeDelta > 0.0025 {
-                instructionsLabel.text = "Zoom in closer to the location of your post"
-                tapAndHoldActive = false
+                if self.instructionsLabel.text != "Zoom in closer to the location of your post" && fadingInstructions == false {
+                    changeInstructionLabel("Zoom in closer to the location of your post")
+                    tapAndHoldActive = false
+                }
             } else {
-                instructionsLabel.text = "Tap and hold to mark a location"
-                tapAndHoldActive = true
+                if self.instructionsLabel.text != "Tap and hold to mark a location" && fadingInstructions == false {
+                    changeInstructionLabel("Tap and hold to mark a location")
+                    tapAndHoldActive = true
+                }
             }
         }
+    }
+    
+    func createAnnotationAndConfirm(coordinate: CLLocationCoordinate2D) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        map.addAnnotation(annotation)
+        self.newAnnotation = annotation
+        
+        //if we are too far away, zoom in, otherwise just center on the coordinate
+        if map.region.span.latitudeDelta > 0.0025 {
+            map.setRegion(MKCoordinateRegionMake(coordinate, MKCoordinateSpanMake(0.002, 0.002)), animated: true)
+        } else {
+            map.setCenterCoordinate(coordinate, animated: true)
+        }
+        
+        let createPostHere = UIAlertController(title: nil, message: "Create your post here?", preferredStyle: .ActionSheet)
+        
+        //create new post here, go to new post form
+        let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.confirmPostLocationActive = false
+            self.performSegueWithIdentifier("newPost", sender: self)
+        })
+        
+        //don't create new post here, remove annotation
+        let noAction = UIAlertAction(title: "No", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.confirmPostLocationActive = false
+            self.map.removeAnnotation(self.newAnnotation)
+            self.newPostAnywhere()
+        })
+        
+        createPostHere.addAction(yesAction)
+        createPostHere.addAction(noAction)
+        
+        self.confirmPostLocationActive = true
+        self.presentViewController(createPostHere, animated: true, completion: nil)
     }
     
     func longPress(gestureRecognizer: UIGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizerState.Began {
             if tapAndHoldActive {
-                //create an annotation under the pressed area
+                //create an annotation under the pressed area, center the map there
                 let touchPoint = gestureRecognizer.locationInView(self.map)
                 let newCoordinate: CLLocationCoordinate2D = map.convertPoint(touchPoint, toCoordinateFromView: self.map)
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = newCoordinate
-                map.addAnnotation(annotation)
-                
-                //center the map on the coordinate and freeze it until the user confirms or cancels
-                map.setCenterCoordinate(newCoordinate, animated: true)
-                map.userInteractionEnabled = false
-                
-                confirmLocationActive = true
-                instructionsLabel.text = "Create your post here?"
+
+                hideInstructionLabel()
+                createAnnotationAndConfirm(newCoordinate)
             }
         }
     }
@@ -354,18 +401,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 self.toolbarDown()
             }
             
+            //TODO check for location here
             let location = self.locationManager.location!.coordinate
-            let span:MKCoordinateSpan = MKCoordinateSpanMake(0.001, 0.001)
-            
-            let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
-            self.map.setRegion(region, animated: true)
-            
-            //drop an annotation at our location
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = location
-            self.map.addAnnotation(annotation)
-            
-            self.performSegueWithIdentifier("newPost", sender: self)
+            self.createAnnotationAndConfirm(location)
         })
         
         //user wants to find a location on the map for a new post
@@ -380,7 +418,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
             (alert: UIAlertAction!) -> Void in
-            print("cancelled")
         })
         
         newPostMenu.addAction(myLocationAction)
@@ -393,17 +430,80 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     func newPostAnywhere(){
         self.newPostAnywhereActive = true
         checkZoom()
-        self.instructionsLabel.hidden = false
-        self.buttonsToolbar.hidden = true
-        self.cancelToolbar.hidden = false
+        
+        if self.cancelToolbar.hidden == true {
+            switchToolbars(self.buttonsToolbar, to: self.cancelToolbar)
+        }
     }
     
     @IBAction func cancelButton(sender: AnyObject) {
-        //TODO: cancels new post anywhere
+        //cancels new post anywhere
         self.newPostAnywhereActive = false
-        self.instructionsLabel.hidden = true
-        self.buttonsToolbar.hidden = false
-        self.cancelToolbar.hidden = true
+        self.tapAndHoldActive = false
+        
+        hideInstructionLabel()
+        switchToolbars(self.cancelToolbar, to: self.buttonsToolbar)
+    }
+    
+    //this function animates fading out a toolbar and replacing it with another
+    func switchToolbars(from: UIToolbar, to: UIToolbar) {
+        to.alpha = 0
+        to.hidden = false
+        
+        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            from.alpha = 0
+            }, completion: { (Bool) -> Void in
+                UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                    to.alpha = 1
+                    }, completion: { (Bool) -> Void in
+                        from.hidden = true
+                        from.alpha = 1
+                })
+        })
+    }
+    
+    //fade the instructions label when it changes text
+    func changeInstructionLabel(instruction: String){
+        //we are fading in for the first time, not chaning the text
+        if self.instructionsLabel.hidden == true || self.instructionsLabel.alpha == 0 {
+            showInstructionLabel(instruction)
+        } else {
+            UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                self.fadingInstructions = true
+                self.instructionsLabel.alpha = 0
+                }, completion: { (Bool) -> Void in
+                    self.instructionsLabel.text = instruction
+                    UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                        self.instructionsLabel.alpha = 1
+                        }, completion: { (Bool) -> Void in
+                            self.fadingInstructions = false
+                        })
+            })
+        }
+    }
+    
+    func hideInstructionLabel(){
+        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.fadingInstructions = true
+            self.instructionsLabel.alpha = 0
+            
+            }, completion: { (Bool) -> Void in
+                self.fadingInstructions = false
+                self.instructionsLabel.hidden = true
+                self.instructionsLabel.text = "placeholder"
+        })
+    }
+    
+    func showInstructionLabel(instruction: String){
+        self.instructionsLabel.text = instruction
+        self.instructionsLabel.hidden = false
+        
+        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.fadingInstructions = true
+            self.instructionsLabel.alpha = 1
+            }, completion: { (Bool) -> Void in
+            self.fadingInstructions = false
+        })
     }
     
     //used to switch between map & list view
@@ -646,15 +746,13 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     }
     
     func mapViewWillStartLocatingUser(map: MKMapView) {
-    //deal with what happens when the user hasn't authorized sharing location
-        print("hey!", appendNewline: false)
-        
-        let status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
-        if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
-            print("hey", appendNewline: false)
-        } else {
-            print("all good", appendNewline: false)
-        }
+    //check if user has authorized location services
+    let status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+    if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
+        print("location services denied", appendNewline: false)
+    } else {
+        //location services are allowed
+    }
         
     }
     
@@ -665,6 +763,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "settings") {
+            //used in settings view controller
             let nc = segue.destinationViewController as! UINavigationController
             let vc = nc.topViewController as! SettingsViewController
             
@@ -673,11 +772,30 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             vc.initialSortBy = (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String)
             vc.initialOnlyFree = (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool)
             vc.delegate = self
+        } else if (segue.identifier == "newPost") {
+            //used in new post view controller
+            let nc = segue.destinationViewController as! UINavigationController
+            let vc = nc.topViewController as! NewPostFormViewController
+            
+            //pass values to new post controller
+            vc.newPostLat = self.newAnnotation.coordinate.latitude
+            vc.newPostLon = self.newAnnotation.coordinate.longitude
+            vc.delegate = self
         }
     }
     
     func editSettingsDidFinish(settingsChanged:Bool) {
         if (settingsChanged) {
+            self.reloadPosts()
+        }
+    }
+    
+    //this method is called when we close the new post form either by cancelling or submitting it
+    func finishedWith(button: String) {
+        if button == "Cancel" {
+            self.map.removeAnnotation(newAnnotation)
+            self.newPostAnywhere()
+        } else if button == "Submit" {
             self.reloadPosts()
         }
     }

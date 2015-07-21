@@ -7,10 +7,13 @@
 //
 
 //TODO: -format dollar sign in price
+//      -generally fix up the new post form
 
 import UIKit
 
-
+protocol NewPostFormViewControllerDelegate {
+    func finishedWith(button: String)
+}
 
 class NewPostFormViewController: UITableViewController {
 
@@ -20,18 +23,40 @@ class NewPostFormViewController: UITableViewController {
     @IBOutlet weak var descriptionPlaceholder: UITextView!
     @IBOutlet weak var descriptionField: UITextView!
     
+    var delegate: NewPostFormViewControllerDelegate! = nil
+    var newPostLat: Double?
+    var newPostLon: Double?
+    var foodType = "free"
+    var rating = 0
+    
+    override func viewDidLoad() {
+    }
+    
     @IBAction func cancelButton(sender: AnyObject) {
-        print("cancel")
+        delegate!.finishedWith("Cancel")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func submitButton(sender: AnyObject) {
-        print("submit")
+        print(titleField.text!)
+        print(descriptionField.text)
+        print(foodType)
+        print(price.text!)
+        print(newPostLat!)
+        print(newPostLon!)
+        print(rating)
+        
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.delegate!.finishedWith("Submit")
+        })
     }
     
     @IBAction func freeOrCheap(sender: AnyObject) {
-        //make the price cell appear if food is cheap
+        if freeOrCheapValue.selectedSegmentIndex == 0 {
+            foodType = "free"
+        } else if freeOrCheapValue.selectedSegmentIndex == 1 {
+            foodType = "cheap"
+        }
+        //TODO: make the price cell appear if food is cheap
     }
-    
-    
 }
