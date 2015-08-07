@@ -395,6 +395,31 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="198" id="DW9-No-nbE">
+                                        <rect key="frame" x="0.0" y="394" width="375" height="198"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DW9-No-nbE" id="SCk-hN-acD">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="197.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="E17-Ko-7ny">
+                                                    <rect key="frame" x="0.0" y="-9" width="375" height="216"/>
+                                                    <animations/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="459194227.99470901">
+                                                        <!--2015-07-21 17:57:07 +0000-->
+                                                    </date>
+                                                </datePicker>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="E17-Ko-7ny" firstAttribute="top" secondItem="SCk-hN-acD" secondAttribute="topMargin" constant="-17" id="3Mu-vP-nEo"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="E17-Ko-7ny" secondAttribute="trailing" constant="-8" id="A1c-Ct-6Vc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="E17-Ko-7ny" secondAttribute="bottom" constant="-17.5" id="azb-gh-ogJ"/>
+                                                <constraint firstItem="E17-Ko-7ny" firstAttribute="leading" secondItem="SCk-hN-acD" secondAttribute="leadingMargin" constant="-8" id="ul9-jz-lXG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>

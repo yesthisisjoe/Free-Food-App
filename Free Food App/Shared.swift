@@ -9,13 +9,13 @@
 import Foundation
 
 struct Post {
-    var id, title, description, type: String
+    var id, title, description, type, price: String
     var posted, confirmed: NSDate
     var latitude, longitude: Double
     var rating: Int
     
     //initializer for when we download from the server
-    init(id: String, title: String, description: String, type: String, posted: NSDate, confirmed: NSDate, latitude: Double, longitude: Double, rating: Int) {
+    init(id: String, title: String, description: String, type: String, posted: NSDate, confirmed: NSDate, latitude: Double, longitude: Double, rating: Int, price: String) {
         self.id = id
         self.title = title
         self.description = description
@@ -25,6 +25,7 @@ struct Post {
         self.latitude = latitude
         self.longitude = longitude
         self.rating = rating
+        self.price = price
     }
     
     //initializer for when we create a new post
