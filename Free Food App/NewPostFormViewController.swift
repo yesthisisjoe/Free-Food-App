@@ -10,6 +10,7 @@
 //      -generally fix up the new post form
 
 import UIKit
+import Parse
 
 protocol NewPostFormViewControllerDelegate {
     func finishedWith(button: String)
@@ -28,6 +29,8 @@ class NewPostFormViewController: UITableViewController {
     var newPostLon: Double?
     var foodType = "free"
     var rating = 0
+    var lastConfirmed = NSDate(timeIntervalSinceReferenceDate: 0)
+    var approved = false
     
     override func viewDidLoad() {
     }
@@ -38,17 +41,32 @@ class NewPostFormViewController: UITableViewController {
     }
     
     @IBAction func submitButton(sender: AnyObject) {
-        print(titleField.text!)
-        print(descriptionField.text)
-        print(foodType)
-        print(price.text!)
-        print(newPostLat!)
-        print(newPostLon!)
-        print(rating)
+        let newPost = PFObject(className: "Posts")
+
+        newPost["Title"] = titleField.text!
+        newPost["Description"] = descriptionField.text
+        newPost["FoodType"] = foodType
+        newPost["Price"] = price.text!
+        newPost["Latitude"] = newPostLat!
+        newPost["Longitude"] = newPostLon!
+        newPost["Rating"] = rating
+        newPost["LastConfirmed"] = lastConfirmed
+        newPost["Approved"] = approved
         
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
-            self.delegate!.finishedWith("Submit")
-        })
+        newPost.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if (success) {                
+                //dismiss view controller and return to map
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    self.delegate!.finishedWith("Submit")
+                })
+            } else {
+                //failure, notify of error
+                let alert = UIAlertController(title: "Error Submitting Post", message: "Could not download posts from server. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func freeOrCheap(sender: AnyObject) {

@@ -15,6 +15,7 @@ TODO:
 -Add support for uploading photos (also means looking at how you download)
 
 MINOR BUGS:
+-toolbar transparency stacks when cancel toolbar is active
 -cancel button is underneath list view when creating a post from there (rather than moving with the toolbar)
 -zooming in and out quickly between the zoom in and tap and hold instructions might cause one to display when it should be the other
 */
@@ -634,7 +635,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                     
                     for post in currentPosts {
                         //create a post object from Parse then append it
-                        if (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == false || post["FoodType"] as! String == "free") {
+                        if ((NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == false || post["FoodType"] as! String == "free") && (post["Approved"] as! Bool == true)) {
                             let toAppend = Post(
                                 id: post.objectId!,
                                 title: post["Title"] as! String,
@@ -644,11 +645,13 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                                 confirmed: post["LastConfirmed"] as! NSDate,
                                 latitude: post["Latitude"] as! Double,
                                 longitude: post["Longitude"] as! Double,
-                                rating: post["Rating"] as! Int
+                                rating: post["Rating"] as! Int,
+                                price: post["Price"] as! String
                             )
                             self.posts.append(toAppend)
                         }
                     }
+                    print("posts appended")
                 }
                 //decides the order of the posts in list view
                 self.posts.sortInPlace({$0.rating > $1.rating})
@@ -795,7 +798,13 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         if button == "Cancel" {
             self.map.removeAnnotation(newAnnotation)
             self.newPostAnywhere()
+            
         } else if button == "Submit" {
+            //success submitting, notify of approval
+            let alert = UIAlertController(title: "Post Submitted!", message: "Thanks for your submission! Your post has been received and will be made public once it has been approved.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            
             self.reloadPosts()
         }
     }
