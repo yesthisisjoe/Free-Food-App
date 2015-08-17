@@ -13,6 +13,7 @@ TODO:
 -If progress bar is in middle (airplane mode) and view is switched, it is on the wrong side
 -Check layout on all devices
 -Add support for uploading photos (also means looking at how you download)
+-before release, check if there is a bitcode version of parse
 
 MINOR BUGS:
 -toolbar transparency stacks when cancel toolbar is active
@@ -72,9 +73,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         locationManager.requestWhenInUseAuthorization()
 
         //location button setup
-        //add button & flexible space
+        //add buttons & flexible space
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "reloadPosts")
         let trackingButton = MKUserTrackingBarButtonItem(mapView: self.map)
-        self.toolbarItems = [flexibleSpace, trackingButton]
+        self.toolbarItems = [refreshButton, flexibleSpace, trackingButton]
         locationToolbar.setItems(toolbarItems, animated: true)
         
         //make the location toolbar transparent
@@ -626,16 +628,15 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         query.findObjectsInBackgroundWithBlock {
             (currentPosts: [AnyObject]?, error: NSError?) -> Void in
             
-            
             if error == nil && currentPosts != nil {
+
                 //no error and post isn't empty
                 self.posts.removeAll(keepCapacity: true) //erase old array of posts
                 
                 if let currentPosts = currentPosts as? [PFObject]{
-                    
                     for post in currentPosts {
                         //create a post object from Parse then append it
-                        if ((NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == false || post["FoodType"] as! String == "free") && (post["Approved"] as! Bool == true)) {
+                        if ((NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == false || post["FoodType"] as! String == "free") && (post["Approved"] as! Bool == true)) { //check if post is approved and if user wants only free food
                             let toAppend = Post(
                                 id: post.objectId!,
                                 title: post["Title"] as! String,
@@ -651,7 +652,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                             self.posts.append(toAppend)
                         }
                     }
-                    print("posts appended")
                 }
                 //decides the order of the posts in list view
                 self.posts.sortInPlace({$0.rating > $1.rating})
@@ -804,6 +804,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             let alert = UIAlertController(title: "Post Submitted!", message: "Thanks for your submission! Your post has been received and will be made public once it has been approved.", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
+            
+            //reset state to default
+            hideInstructionLabel()
+            switchToolbars(self.cancelToolbar, to: self.buttonsToolbar)
+            self.newPostAnywhereActive = false
+            self.tapAndHoldActive = false
             
             self.reloadPosts()
         }

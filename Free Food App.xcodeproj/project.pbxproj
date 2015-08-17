@@ -434,6 +434,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
@@ -454,9 +455,6 @@
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
-					"$(PROJECT_DIR)/Free",
-					Food,
-					App,
 				);
 				INFOPLIST_FILE = "Free Food App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -475,6 +473,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
@@ -495,9 +494,6 @@
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
-					"$(PROJECT_DIR)/Free",
-					Food,
-					App,
 				);
 				INFOPLIST_FILE = "Free Food App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

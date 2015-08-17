@@ -54,7 +54,7 @@ class NewPostFormViewController: UITableViewController {
         newPost["Approved"] = approved
         
         newPost.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
+            (success, error) -> Void in
             if (success) {                
                 //dismiss view controller and return to map
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
