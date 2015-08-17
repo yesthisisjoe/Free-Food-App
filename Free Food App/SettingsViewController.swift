@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import MessageUI
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var onlyFreeSwitch: UISwitch!
     @IBOutlet weak var onlyFreeCell: UITableViewCell!
     @IBOutlet weak var newPostNotificationText: UILabel!
     @IBOutlet weak var nearbyPostNotificationText: UILabel!
+    @IBOutlet weak var versionLabel: UILabel!
     
     var settingsChanged: Bool? //do we need to refresh pins/list when we exit settings?
     var initialOnlyFree: Bool? //what is the initial only free option?
@@ -21,11 +23,18 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //tableView.delegate = self
+        
         //make sure the first 2 cells don't get highlighted when they are tapped
         onlyFreeCell.selectionStyle = UITableViewCellSelectionStyle.None
         
         //set the value of buttons to reflect existing values
         onlyFreeSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool, animated: false)
+        
+        //set the version number in the settings
+        if let versionObject = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
+            versionLabel.text = versionObject
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -70,9 +79,51 @@ class SettingsViewController: UITableViewController {
         } else if (indexPath.section == 1 && indexPath.row == 1) {
             self.performSegueWithIdentifier("NearbyPost", sender: self)
         }
+        
+            //triggers the mail compose view controller for feedback
+        else if (indexPath.section == 2 && indexPath.row == 1) {
+            let mailComposeViewController = configuredMailComposeViewController("Feedback for the Free Food app")
+            if MFMailComposeViewController.canSendMail() {
+                self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+            } else {
+                self.showSendMailErrorAlert()
+            }
+            
+        } else if (indexPath.section == 2 && indexPath.row == 2) {
+            print("app store review link")
+            
+            //email form for moderation
+        } else if (indexPath.section == 2 && indexPath.row == 3) {
+            let mailComposeViewController = configuredMailComposeViewController("Becoming a Free Food app Moderator")
+            if MFMailComposeViewController.canSendMail() {
+                self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+            } else {
+                self.showSendMailErrorAlert()
+            }
+        }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    //configure the mail composer for when we want to send feedback
+    func configuredMailComposeViewController(subject: String) -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self
+        
+        mailComposerVC.setToRecipients(["joseph.peplowski@mail.mcgill.ca"])
+        mailComposerVC.setSubject(subject)
+        
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
+        let alert = UIAlertController(title: "Could Not Send Email", message:"Your email message could not be sent. Please check your email settings and try again.", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
     //this is the only free food switch
     @IBAction func onlyFree(sender: AnyObject) {
         

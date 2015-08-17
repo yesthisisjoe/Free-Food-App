@@ -27,17 +27,4 @@ struct Post {
         self.rating = rating
         self.price = price
     }
-    
-    //initializer for when we create a new post
-    /*init(title: String, description: String, type: String, latitude: Double, longitude: Double) {
-        self.title = title
-        self.description = description
-        self.type = type
-        self.latitude = latitude
-        self.longitude = longitude
-        id = ""
-        confirmed = NSDate()
-        created = NSDate()
-        rating = 0
-    }*/
 }
