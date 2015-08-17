@@ -313,18 +313,21 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NYP-lL-oXs">
+                                    <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NYP-lL-oXs">
                                         <rect key="frame" x="0.0" y="108" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NYP-lL-oXs" id="vzg-OM-ymw">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="5$" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2nP-Ye-7so">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1$ per samosa" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2nP-Ye-7so">
                                                     <rect key="frame" x="63" y="7" width="295" height="30"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="next"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                    <connections>
+                                                        <action selector="priceFieldChanged:" destination="xEI-Yh-7EH" eventType="editingChanged" id="Xb2-Pn-Z2I"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Price" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOI-8C-ck6">
                                                     <rect key="frame" x="13" y="11" width="42" height="21"/>
@@ -355,6 +358,9 @@
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
+                                                    <connections>
+                                                        <action selector="titleFieldChanged:" destination="xEI-Yh-7EH" eventType="editingChanged" id="WPm-6b-sen"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <animations/>
@@ -402,22 +408,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DW9-No-nbE" id="SCk-hN-acD">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="197"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="E17-Ko-7ny">
-                                                    <rect key="frame" x="0.0" y="-9" width="375" height="216"/>
-                                                    <animations/>
-                                                    <date key="date" timeIntervalSinceReferenceDate="459194227.99470901">
-                                                        <!--2015-07-21 17:57:07 +0000-->
-                                                    </date>
-                                                </datePicker>
-                                            </subviews>
                                             <animations/>
-                                            <constraints>
-                                                <constraint firstItem="E17-Ko-7ny" firstAttribute="top" secondItem="SCk-hN-acD" secondAttribute="topMargin" constant="-17" id="3Mu-vP-nEo"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="E17-Ko-7ny" secondAttribute="trailing" constant="-8" id="A1c-Ct-6Vc"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="E17-Ko-7ny" secondAttribute="bottom" constant="-17.5" id="azb-gh-ogJ"/>
-                                                <constraint firstItem="E17-Ko-7ny" firstAttribute="leading" secondItem="SCk-hN-acD" secondAttribute="leadingMargin" constant="-8" id="ul9-jz-lXG"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
@@ -447,6 +438,7 @@
                         <outlet property="descriptionPlaceholder" destination="7sB-l6-0rt" id="FHi-PO-BSl"/>
                         <outlet property="freeOrCheapValue" destination="hiZ-0a-yIU" id="bMr-yK-jpW"/>
                         <outlet property="price" destination="2nP-Ye-7so" id="dyc-8w-efX"/>
+                        <outlet property="priceCell" destination="NYP-lL-oXs" id="KY9-Zn-YEL"/>
                         <outlet property="titleField" destination="mtH-dn-k61" id="ArD-sd-QgT"/>
                     </connections>
                 </tableViewController>
@@ -503,7 +495,7 @@
                                                         <action selector="onlyFree:" destination="1Au-Mf-9xZ" eventType="valueChanged" id="vcf-O9-WNg"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Only Show Free Food" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n11-Or-t23">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Only Show Free Food" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n11-Or-t23">
                                                     <rect key="frame" x="15" y="11" width="265" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
@@ -513,7 +505,9 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
+                                                <constraint firstItem="n11-Or-t23" firstAttribute="centerY" secondItem="NQl-2v-2dl" secondAttribute="centerY" id="AjE-MZ-7TD"/>
                                                 <constraint firstAttribute="centerY" secondItem="b3M-m9-WaQ" secondAttribute="centerY" id="UHD-Bn-CJO"/>
+                                                <constraint firstItem="n11-Or-t23" firstAttribute="leading" secondItem="NQl-2v-2dl" secondAttribute="leadingMargin" constant="7" id="adh-zi-bND"/>
                                                 <constraint firstItem="b3M-m9-WaQ" firstAttribute="trailing" secondItem="NQl-2v-2dl" secondAttribute="trailingMargin" id="zYM-n0-EA2"/>
                                             </constraints>
                                         </tableViewCellContentView>
