@@ -772,7 +772,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             
             //pass some variables to the settings view controller before it opens
             vc.settingsChanged = false
-            vc.initialSortBy = (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String)
             vc.initialOnlyFree = (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool)
             vc.delegate = self
         } else if (segue.identifier == "newPost") {

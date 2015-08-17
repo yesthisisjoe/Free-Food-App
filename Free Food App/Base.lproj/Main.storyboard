@@ -26,7 +26,6 @@
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
-            <string>AvenirNext-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -513,67 +512,12 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="OCE-U6-K1s">
-                                        <rect key="frame" x="0.0" y="158" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OCE-U6-K1s" id="1WQ-rn-wjR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sort List By" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cd-oj-tth">
-                                                    <rect key="frame" x="15" y="11" width="90" height="21"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7q8-s0-nlv">
-                                                    <rect key="frame" x="106" y="7" width="261" height="29"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="233" id="sCu-DY-JAh"/>
-                                                    </constraints>
-                                                    <segments>
-                                                        <segment title="Confirmed"/>
-                                                        <segment title="Posted"/>
-                                                        <segment title="Rating"/>
-                                                    </segments>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="sCu-DY-JAh"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <connections>
-                                                        <action selector="valueChanged:" destination="1Au-Mf-9xZ" eventType="valueChanged" id="B0x-bb-umo"/>
-                                                    </connections>
-                                                </segmentedControl>
-                                            </subviews>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="7q8-s0-nlv" secondAttribute="centerY" id="0uu-AE-A3O"/>
-                                                <constraint firstItem="7q8-s0-nlv" firstAttribute="leading" secondItem="2cd-oj-tth" secondAttribute="trailing" constant="1" id="DLI-ep-Za3"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="7q8-s0-nlv" secondAttribute="trailing" id="X0L-fz-gRL"/>
-                                                <constraint firstItem="7q8-s0-nlv" firstAttribute="trailing" secondItem="1WQ-rn-wjR" secondAttribute="trailingMargin" id="jLO-08-b0S"/>
-                                                <constraint firstItem="2cd-oj-tth" firstAttribute="leading" secondItem="1WQ-rn-wjR" secondAttribute="leadingMargin" constant="7" id="lCS-2C-WlP"/>
-                                                <constraint firstItem="7q8-s0-nlv" firstAttribute="centerY" secondItem="1WQ-rn-wjR" secondAttribute="centerY" id="qMJ-eq-8Ul"/>
-                                                <constraint firstItem="2cd-oj-tth" firstAttribute="centerY" secondItem="1WQ-rn-wjR" secondAttribute="centerY" id="r7t-WQ-Xis"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="0uu-AE-A3O"/>
-                                                    <exclude reference="DLI-ep-Za3"/>
-                                                    <exclude reference="jLO-08-b0S"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Notifications" id="fdk-7y-4jK">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="LhR-dj-iQN" detailTextLabel="cZ2-c8-ILz" style="IBUITableViewCellStyleValue1" id="g9V-Eh-vxl">
-                                        <rect key="frame" x="0.0" y="245" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="201" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g9V-Eh-vxl" id="dPg-Sj-t5R">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
@@ -601,7 +545,7 @@
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="j9p-bc-Y32" detailTextLabel="U7a-G1-rHK" style="IBUITableViewCellStyleValue1" id="js9-ks-zO3">
-                                        <rect key="frame" x="0.0" y="289" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="245" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="js9-ks-zO3" id="QyA-bY-OkO">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
@@ -649,8 +593,6 @@
                         <outlet property="newPostNotificationText" destination="cZ2-c8-ILz" id="uQF-Rg-gfa"/>
                         <outlet property="onlyFreeCell" destination="FtR-7p-wfj" id="oI3-R3-sNe"/>
                         <outlet property="onlyFreeSwitch" destination="b3M-m9-WaQ" id="KrT-4f-wRi"/>
-                        <outlet property="segmentedControl" destination="7q8-s0-nlv" id="gXm-Kt-R1n"/>
-                        <outlet property="sortCell" destination="OCE-U6-K1s" id="ZcR-g0-m5w"/>
                         <segue destination="GLg-EI-SGe" kind="show" identifier="NewPost" id="Htg-Q7-08L"/>
                         <segue destination="TGI-2t-pga" kind="show" identifier="NearbyPost" id="91e-75-qDy"/>
                     </connections>

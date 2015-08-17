@@ -10,14 +10,11 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     @IBOutlet weak var onlyFreeSwitch: UISwitch!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var onlyFreeCell: UITableViewCell!
-    @IBOutlet weak var sortCell: UITableViewCell!
     @IBOutlet weak var newPostNotificationText: UILabel!
     @IBOutlet weak var nearbyPostNotificationText: UILabel!
     
     var settingsChanged: Bool? //do we need to refresh pins/list when we exit settings?
-    var initialSortBy: String? //when we open the view controller what is the sort by option?
     var initialOnlyFree: Bool? //what is the initial only free option?
     var delegate: SettingsViewDelegate?
     
@@ -26,17 +23,9 @@ class SettingsViewController: UITableViewController {
         
         //make sure the first 2 cells don't get highlighted when they are tapped
         onlyFreeCell.selectionStyle = UITableViewCellSelectionStyle.None
-        sortCell.selectionStyle = UITableViewCellSelectionStyle.None
         
         //set the value of buttons to reflect existing values
         onlyFreeSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool, animated: false)
-        if (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String == "confirmed") {
-            segmentedControl.selectedSegmentIndex = 0
-        } else if (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String == "posted") {
-            segmentedControl.selectedSegmentIndex = 1
-        } else if (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String == "rating") {
-            segmentedControl.selectedSegmentIndex = 2
-        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -84,20 +73,6 @@ class SettingsViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    //gets data from segmented control
-    @IBAction func valueChanged(sender: AnyObject) {
-        switch segmentedControl.selectedSegmentIndex {
-            case 0:
-                NSUserDefaults.standardUserDefaults().setObject("confirmed", forKey: "sortBy")
-            case 1:
-                NSUserDefaults.standardUserDefaults().setObject("posted", forKey: "sortBy")
-            case 2:
-                NSUserDefaults.standardUserDefaults().setObject("rating", forKey: "sortBy")
-            default:
-                break
-        }
-    }
-    
     //this is the only free food switch
     @IBAction func onlyFree(sender: AnyObject) {
         
@@ -139,9 +114,8 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func doneButton(sender: AnyObject) {
-        //if the sort by or only free settings changed we tell the view controller to reload posts
-        if (initialOnlyFree != (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool) ||
-            initialSortBy != (NSUserDefaults.standardUserDefaults().objectForKey("sortBy") as! String)) {
+        //if the only free setting changed we tell the view controller to reload posts
+        if (initialOnlyFree != (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool)) {
             settingsChanged = true
         }
         
