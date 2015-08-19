@@ -15,6 +15,40 @@ class CoreLocationController: NSObject, CLLocationManagerDelegate {
     override init() {
         super.init()
         self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+    }
+    
+    class var manager: CoreLocationController {
+        return SharedUserLocation
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("Did change authorization status: ")
         
+        switch status {
+        case .NotDetermined:
+            print("not determined")
+            break
+            
+        case .AuthorizedWhenInUse:
+            print("authorized when in use")
+            self.locationManager.startUpdatingLocation()
+            break
+            
+        case .AuthorizedAlways:
+            print("authorized always")
+            self.locationManager.startUpdatingLocation()
+            break
+            
+        case .Denied:
+            print("denied")
+            break
+            
+        default:
+            print("unhandled authorization status")
+            break
+        }
     }
 }
+
+let SharedUserLocation = CoreLocationController()

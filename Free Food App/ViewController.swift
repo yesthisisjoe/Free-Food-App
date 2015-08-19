@@ -17,6 +17,7 @@ TODO:
 -Check layout on all devices
 -Add support for uploading photos (also means looking at how you download)
 -before release, check if there is a bitcode version of parse
+-location doesn't show up when you open the app and have allowed location stuff
 
 MINOR BUGS:
 -toolbar transparency stacks when cancel toolbar is active
@@ -26,7 +27,6 @@ MINOR BUGS:
 
 import UIKit
 import MapKit
-import CoreLocation
 import Parse
 
 class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate, UIGestureRecognizerDelegate, NewPostFormViewControllerDelegate {
@@ -52,12 +52,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     
-    
-    var locationManager = CLLocationManager()
     var screenSize: CGRect = UIScreen.mainScreen().bounds
     var statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
     var refresher: UIRefreshControl! //pull to refresh
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView() //spinner for refresh button
+    //var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView() //spinner for refresh button
     var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
     var listActive = false //keeps track of when the list view is active
     var newPostAnywhereActive = false //keeps track of when the user is in the hold to post mode
@@ -71,9 +69,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         map.delegate = self
-
-        locationManager.requestWhenInUseAuthorization()
 
         //location button setup
         //add buttons & flexible space
@@ -407,8 +404,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 self.toolbarDown()
             }
             
-            //TODO check for location here
-            let location = self.locationManager.location!.coordinate
+            //TODO check for location permission here
+            let location = SharedUserLocation.locationManager.location!.coordinate
             self.createAnnotationAndConfirm(location)
         })
         
