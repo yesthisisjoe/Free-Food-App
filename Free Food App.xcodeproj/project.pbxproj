@@ -20,6 +20,7 @@
 		D85022BA1B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */; };
 		D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = D85022FD1B3097E500CA1118 /* DefaultSettings.plist */; };
 		D899FE541B84CB5A005FD176 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899FE531B84CB5A005FD176 /* CoreLocationController.swift */; };
+		D899FE561B84FFC2005FD176 /* CloudCode in Resources */ = {isa = PBXBuildFile; fileRef = D899FE551B84FFC2005FD176 /* CloudCode */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
 		D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */; };
@@ -64,6 +65,7 @@
 		D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NearbyPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D85022FD1B3097E500CA1118 /* DefaultSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultSettings.plist; sourceTree = "<group>"; };
 		D899FE531B84CB5A005FD176 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
+		D899FE551B84FFC2005FD176 /* CloudCode */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CloudCode; path = "Free Food App/CloudCode"; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 		D8D87AE71AF7F19B00303AB0 = {
 			isa = PBXGroup;
 			children = (
+				D899FE551B84FFC2005FD176 /* CloudCode */,
 				D80D47511B7504D80035DA50 /* Bolts.framework */,
 				D837213F1B74FE7600D12167 /* Swift.gitignore */,
 				D8F06C041B2F3B500075573C /* libsqlite3.dylib */,
@@ -287,6 +290,7 @@
 				D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */,
 				D8D87B031AF7F19B00303AB0 /* LaunchScreen.xib in Resources */,
 				D8D87B001AF7F19B00303AB0 /* Images.xcassets in Resources */,
+				D899FE561B84FFC2005FD176 /* CloudCode in Resources */,
 				D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
