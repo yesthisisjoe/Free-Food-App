@@ -8,6 +8,9 @@
 
 /*
 TODO:
+-Ratings on posts
+-New post notifications
+-Nearby notifications
 -Handle denied location sharing
 -Handle in-call status bar
 -If progress bar is in middle (airplane mode) and view is switched, it is on the wrong side
