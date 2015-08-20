@@ -8,6 +8,7 @@
 
 //TODO: -format dollar sign in price
 //      -generally fix up the new post form
+//      -hitting next show go to the next text box
 
 import UIKit
 import Parse

@@ -1,22 +1,36 @@
-Parse.Cloud.beforeSave("Posts", function(request, response) {
-    if (request.object.get("Rating") < 1) {
-        response.error("yup, rating is less than 1");
-    } else {
-        response.success();
+Parse.Cloud.afterSave("Posts", function(request) {
+    if (request.object.get("Approved")) {
+        //new free food post
+        if (request.object.get("FoodType").localeCompare("free") == 0) {
+            Parse.Push.send({
+                channels: ["FreePostNotifications"],
+                data: {
+                    alert: "New free food post: \"" + request.object.get("Title") + "\""
+                }
+            }, {
+                success: function() {
+                    console.log("Push successful")
+                },
+                error: function(error) {
+                    console.log("Push failed")
+                }
+            });
+        } else {
+            //new cheap food post
+            Parse.Push.send({
+                channels: ["CheapPostNotifications"],
+                data: {
+                    alert: "New cheap food post: \"" + request.object.get("Title") + "\""
+                }
+            }, {
+                success: function() {
+                    console.log("Push successful")
+                },
+                error: function(error) {
+                    console.log("Push failed")
+                }
+            });
+        }
     }
 });
 
-Parse.Cloud.afterSave("Comment", function(request) {
-                      Parse.Push.send({
-                                      channels: [ "Giants", "Mets" ],
-                                      data: {
-                                      alert: "The Giants won against the Mets 2-3."
-                                      }
-                                      }, {
-                                      success: function() {
-                                      // Push was successful
-                                      },
-                                      error: function(error) {
-                                      // Handle error
-                                      }
-                                      });                      });
