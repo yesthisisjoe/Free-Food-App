@@ -114,7 +114,7 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
                 })
             } else {
                 //failure, notify of error
-                let alert = UIAlertController(title: "Error Submitting Post", message: "Could not download posts from server. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Error Submitting Post", message: "Could not submit post. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }

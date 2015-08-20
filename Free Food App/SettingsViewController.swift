@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import Parse
 
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var onlyFreeSwitch: UISwitch!
@@ -19,6 +20,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     var settingsChanged: Bool? //do we need to refresh pins/list when we exit settings?
     var initialOnlyFree: Bool? //what is the initial only free option?
     var delegate: SettingsViewDelegate?
+    let subscribedChannels = PFInstallation.currentInstallation().channels //checks what channels the user is subscribed to (for notifications)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,9 +141,17 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
                 //the user is OK with this, so turn off cheap food and cheap food notifications
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {
                     (alert: UIAlertAction!) -> Void in
+                    //turn off the notifications and turn on only free in core data
                     NSUserDefaults.standardUserDefaults().setObject(true, forKey: "onlyFree")
                     NSUserDefaults.standardUserDefaults().setObject(false, forKey: "cheapPostNotifications")
                     NSUserDefaults.standardUserDefaults().setObject(false, forKey: "cheapNearbyNotifications")
+                    
+                    //remove the user from the notification channels in Parse
+                    let currentInstallation = PFInstallation.currentInstallation()
+                    currentInstallation.removeObject("FreePostNotifications", forKey: "channels")
+                    currentInstallation.removeObject("CheapPostNotifications", forKey: "channels")
+                    currentInstallation.saveEventually()
+                    
                     self.updateRightDetail()
                 }))
                 

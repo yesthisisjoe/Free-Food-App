@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class NewPostNotificationSettingsTableViewController: UITableViewController {
     
@@ -31,11 +32,35 @@ class NewPostNotificationSettingsTableViewController: UITableViewController {
     
     @IBAction func freeFoodSwitchAction(sender: AnyObject) {
         let switchOn = freeFoodSwitch.on
+        let currentInstallation = PFInstallation.currentInstallation()
+        
+        if (switchOn) {
+            //subscribe to the new free post notifications parse channel
+            currentInstallation.addUniqueObject("FreePostNotifications", forKey: "channels")
+        } else {
+            //unsubscribe if we switch this setting off
+            currentInstallation.removeObject("FreePostNotifications", forKey: "channels")
+        }
+        
+        //save this setting to the phone and Parse
+        currentInstallation.saveEventually()
         NSUserDefaults.standardUserDefaults().setObject(switchOn, forKey: "freePostNotifications")
     }
     
     @IBAction func cheapFoodSwitchAction(sender: AnyObject) {
         let switchOn = cheapFoodSwitch.on
+        let currentInstallation = PFInstallation.currentInstallation()
+        
+        if (switchOn) {
+            //subscribe to the new free post notifications parse channel
+            currentInstallation.addUniqueObject("CheapPostNotifications", forKey: "channels")
+        } else {
+            //unsubscribe if we switch this setting off
+            currentInstallation.removeObject("CheapPostNotifications", forKey: "channels")
+        }
+        
+        //save this setting to the phone and Parse
+        currentInstallation.saveEventually()
         NSUserDefaults.standardUserDefaults().setObject(switchOn, forKey: "cheapPostNotifications")
     }
 
