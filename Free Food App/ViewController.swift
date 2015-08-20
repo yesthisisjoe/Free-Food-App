@@ -207,7 +207,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         
         //if we are too far away, zoom in, otherwise just center on the coordinate
         if map.region.span.latitudeDelta > 0.0025 {
-            map.setRegion(MKCoordinateRegionMake(coordinate, MKCoordinateSpanMake(0.002, 0.002)), animated: true)
+            map.setRegion(MKCoordinateRegionMake(coordinate, MKCoordinateSpanMake(0.0018, 0.0018)), animated: true)
         } else {
             map.setCenterCoordinate(coordinate, animated: true)
         }

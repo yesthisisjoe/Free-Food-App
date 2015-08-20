@@ -6,9 +6,8 @@
 //  Copyright © 2015 Joseph Peplowski. All rights reserved.
 //
 
-//TODO: -format dollar sign in price
+//TODO:
 //      -generally fix up the new post form
-//      -hitting next show go to the next text box
 
 import UIKit
 import Parse
@@ -43,6 +42,7 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
         descriptionField.delegate = self
         
         tableView.delegate = self
+        tableView.tableFooterView = UIView() //hides extra lines at table footer
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -87,6 +87,17 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
             textField.deleteBackward()
         }
     }
+    
+    //when we hit return in the first 2 fields we select the next one
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if (textField == price) {
+            titleField.becomeFirstResponder()
+        } else if (textField == titleField) {
+            descriptionField.becomeFirstResponder()
+        }
+        return true
+    }
+    
     
     @IBAction func cancelButton(sender: AnyObject) {
         delegate!.finishedWith("Cancel")
