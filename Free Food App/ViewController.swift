@@ -151,6 +151,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         checkZoom()
     }
     
+    class CustomPointAnnotation: MKPointAnnotation {
+        var type: String!
+    }
+    
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation is MKUserLocation) {
             //if annotation is not an MKPointAnnotation (eg. MKUserLocation),
@@ -159,8 +163,24 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         }
         
         let pinView:MKPinAnnotationView = MKPinAnnotationView()
-        pinView.annotation = annotation
-        pinView.pinTintColor = UIColor.purpleColor()
+        
+        //color pin based on what food type it is
+        if let customAnnotation = annotation as? CustomPointAnnotation {
+            if (customAnnotation.type == "free") {
+                pinView.pinTintColor = UIColor.blueColor()
+            } else if (customAnnotation.type == "cheap") {
+                pinView.pinTintColor = UIColor.redColor()
+            } else {
+                pinView.pinTintColor = UIColor.whiteColor()
+                print("error couloring pin")
+            }
+            pinView.annotation = customAnnotation
+        } else {
+            //pin is dropped from create post
+            pinView.pinTintColor = UIColor.greenColor()
+            pinView.annotation = annotation
+        }
+        
         pinView.animatesDrop = true
         pinView.canShowCallout = true
         
@@ -697,12 +717,13 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         
         for post in self.posts {
             //populate map with pins from what we have downloaded
-            let annotation = MKPointAnnotation()
+            let annotation = CustomPointAnnotation()
             let latitude:CLLocationDegrees = post.latitude
             let longitude:CLLocationDegrees = post.longitude
             annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
             annotation.title = post.title
             annotation.subtitle = post.description
+            annotation.type = post.type
             map.addAnnotation(annotation)
         }
         
