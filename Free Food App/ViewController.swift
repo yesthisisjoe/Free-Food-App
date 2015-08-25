@@ -18,6 +18,7 @@ TODO:
 -Add support for uploading photos (also means looking at how you download)
 -before release, check if there is a bitcode version of parse
 -location doesn't show up when you open the app and have allowed location stuff
+-change font of action sheet
 
 MINOR BUGS:
 -toolbar transparency stacks when cancel toolbar is active
