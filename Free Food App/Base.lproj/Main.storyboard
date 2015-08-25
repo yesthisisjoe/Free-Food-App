@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8173.3" systemVersion="15A244d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8187.4" systemVersion="15A263e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -94,14 +94,14 @@
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <barButtonItem systemItem="action" id="yWp-ZH-DOk">
+                                    <barButtonItem image="gears24.png" id="yWp-ZH-DOk" userLabel="Settings Button">
                                         <color key="tintColor" red="0.19182224980000001" green="0.3811789693" blue="0.73691998110000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="reloadButton:" destination="vXZ-lx-hvc" id="AjN-IK-zWD"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Q9O-PX-bPU"/>
-                                    <barButtonItem title="LIST" id="QTm-li-LJ1">
+                                    <barButtonItem title="List" id="QTm-li-LJ1">
                                         <color key="tintColor" red="0.19182224980000001" green="0.3811789693" blue="0.73691998110000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="linkButton:" destination="vXZ-lx-hvc" id="5qJ-xR-nfl"/>
@@ -121,7 +121,7 @@
                                 <animations/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="knh-ph-LG6"/>
-                                    <barButtonItem title="CANCEL" id="KfS-kZ-As1">
+                                    <barButtonItem title="Cancel" id="KfS-kZ-As1">
                                         <color key="tintColor" red="0.19182224980000001" green="0.3811789693" blue="0.73691998110000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="cancelButton:" destination="vXZ-lx-hvc" id="JxI-I4-vWo"/>
@@ -257,7 +257,7 @@
                         <outlet property="progressViewTop" destination="jXd-tL-4of" id="MoB-aM-EdD"/>
                         <outlet property="refreshButton" destination="yWp-ZH-DOk" id="rFf-QH-H5z"/>
                         <outlet property="tableView" destination="Xmr-Jb-bP2" id="IOU-rC-9bB"/>
-                        <segue destination="imb-jQ-uQh" kind="presentation" identifier="settings" modalTransitionStyle="flipHorizontal" id="RsO-1H-YyG"/>
+                        <segue destination="imb-jQ-uQh" kind="presentation" identifier="settings" modalTransitionStyle="crossDissolve" id="RsO-1H-YyG"/>
                         <segue destination="xlO-8i-X9A" kind="show" identifier="newPost" id="k2x-ZG-lTD"/>
                     </connections>
                 </viewController>
@@ -588,7 +588,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pvn-cz-Cp6">
@@ -616,7 +616,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -636,7 +636,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -656,7 +656,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -895,4 +895,7 @@
             <point key="canvasLocation" x="471" y="-735"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="gears24.png" width="24" height="24"/>
+    </resources>
 </document>

@@ -50,6 +50,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotificationTypes([.Alert, .Badge, .Sound])
         }
         
+        //set appearance of navigation bar title in settings
+        if let navBarFont = UIFont(name: "AvenirNext-Bold", size: 18) {
+            UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navBarFont]
+        }
+        
+        //same for the buttons in settings
+        if let buttonFont = UIFont(name: "AvenirNext-Bold", size: 18) {
+            UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: buttonFont, NSForegroundColorAttributeName: UIColor(red: 65/255, green: 122/255, blue: 198/255, alpha: 1)], forState: UIControlState.Normal)
+        }
+        
         return true
     }
     

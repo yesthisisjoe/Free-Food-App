@@ -23,7 +23,9 @@ MINOR BUGS:
 -toolbar transparency stacks when cancel toolbar is active
 -cancel button is underneath list view when creating a post from there (rather than moving with the toolbar)
 -zooming in and out quickly between the zoom in and tap and hold instructions might cause one to display when it should be the other
-*/
+
+CREDITS:
+-Settings icon: <div>Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>*/
 
 import UIKit
 import MapKit
@@ -75,7 +77,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         //location button setup
         //add buttons & flexible space
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "reloadPosts")
+        refreshButton.tintColor = UIColor(red: 65/255, green: 122/255, blue: 198/255, alpha: 1)
         let trackingButton = MKUserTrackingBarButtonItem(mapView: self.map)
+        trackingButton.customView!.tintColor = UIColor(red: 65/255, green: 122/255, blue: 198/255, alpha: 1)
         self.toolbarItems = [refreshButton, flexibleSpace, trackingButton]
         locationToolbar.setItems(toolbarItems, animated: true)
         
@@ -546,7 +550,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             self.backgroundToolbar.frame = CGRectMake(0, 0, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height + self.statusBarHeight)
             self.tableView.frame = CGRectMake(0, self.backgroundToolbar.frame.height, self.buttonsToolbar.frame.width, self.screenSize.height - self.backgroundToolbar.frame.height)
             
-            self.linkButton.title = "MAP" //change button text to map
+            self.linkButton.title = "Map" //change button text to map
             }, completion: nil)
         listActive = true //tracks whether the list view is active
     }
@@ -559,7 +563,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             self.backgroundToolbar.frame = CGRectMake(0, self.screenSize.height - self.buttonsToolbar.frame.height, self.buttonsToolbar.frame.width, self.buttonsToolbar.frame.height)
             self.tableView.frame = CGRectMake(0, self.screenSize.height, self.screenSize.width, 0)
             
-            self.linkButton.title = "LIST" //change button text to list
+            self.linkButton.title = "List" //change button text to list
         }, completion: nil)
         
         listActive = false //tracks whether the list view is active
@@ -773,7 +777,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     //check if user has authorized location services
     let status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
     if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
-        print("location services denied", appendNewline: false)
+        print("location services denied")
     } else {
         //location services are allowed
     }

@@ -17,6 +17,8 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     @IBOutlet weak var nearbyPostNotificationText: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
     
+    //DRAG THIS TO THE NAV BAR
+    
     var settingsChanged: Bool? //do we need to refresh pins/list when we exit settings?
     var initialOnlyFree: Bool? //what is the initial only free option?
     var delegate: SettingsViewDelegate?
