@@ -167,29 +167,55 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             return nil
         }
         
-        let pinView:MKPinAnnotationView = MKPinAnnotationView()
+        let reuseId = "pin"
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
         
-        //color pin based on what food type it is
-        if let customAnnotation = annotation as? CustomPointAnnotation {
-            if (customAnnotation.type == "free") {
-                pinView.pinTintColor = UIColor.blueColor()
-            } else if (customAnnotation.type == "cheap") {
-                pinView.pinTintColor = UIColor.redColor()
+        if (pinView == nil) {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.animatesDrop = true
+            pinView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.InfoDark)
+            let imageView = UIImageView(frame: CGRectMake(0, 0, 40, 40))
+            imageView.image = UIImage(named: "gears44.png")
+            pinView!.leftCalloutAccessoryView = imageView
+            
+            //color pin based on what food type it is
+            if let customAnnotation = annotation as? CustomPointAnnotation {
+                if (customAnnotation.type == "free") {
+                    pinView!.pinTintColor = UIColor.blueColor()
+                } else if (customAnnotation.type == "cheap") {
+                    pinView!.pinTintColor = UIColor.redColor()
+                } else {
+                    pinView!.pinTintColor = UIColor.whiteColor()
+                    print("error couloring pin")
+                }
             } else {
-                pinView.pinTintColor = UIColor.whiteColor()
-                print("error couloring pin")
+                pinView!.pinTintColor = UIColor.greenColor()
             }
-            pinView.annotation = customAnnotation
         } else {
-            //pin is dropped from create post
-            pinView.pinTintColor = UIColor.greenColor()
-            pinView.annotation = annotation
+            //set up annotation
+            if let customAnnotation = annotation as? CustomPointAnnotation {
+                pinView!.annotation = customAnnotation
+            } else {
+                pinView!.annotation = annotation
+            }
         }
         
-        pinView.animatesDrop = true
-        pinView.canShowCallout = true
-        
         return pinView
+    }
+    
+    //called if we tap the button on an annotation callout
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView,
+        calloutAccessoryControlTapped control: UIControl) {
+        
+        if control == view.rightCalloutAccessoryView {
+            print("Disclosure Pressed! \(view.annotation!.subtitle)")
+            
+            if let cpa = view.annotation as? CustomPointAnnotation {
+                print("cpa.type = \(cpa.type)")
+            }
+        }
+        
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
