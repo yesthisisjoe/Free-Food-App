@@ -7,15 +7,37 @@
 //
 
 import UIKit
+import MapKit
 
 class PostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var postTableView: UITableView!
+    @IBOutlet weak var map: MKMapView!
     
     var post = Post!()
     var dataSourceArray = []
     
     override func viewDidLoad() {
+        //populate fields of table
         dataSourceArray = [post.title, post.description, post.type, dateSimplifier(post.confirmed), dateSimplifier(post.posted), String(post.rating), String(post.price)]
+        
+        //add post pin to map
+        let annotation = MKPointAnnotation()
+        let annotationLatitude:CLLocationDegrees = post.latitude
+        let annotationLongitude:CLLocationDegrees = post.longitude
+        annotation.coordinate = CLLocationCoordinate2DMake(annotationLatitude, annotationLongitude)
+        map.addAnnotation(annotation)
+        
+        //set map region on coordinate
+        let latitude:CLLocationDegrees = post.latitude
+        let longitude:CLLocationDegrees = post.longitude
+        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        
+        let latDelta:CLLocationDegrees = 0.001
+        let lonDelta:CLLocationDegrees = 0.001
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+        map.setRegion(region, animated: true)
         
         super.viewDidLoad()
     }
