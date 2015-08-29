@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D8059AFE1B03D8EF00200348 /* cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8059AFD1B03D8EF00200348 /* cell.swift */; };
-		D80D47521B7504D80035DA50 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80D47511B7504D80035DA50 /* Bolts.framework */; };
 		D811A5FC1B83AB240064ED0C /* PushNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D811A5FB1B83AB240064ED0C /* PushNotificationController.swift */; };
 		D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D811A5FD1B83B3430064ED0C /* ApiKeys.plist */; };
 		D811A6001B83B4D60064ED0C /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */; };
@@ -21,6 +20,8 @@
 		D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = D85022FD1B3097E500CA1118 /* DefaultSettings.plist */; };
 		D899FE541B84CB5A005FD176 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899FE531B84CB5A005FD176 /* CoreLocationController.swift */; };
 		D899FE561B84FFC2005FD176 /* CloudCode in Resources */ = {isa = PBXBuildFile; fileRef = D899FE551B84FFC2005FD176 /* CloudCode */; };
+		D8AC0B691B92398D00D8779B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AC0B681B92398D00D8779B /* PostViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		D8AC0B6B1B923C6A00D8779B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8AC0B6A1B923C6A00D8779B /* Bolts.framework */; settings = {ASSET_TAGS = (); }; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
 		D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */; };
@@ -59,7 +60,6 @@
 
 /* Begin PBXFileReference section */
 		D8059AFD1B03D8EF00200348 /* cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cell.swift; sourceTree = "<group>"; };
-		D80D47511B7504D80035DA50 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Free Food App/Bolts.framework"; sourceTree = "<group>"; };
 		D811A5FB1B83AB240064ED0C /* PushNotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationController.swift; sourceTree = "<group>"; };
 		D811A5FD1B83B3430064ED0C /* ApiKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
 		D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
@@ -72,6 +72,8 @@
 		D85022FD1B3097E500CA1118 /* DefaultSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultSettings.plist; sourceTree = "<group>"; };
 		D899FE531B84CB5A005FD176 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
 		D899FE551B84FFC2005FD176 /* CloudCode */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CloudCode; path = "Free Food App/CloudCode"; sourceTree = "<group>"; };
+		D8AC0B681B92398D00D8779B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		D8AC0B6A1B923C6A00D8779B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,12 +116,12 @@
 				D8E864A81AF84DD0006986B9 /* QuartzCore.framework in Frameworks */,
 				D8F06C001B2F32F10075573C /* Parse.framework in Frameworks */,
 				D8E864A61AF84DC8006986B9 /* MobileCoreServices.framework in Frameworks */,
+				D8AC0B6B1B923C6A00D8779B /* Bolts.framework in Frameworks */,
 				D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */,
 				D8E864A41AF84DBB006986B9 /* CoreGraphics.framework in Frameworks */,
 				D8F06C0A1B2F40EC0075573C /* Parse.framework in Frameworks */,
 				D8E864A21AF84DB4006986B9 /* CFNetwork.framework in Frameworks */,
 				D8E864A01AF84DAE006986B9 /* AudioToolbox.framework in Frameworks */,
-				D80D47521B7504D80035DA50 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +138,8 @@
 		D8D87AE71AF7F19B00303AB0 = {
 			isa = PBXGroup;
 			children = (
+				D8AC0B6A1B923C6A00D8779B /* Bolts.framework */,
 				D899FE551B84FFC2005FD176 /* CloudCode */,
-				D80D47511B7504D80035DA50 /* Bolts.framework */,
 				D837213F1B74FE7600D12167 /* Swift.gitignore */,
 				D8F06C041B2F3B500075573C /* libsqlite3.dylib */,
 				D8F06C011B2F3ADD0075573C /* libz.1.dylib */,
@@ -191,6 +193,7 @@
 				D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */,
 				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
 				D8D87B011AF7F19B00303AB0 /* LaunchScreen.xib */,
+				D8AC0B681B92398D00D8779B /* PostViewController.swift */,
 				D8D87AF31AF7F19B00303AB0 /* Supporting Files */,
 			);
 			path = "Free Food App";
@@ -338,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8AC0B691B92398D00D8779B /* PostViewController.swift in Sources */,
 				D85022BA1B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift in Sources */,
 				D811A5FC1B83AB240064ED0C /* PushNotificationController.swift in Sources */,
 				D899FE541B84CB5A005FD176 /* CoreLocationController.swift in Sources */,
