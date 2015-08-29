@@ -28,3 +28,20 @@ struct Post {
         self.price = price
     }
 }
+
+public func dateSimplifier(sinceDate: NSDate) -> String {
+    let elapsedTime = Int(NSDate().timeIntervalSinceDate(sinceDate))
+    var simplifiedDate = ""
+    
+    if (elapsedTime < 60) { //less than a minute
+        simplifiedDate = "less than 1m ago"
+    } else if (elapsedTime >= 60 && elapsedTime < 60*60) { //less than an hour
+        simplifiedDate = "\(elapsedTime / 60)m ago"
+    } else if (elapsedTime >= 60*60 && elapsedTime < 60*60*24) { //less than a day
+        simplifiedDate = "\(elapsedTime / 60 / 60)h ago"
+    } else { //over a day
+        simplifiedDate = "\(elapsedTime / 60 / 60 / 24)d ago"
+    }
+    
+    return simplifiedDate
+}

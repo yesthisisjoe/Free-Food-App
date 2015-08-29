@@ -11,9 +11,12 @@ import UIKit
 class PostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var postTableView: UITableView!
     
-    let dataSourceArray = ["uno", "dos", "tres"]
+    var post = Post!()
+    var dataSourceArray = []
     
     override func viewDidLoad() {
+        dataSourceArray = [post.title, post.description, post.type, dateSimplifier(post.confirmed), dateSimplifier(post.posted), String(post.rating), String(post.price)]
+        
         super.viewDidLoad()
     }
     
@@ -32,7 +35,7 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         
-        cell!.textLabel!.text = dataSourceArray[indexPath.row]
+        cell!.textLabel!.text = (dataSourceArray[indexPath.row] as! String)
         return cell!
     }
 }

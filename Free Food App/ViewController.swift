@@ -67,6 +67,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     var confirmPostLocationActive = false //keeps track of when the user is confirming that a pin is correct
     var newCoordinate: CLLocationCoordinate2D! //these are the coordinates of a post created when we tap & hold
     var newAnnotation: MKPointAnnotation! //stores the last annotation so we can remove it
+    var postToPass: Post! //the post that the user tapped and to show in post view
     var posts = [Post]()
     
     override func viewDidLoad() {
@@ -157,7 +158,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     }
     
     class CustomPointAnnotation: MKPointAnnotation {
-        var type: String!
+        var post: Post!
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -181,9 +182,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             
             //color pin based on what food type it is
             if let customAnnotation = annotation as? CustomPointAnnotation {
-                if (customAnnotation.type == "free") {
+                if (customAnnotation.post.type == "free") {
                     pinView!.pinTintColor = UIColor.blueColor()
-                } else if (customAnnotation.type == "cheap") {
+                } else if (customAnnotation.post.type == "cheap") {
                     pinView!.pinTintColor = UIColor.redColor()
                 } else {
                     pinView!.pinTintColor = UIColor.whiteColor()
@@ -204,15 +205,16 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         return pinView
     }
     
-    //called if we tap the button on an annotation callout
+    //if we tap the button on an annotation callout, go to that posts' post view
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
         
         if control == view.rightCalloutAccessoryView {
-            print("Disclosure Pressed! \(view.annotation!.subtitle)")
-            
             if let cpa = view.annotation as? CustomPointAnnotation {
-                print("cpa.type = \(cpa.type)")
+                self.postToPass = cpa.post
+                self.performSegueWithIdentifier("postViewSegue", sender: self)
+            } else {
+                print("error, this is not a custom pin")
             }
         }
         
@@ -412,23 +414,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             */
         }
 
-    }
-    
-    func dateSimplifier(sinceDate: NSDate) -> String {
-        let elapsedTime = Int(NSDate().timeIntervalSinceDate(sinceDate))
-        var simplifiedDate = ""
-        
-        if (elapsedTime < 60) { //less than a minute
-            simplifiedDate = "less than 1m ago"
-        } else if (elapsedTime >= 60 && elapsedTime < 60*60) { //less than an hour
-            simplifiedDate = "\(elapsedTime / 60)m ago"
-        } else if (elapsedTime >= 60*60 && elapsedTime < 60*60*24) { //less than a day
-            simplifiedDate = "\(elapsedTime / 60 / 60)h ago"
-        } else { //over a day
-            simplifiedDate = "\(elapsedTime / 60 / 60 / 24)d ago"
-        }
-        
-        return simplifiedDate
     }
     
     //called when the first view appears
@@ -754,7 +739,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
             annotation.title = post.title
             annotation.subtitle = post.description
-            annotation.type = post.type
+            annotation.post = post
             map.addAnnotation(annotation)
         }
         
@@ -835,6 +820,13 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             vc.newPostLat = self.newAnnotation.coordinate.latitude
             vc.newPostLon = self.newAnnotation.coordinate.longitude
             vc.delegate = self
+        } else if (segue.identifier == "postViewSegue") {
+            //used in post view
+            let nc = segue.destinationViewController as! UINavigationController
+            let vc = nc.topViewController as! PostViewController
+            
+            //pass post to post view controller
+            vc.post = self.postToPass
         }
     }
     

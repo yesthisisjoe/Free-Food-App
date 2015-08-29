@@ -187,13 +187,13 @@
 				D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */,
 				D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */,
 				D811A5FB1B83AB240064ED0C /* PushNotificationController.swift */,
+				D8AC0B681B92398D00D8779B /* PostViewController.swift */,
 				D811A5FD1B83B3430064ED0C /* ApiKeys.plist */,
 				D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */,
 				D85022FD1B3097E500CA1118 /* DefaultSettings.plist */,
 				D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */,
 				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
 				D8D87B011AF7F19B00303AB0 /* LaunchScreen.xib */,
-				D8AC0B681B92398D00D8779B /* PostViewController.swift */,
 				D8D87AF31AF7F19B00303AB0 /* Supporting Files */,
 			);
 			path = "Free Food App";
