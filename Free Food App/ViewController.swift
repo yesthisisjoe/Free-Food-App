@@ -32,7 +32,7 @@ import UIKit
 import MapKit
 import Parse
 
-class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate, UIGestureRecognizerDelegate, NewPostFormViewControllerDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate, UIGestureRecognizerDelegate, NewPostFormViewControllerDelegate, PostViewControllerDelegate {
     
     @IBOutlet weak var map: MKMapView!
     
@@ -827,6 +827,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             
             //pass post to post view controller
             vc.post = self.postToPass
+            vc.delegate = self
         }
     }
     
@@ -855,6 +856,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             self.tapAndHoldActive = false
             
             self.reloadPosts()
+        }
+    }
+    
+    func postViewDidFinish(controller: PostViewController, changed: Bool) {
+        if (changed) {
+            self.reloadPosts() //TODO do you have to reload this?
         }
     }
 }

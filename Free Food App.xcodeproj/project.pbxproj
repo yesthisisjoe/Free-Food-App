@@ -12,6 +12,7 @@
 		D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D811A5FD1B83B3430064ED0C /* ApiKeys.plist */; };
 		D811A6001B83B4D60064ED0C /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */; };
 		D812ED731B06BFEF009287DA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D812ED721B06BFEF009287DA /* SettingsViewController.swift */; };
+		D83412CB1BB8F2B100B367FE /* Images you need in Resources */ = {isa = PBXBuildFile; fileRef = D83412CA1BB8F2B100B367FE /* Images you need */; settings = {ASSET_TAGS = (); }; };
 		D83721401B74FE7600D12167 /* Swift.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D837213F1B74FE7600D12167 /* Swift.gitignore */; };
 		D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */; };
 		D8471CAE1B499C7C003C5F70 /* NewPostFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8471CAD1B499C7C003C5F70 /* NewPostFormViewController.swift */; };
@@ -64,6 +65,7 @@
 		D811A5FD1B83B3430064ED0C /* ApiKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
 		D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
 		D812ED721B06BFEF009287DA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		D83412CA1BB8F2B100B367FE /* Images you need */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Images you need"; sourceTree = "<group>"; };
 		D837213F1B74FE7600D12167 /* Swift.gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Swift.gitignore; sourceTree = "<group>"; };
 		D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D8471CAD1B499C7C003C5F70 /* NewPostFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostFormViewController.swift; sourceTree = "<group>"; };
@@ -170,7 +172,6 @@
 		D8D87AF21AF7F19B00303AB0 /* Free Food App */ = {
 			isa = PBXGroup;
 			children = (
-				D8FC3B581B8BAE4D00217B53 /* gears44.png */,
 				D8FC3B621B8BB4CE00217B53 /* gears24.png */,
 				D8FC3B5A1B8BB08500217B53 /* gears22.png */,
 				D8FC3B5C1B8BB11000217B53 /* gears30.png */,
@@ -192,7 +193,9 @@
 				D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */,
 				D85022FD1B3097E500CA1118 /* DefaultSettings.plist */,
 				D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */,
+				D83412CA1BB8F2B100B367FE /* Images you need */,
 				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
+				D8FC3B581B8BAE4D00217B53 /* gears44.png */,
 				D8D87B011AF7F19B00303AB0 /* LaunchScreen.xib */,
 				D8D87AF31AF7F19B00303AB0 /* Supporting Files */,
 			);
@@ -323,6 +326,7 @@
 				D8FC3B631B8BB4CE00217B53 /* gears24.png in Resources */,
 				D8FC3B5F1B8BB18F00217B53 /* gears28.png in Resources */,
 				D899FE561B84FFC2005FD176 /* CloudCode in Resources */,
+				D83412CB1BB8F2B100B367FE /* Images you need in Resources */,
 				D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

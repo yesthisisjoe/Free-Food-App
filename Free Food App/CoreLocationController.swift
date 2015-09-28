@@ -23,7 +23,7 @@ class CoreLocationController: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        print("Did change authorization status: ")
+        /*print("Did change authorization status: ")
         
         switch status {
         case .NotDetermined:
@@ -47,7 +47,7 @@ class CoreLocationController: NSObject, CLLocationManagerDelegate {
         default:
             print("unhandled authorization status")
             break
-        }
+        }*/
     }
 }
 
