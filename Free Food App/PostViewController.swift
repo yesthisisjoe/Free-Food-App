@@ -93,7 +93,7 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         cell!.textLabel!.text = (dataSourceArray[indexPath.row] as! String)
-        
+        /* TODO: make this work
         switch indexPath.row {
         case 0:
             cell!.textLabel!.font = UIFont(name: "AvenirNext-Bold", size: 24)
@@ -119,7 +119,7 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
         default:
             print("hit default statement setting post table view stuff")
             break
-        }
+        }*/
         
         return cell!
     }

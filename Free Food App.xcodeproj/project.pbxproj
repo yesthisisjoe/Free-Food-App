@@ -12,7 +12,7 @@
 		D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D811A5FD1B83B3430064ED0C /* ApiKeys.plist */; };
 		D811A6001B83B4D60064ED0C /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */; };
 		D812ED731B06BFEF009287DA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D812ED721B06BFEF009287DA /* SettingsViewController.swift */; };
-		D83412CB1BB8F2B100B367FE /* Images you need in Resources */ = {isa = PBXBuildFile; fileRef = D83412CA1BB8F2B100B367FE /* Images you need */; settings = {ASSET_TAGS = (); }; };
+		D83412CB1BB8F2B100B367FE /* Images you need in Resources */ = {isa = PBXBuildFile; fileRef = D83412CA1BB8F2B100B367FE /* Images you need */; };
 		D83721401B74FE7600D12167 /* Swift.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D837213F1B74FE7600D12167 /* Swift.gitignore */; };
 		D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */; };
 		D8471CAE1B499C7C003C5F70 /* NewPostFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8471CAD1B499C7C003C5F70 /* NewPostFormViewController.swift */; };
@@ -21,8 +21,8 @@
 		D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = D85022FD1B3097E500CA1118 /* DefaultSettings.plist */; };
 		D899FE541B84CB5A005FD176 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899FE531B84CB5A005FD176 /* CoreLocationController.swift */; };
 		D899FE561B84FFC2005FD176 /* CloudCode in Resources */ = {isa = PBXBuildFile; fileRef = D899FE551B84FFC2005FD176 /* CloudCode */; };
-		D8AC0B691B92398D00D8779B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AC0B681B92398D00D8779B /* PostViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		D8AC0B6B1B923C6A00D8779B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8AC0B6A1B923C6A00D8779B /* Bolts.framework */; settings = {ASSET_TAGS = (); }; };
+		D8AC0B691B92398D00D8779B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AC0B681B92398D00D8779B /* PostViewController.swift */; };
+		D8AC0B6B1B923C6A00D8779B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8AC0B6A1B923C6A00D8779B /* Bolts.framework */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
 		D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */; };
@@ -40,7 +40,6 @@
 		D8F06C001B2F32F10075573C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F06BFF1B2F32F10075573C /* Parse.framework */; };
 		D8F06C031B2F3B240075573C /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F06C011B2F3ADD0075573C /* libz.1.dylib */; };
 		D8F06C051B2F3B500075573C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F06C041B2F3B500075573C /* libsqlite3.dylib */; };
-		D8F06C0A1B2F40EC0075573C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F06C091B2F40EC0075573C /* Parse.framework */; };
 		D8FC3B591B8BAE4D00217B53 /* gears44.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B581B8BAE4D00217B53 /* gears44.png */; };
 		D8FC3B5B1B8BB08500217B53 /* gears22.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B5A1B8BB08500217B53 /* gears22.png */; };
 		D8FC3B5D1B8BB11000217B53 /* gears30.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B5C1B8BB11000217B53 /* gears30.png */; };
@@ -121,7 +120,6 @@
 				D8AC0B6B1B923C6A00D8779B /* Bolts.framework in Frameworks */,
 				D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */,
 				D8E864A41AF84DBB006986B9 /* CoreGraphics.framework in Frameworks */,
-				D8F06C0A1B2F40EC0075573C /* Parse.framework in Frameworks */,
 				D8E864A21AF84DB4006986B9 /* CFNetwork.framework in Frameworks */,
 				D8E864A01AF84DAE006986B9 /* AudioToolbox.framework in Frameworks */,
 			);
@@ -272,7 +270,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Joseph Peplowski";
 				TargetAttributes = {
 					D8D87AEF1AF7F19B00303AB0 = {
