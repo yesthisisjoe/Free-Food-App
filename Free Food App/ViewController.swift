@@ -164,7 +164,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation is MKUserLocation) {
             //if annotation is not an MKPointAnnotation (eg. MKUserLocation),
-            //return nil so map draws default view for it (eg. blue dot)...
+            //return nil so map draws d efault view for it (eg. blue dot)...
             return nil
         }
         
@@ -176,6 +176,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             pinView!.canShowCallout = true
             pinView!.animatesDrop = true
             pinView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.InfoDark)
+//            let ratingView = UIView(frame: CGRectMake(0, 0, 80, 40))
+//            let ratingLabel = UILabel(frame: CGRectMake(0, 0, 80, 40))
+//            ratingLabel.text = "Seen 10m ago"
+//            ratingLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 30.0)
+//            ratingView.addSubview(ratingLabel)
+            
             let imageView = UIImageView(frame: CGRectMake(0, 0, 40, 40))
             imageView.image = UIImage(named: "gears44.png")
             pinView!.leftCalloutAccessoryView = imageView
@@ -738,7 +744,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             let longitude:CLLocationDegrees = post.longitude
             annotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
             annotation.title = post.title
-            annotation.subtitle = post.description
+            annotation.subtitle = "Last seen \(dateSimplifier(post.confirmed))"
             annotation.post = post
             map.addAnnotation(annotation)
         }

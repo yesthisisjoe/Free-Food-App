@@ -22,14 +22,16 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         //populate fields of table
         dataSourceArray = [
-            post.title,
-            post.type,
-            "posted \(dateSimplifier(post.posted))",
-            "rating: \(String(post.rating))",
             post.description,
+            String(post.price),
             "last confirmed: \(dateSimplifier(post.confirmed))",
-            String(post.price)
+            "posted \(dateSimplifier(post.posted))",
+            //post.title,
+            post.type,
+            "rating: \(String(post.rating))"
         ]
+        
+        self.title = post.title
         
         map.delegate = self
         
