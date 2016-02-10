@@ -9,8 +9,7 @@
 import UIKit
 import MapKit
 
-class PostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
-    @IBOutlet weak var postTableView: UITableView!
+class PostViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var backButton: UIBarButtonItem!
     
@@ -30,7 +29,7 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
             post.type,
             "rating: \(String(post.rating))"
         ]
-        
+    
         self.title = post.title
         
         map.delegate = self
@@ -82,53 +81,6 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         return pinView
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSourceArray.count // Most of the time my data source is an array of something...  will replace with the actual name of the data source
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-        cell!.textLabel!.text = (dataSourceArray[indexPath.row] as! String)
-        /* TODO: make this work
-        switch indexPath.row {
-        case 0:
-            cell!.textLabel!.font = UIFont(name: "AvenirNext-Bold", size: 24)
-            break
-        case 1:
-            cell!.textLabel!.font = UIFont(name: "BodoniSvtyTwoSCITCTT-Book", size: 18)
-            break
-        case 2:
-            cell!.textLabel!.font = UIFont(name: "AvenirNext-Italic", size: 15)
-            break
-        case 3:
-            cell!.textLabel!.font = UIFont(name: "AvenirNext-Italic", size: 15)
-            break
-        case 4:
-            cell!.textLabel!.font = UIFont(name: "AvenirNext-Light", size: 15)
-            break
-        case 5:
-            cell!.textLabel!.font = UIFont(name: "AvenirNext-Italic", size: 15)
-            break
-        case 6:
-            cell!.textLabel!.font = UIFont(name: "AvenirNext-Italic", size: 15)
-            break
-        default:
-            print("hit default statement setting post table view stuff")
-            break
-        }*/
-        
-        return cell!
-    }
-    
-    //stretch the map when we bounce the table view
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        map.frame = CGRectMake(map.frame.minX, map.frame.minY, map.frame.width, 145 - self.postTableView.contentOffset.y)
     }
 }
 

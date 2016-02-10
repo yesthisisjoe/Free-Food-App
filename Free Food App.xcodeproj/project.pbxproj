@@ -15,11 +15,6 @@
 		D83412CB1BB8F2B100B367FE /* Images you need in Resources */ = {isa = PBXBuildFile; fileRef = D83412CA1BB8F2B100B367FE /* Images you need */; };
 		D83721401B74FE7600D12167 /* Swift.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D837213F1B74FE7600D12167 /* Swift.gitignore */; };
 		D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */; };
-		D84656371C6AA0F500D2F690 /* Pale Clock Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D84656321C6AA0F500D2F690 /* Pale Clock Filled-50.png */; };
-		D84656381C6AA0F500D2F690 /* Pale Good Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D84656331C6AA0F500D2F690 /* Pale Good Quality Filled-50.png */; };
-		D84656391C6AA0F500D2F690 /* Pale Info Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D84656341C6AA0F500D2F690 /* Pale Info Filled-50.png */; };
-		D846563A1C6AA0F500D2F690 /* Pale Poor Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D84656351C6AA0F500D2F690 /* Pale Poor Quality Filled-50.png */; };
-		D846563B1C6AA0F500D2F690 /* Pale US Dollar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D84656361C6AA0F500D2F690 /* Pale US Dollar-50.png */; };
 		D84656411C6AA3CC00D2F690 /* White Clock Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D846563C1C6AA3CC00D2F690 /* White Clock Filled-50.png */; };
 		D84656421C6AA3CC00D2F690 /* White Good Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D846563D1C6AA3CC00D2F690 /* White Good Quality Filled-50.png */; };
 		D84656431C6AA3CC00D2F690 /* White Info Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D846563E1C6AA3CC00D2F690 /* White Info Filled-50.png */; };
@@ -29,16 +24,15 @@
 		D85022B81B2F805F00CA1118 /* NewPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */; };
 		D85022BA1B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */; };
 		D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = D85022FD1B3097E500CA1118 /* DefaultSettings.plist */; };
-		D88A5E241C5D1F4A00AAEFE1 /* Good Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D88A5E221C5D1F4A00AAEFE1 /* Good Quality Filled-50.png */; };
-		D88A5E251C5D1F4A00AAEFE1 /* Poor Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D88A5E231C5D1F4A00AAEFE1 /* Poor Quality Filled-50.png */; };
-		D88A5E271C5D290700AAEFE1 /* Clock Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D88A5E261C5D290700AAEFE1 /* Clock Filled-50.png */; };
-		D88A5E2A1C5D2A8300AAEFE1 /* Orange Dollar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D88A5E281C5D2A8300AAEFE1 /* Orange Dollar-50.png */; };
-		D88A5E2B1C5D2A8300AAEFE1 /* Pink Dollar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D88A5E291C5D2A8300AAEFE1 /* Pink Dollar-50.png */; };
-		D88A5E2D1C5D2C4100AAEFE1 /* Info Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D88A5E2C1C5D2C4100AAEFE1 /* Info Filled-50.png */; };
 		D899FE541B84CB5A005FD176 /* CoreLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899FE531B84CB5A005FD176 /* CoreLocationController.swift */; };
 		D899FE561B84FFC2005FD176 /* CloudCode in Resources */ = {isa = PBXBuildFile; fileRef = D899FE551B84FFC2005FD176 /* CloudCode */; };
 		D8AC0B691B92398D00D8779B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AC0B681B92398D00D8779B /* PostViewController.swift */; };
 		D8AC0B6B1B923C6A00D8779B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8AC0B6A1B923C6A00D8779B /* Bolts.framework */; };
+		D8B364441C6AEFFB00E097E4 /* Clock Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */; };
+		D8B364451C6AEFFB00E097E4 /* Good Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */; };
+		D8B364461C6AEFFB00E097E4 /* Orange Dollar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364421C6AEFFB00E097E4 /* Orange Dollar-50.png */; };
+		D8B364471C6AEFFB00E097E4 /* Poor Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */; };
+		D8B364491C6B832200E097E4 /* Help Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364481C6B832200E097E4 /* Help Filled-50.png */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
 		D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */; };
@@ -83,11 +77,6 @@
 		D83412CA1BB8F2B100B367FE /* Images you need */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Images you need"; sourceTree = "<group>"; };
 		D837213F1B74FE7600D12167 /* Swift.gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Swift.gitignore; sourceTree = "<group>"; };
 		D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		D84656321C6AA0F500D2F690 /* Pale Clock Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pale Clock Filled-50.png"; sourceTree = "<group>"; };
-		D84656331C6AA0F500D2F690 /* Pale Good Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pale Good Quality Filled-50.png"; sourceTree = "<group>"; };
-		D84656341C6AA0F500D2F690 /* Pale Info Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pale Info Filled-50.png"; sourceTree = "<group>"; };
-		D84656351C6AA0F500D2F690 /* Pale Poor Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pale Poor Quality Filled-50.png"; sourceTree = "<group>"; };
-		D84656361C6AA0F500D2F690 /* Pale US Dollar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pale US Dollar-50.png"; sourceTree = "<group>"; };
 		D846563C1C6AA3CC00D2F690 /* White Clock Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "White Clock Filled-50.png"; sourceTree = "<group>"; };
 		D846563D1C6AA3CC00D2F690 /* White Good Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "White Good Quality Filled-50.png"; sourceTree = "<group>"; };
 		D846563E1C6AA3CC00D2F690 /* White Info Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "White Info Filled-50.png"; sourceTree = "<group>"; };
@@ -97,16 +86,15 @@
 		D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NewPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NearbyPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D85022FD1B3097E500CA1118 /* DefaultSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultSettings.plist; sourceTree = "<group>"; };
-		D88A5E221C5D1F4A00AAEFE1 /* Good Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Good Quality Filled-50.png"; sourceTree = "<group>"; };
-		D88A5E231C5D1F4A00AAEFE1 /* Poor Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Poor Quality Filled-50.png"; sourceTree = "<group>"; };
-		D88A5E261C5D290700AAEFE1 /* Clock Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Clock Filled-50.png"; sourceTree = "<group>"; };
-		D88A5E281C5D2A8300AAEFE1 /* Orange Dollar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Orange Dollar-50.png"; sourceTree = "<group>"; };
-		D88A5E291C5D2A8300AAEFE1 /* Pink Dollar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pink Dollar-50.png"; sourceTree = "<group>"; };
-		D88A5E2C1C5D2C4100AAEFE1 /* Info Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Info Filled-50.png"; sourceTree = "<group>"; };
 		D899FE531B84CB5A005FD176 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
 		D899FE551B84FFC2005FD176 /* CloudCode */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CloudCode; path = "Free Food App/CloudCode"; sourceTree = "<group>"; };
 		D8AC0B681B92398D00D8779B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		D8AC0B6A1B923C6A00D8779B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Clock Filled-50.png"; sourceTree = "<group>"; };
+		D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Good Quality Filled-50.png"; sourceTree = "<group>"; };
+		D8B364421C6AEFFB00E097E4 /* Orange Dollar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Orange Dollar-50.png"; sourceTree = "<group>"; };
+		D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Poor Quality Filled-50.png"; sourceTree = "<group>"; };
+		D8B364481C6B832200E097E4 /* Help Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Help Filled-50.png"; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -213,7 +201,6 @@
 				D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */,
 				D899FE531B84CB5A005FD176 /* CoreLocationController.swift */,
 				D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */,
-				D88A5E261C5D290700AAEFE1 /* Clock Filled-50.png */,
 				D8471CAD1B499C7C003C5F70 /* NewPostFormViewController.swift */,
 				D812ED721B06BFEF009287DA /* SettingsViewController.swift */,
 				D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */,
@@ -224,21 +211,16 @@
 				D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */,
 				D85022FD1B3097E500CA1118 /* DefaultSettings.plist */,
 				D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */,
+				D8B364481C6B832200E097E4 /* Help Filled-50.png */,
+				D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */,
+				D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */,
+				D8B364421C6AEFFB00E097E4 /* Orange Dollar-50.png */,
+				D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */,
 				D846563C1C6AA3CC00D2F690 /* White Clock Filled-50.png */,
 				D846563D1C6AA3CC00D2F690 /* White Good Quality Filled-50.png */,
 				D846563E1C6AA3CC00D2F690 /* White Info Filled-50.png */,
 				D846563F1C6AA3CC00D2F690 /* White Poor Quality Filled-50.png */,
 				D84656401C6AA3CC00D2F690 /* White US Dollar-50.png */,
-				D84656321C6AA0F500D2F690 /* Pale Clock Filled-50.png */,
-				D84656331C6AA0F500D2F690 /* Pale Good Quality Filled-50.png */,
-				D84656341C6AA0F500D2F690 /* Pale Info Filled-50.png */,
-				D84656351C6AA0F500D2F690 /* Pale Poor Quality Filled-50.png */,
-				D84656361C6AA0F500D2F690 /* Pale US Dollar-50.png */,
-				D88A5E2C1C5D2C4100AAEFE1 /* Info Filled-50.png */,
-				D88A5E281C5D2A8300AAEFE1 /* Orange Dollar-50.png */,
-				D88A5E291C5D2A8300AAEFE1 /* Pink Dollar-50.png */,
-				D88A5E221C5D1F4A00AAEFE1 /* Good Quality Filled-50.png */,
-				D88A5E231C5D1F4A00AAEFE1 /* Poor Quality Filled-50.png */,
 				D83412CA1BB8F2B100B367FE /* Images you need */,
 				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
 				D8FC3B581B8BAE4D00217B53 /* gears44.png */,
@@ -362,31 +344,25 @@
 			files = (
 				D83721401B74FE7600D12167 /* Swift.gitignore in Resources */,
 				D8FC3B591B8BAE4D00217B53 /* gears44.png in Resources */,
-				D88A5E241C5D1F4A00AAEFE1 /* Good Quality Filled-50.png in Resources */,
-				D88A5E2B1C5D2A8300AAEFE1 /* Pink Dollar-50.png in Resources */,
-				D88A5E2D1C5D2C4100AAEFE1 /* Info Filled-50.png in Resources */,
 				D8FC3B5B1B8BB08500217B53 /* gears22.png in Resources */,
+				D8B364461C6AEFFB00E097E4 /* Orange Dollar-50.png in Resources */,
 				D84656441C6AA3CC00D2F690 /* White Poor Quality Filled-50.png in Resources */,
+				D8B364441C6AEFFB00E097E4 /* Clock Filled-50.png in Resources */,
+				D8B364471C6AEFFB00E097E4 /* Poor Quality Filled-50.png in Resources */,
 				D84656431C6AA3CC00D2F690 /* White Info Filled-50.png in Resources */,
 				D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */,
 				D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */,
-				D88A5E2A1C5D2A8300AAEFE1 /* Orange Dollar-50.png in Resources */,
+				D8B364451C6AEFFB00E097E4 /* Good Quality Filled-50.png in Resources */,
 				D8D87B031AF7F19B00303AB0 /* LaunchScreen.xib in Resources */,
-				D84656391C6AA0F500D2F690 /* Pale Info Filled-50.png in Resources */,
 				D8D87B001AF7F19B00303AB0 /* Images.xcassets in Resources */,
 				D8FC3B5D1B8BB11000217B53 /* gears30.png in Resources */,
-				D84656381C6AA0F500D2F690 /* Pale Good Quality Filled-50.png in Resources */,
 				D84656451C6AA3CC00D2F690 /* White US Dollar-50.png in Resources */,
 				D8FC3B611B8BB45C00217B53 /* gears26.png in Resources */,
+				D8B364491C6B832200E097E4 /* Help Filled-50.png in Resources */,
 				D84656411C6AA3CC00D2F690 /* White Clock Filled-50.png in Resources */,
-				D846563A1C6AA0F500D2F690 /* Pale Poor Quality Filled-50.png in Resources */,
 				D8FC3B631B8BB4CE00217B53 /* gears24.png in Resources */,
 				D84656421C6AA3CC00D2F690 /* White Good Quality Filled-50.png in Resources */,
-				D846563B1C6AA0F500D2F690 /* Pale US Dollar-50.png in Resources */,
 				D8FC3B5F1B8BB18F00217B53 /* gears28.png in Resources */,
-				D88A5E271C5D290700AAEFE1 /* Clock Filled-50.png in Resources */,
-				D84656371C6AA0F500D2F690 /* Pale Clock Filled-50.png in Resources */,
-				D88A5E251C5D1F4A00AAEFE1 /* Poor Quality Filled-50.png in Resources */,
 				D899FE561B84FFC2005FD176 /* CloudCode in Resources */,
 				D83412CB1BB8F2B100B367FE /* Images you need in Resources */,
 				D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */,
@@ -477,8 +453,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -501,6 +477,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -523,8 +500,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Joseph Peplowski (GMFR6JL5MS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Joseph Peplowski (GMFR6JL5MS)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -539,6 +516,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -548,9 +526,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -574,12 +553,13 @@
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
 				);
 				INFOPLIST_FILE = "Free Food App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.blankbullets.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yesthisisjoe.freefoodapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a70f3a39-dfc4-4247-9f33-e0ae880f9fa1";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -587,9 +567,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joseph Peplowski (2AHDT8PYYJ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -613,11 +594,12 @@
 					"$(PROJECT_DIR)/Free\\ Food\\ App",
 				);
 				INFOPLIST_FILE = "Free Food App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.blankbullets.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yesthisisjoe.freefoodapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a70f3a39-dfc4-4247-9f33-e0ae880f9fa1";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

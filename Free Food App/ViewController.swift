@@ -9,7 +9,7 @@
 /*
 TODO:
 -Ratings on posts
--New post notifications
+-New post notifications apporval interface
 -Nearby notifications
 -Handle denied location sharing
 -Handle in-call status bar
@@ -72,7 +72,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         map.delegate = self
 
@@ -555,6 +554,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     @IBAction func linkButton(sender: AnyObject) {
         if !listActive { //we transition from map view to list view
             toolbarUp()
+            //toolbarUp()
         } else { //we transition from list view to map view
             toolbarDown()
         }
