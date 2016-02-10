@@ -29,6 +29,19 @@ struct Post {
     }
 }
 
+struct Vote {
+    var id, postId: String
+    var confirm: Bool
+    var posted: NSDate
+    
+    init(id: String, postId: String, confirm: Bool, posted: NSDate) {
+        self.id = id
+        self.postId = postId
+        self.confirm = confirm
+        self.posted = posted
+    }
+}
+
 public func dateSimplifier(sinceDate: NSDate) -> String {
     let elapsedTime = Int(NSDate().timeIntervalSinceDate(sinceDate))
     var simplifiedDate = ""

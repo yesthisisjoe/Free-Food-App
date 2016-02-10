@@ -23,29 +23,29 @@ class CoreLocationController: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        /*print("Did change authorization status: ")
+        /*NSLog("Did change authorization status: ")
         
         switch status {
         case .NotDetermined:
-            print("not determined")
+            NSLog("not determined")
             break
             
         case .AuthorizedWhenInUse:
-            print("authorized when in use")
+            NSLog("authorized when in use")
             self.locationManager.startUpdatingLocation()
             break
             
         case .AuthorizedAlways:
-            print("authorized always")
+            NSLog("authorized always")
             self.locationManager.startUpdatingLocation()
             break
             
         case .Denied:
-            print("denied")
+            NSLog("denied")
             break
             
         default:
-            print("unhandled authorization status")
+            NSLog("unhandled authorization status")
             break
         }*/
     }

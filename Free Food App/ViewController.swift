@@ -70,6 +70,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     var newAnnotation: MKPointAnnotation! //stores the last annotation so we can remove it
     var postToPass: Post! //the post that the user tapped and to show in post view
     var posts = [Post]()
+    var votes = [Vote]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,10 +113,10 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         //use this to find font names
         /*for family in UIFont.familyNames()
         {
-            print("\(family)")
+            NSLog"\(family)")
             for name in UIFont.fontNamesForFamilyName(family as String)
             {
-                print("  \(name)")
+                NSLog"  \(name)")
             }
         }*/
         
@@ -124,7 +125,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             linkButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
             cancelButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         } else {
-            print("error setting fonts of buttons")
+            NSLog("error setting fonts of buttons")
         }
         
         //creates pull to refresh for the table
@@ -185,7 +186,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                     pinView!.pinTintColor = UIColor.redColor()
                 } else {
                     pinView!.pinTintColor = UIColor.whiteColor()
-                    print("error couloring pin")
+                    NSLog("error couloring pin")
                 }
                 
                 let statusImage = UIImageView(frame: CGRectMake(0, 0, 50, 50))
@@ -233,7 +234,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 self.postToPass = cpa.post
                 self.performSegueWithIdentifier("postViewSegue", sender: self)
             } else {
-                print("error, this is not a custom pin")
+                NSLog("error, this is not a custom pin")
             }
         }
         
@@ -651,12 +652,29 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         self.buttonsToolbar.setItems([loadingView, flexibleSpace, linkButton, flexibleSpace, newPostButton], animated: true)*/
         
         //parse query
-        let query = PFQuery(className: "Posts")
-        query.findObjectsInBackgroundWithBlock {
+        parseQueries({
+            (success:Bool) -> Void in
+            
+            //replaces activity spinner in toolbar with button
+            /*self.buttonsToolbar.setItems([self.refreshButton, self.flexibleSpace, self.linkButton,
+             self.flexibleSpace, self.newPostButton], animated: true)
+             self.activityIndicator.stopAnimating()*/
+            
+            self.refresher.endRefreshing() //ends pull to refresh spinner
+            
+            
+            progressView.setProgress(1, animated: true)
+            _ = NSTimer.scheduledTimerWithTimeInterval(0.55, target: self, selector: Selector("resetRefresh"), userInfo: nil, repeats: false)
+        })
+    }
+    
+    func parseQueries(completionHandler:(success:Bool) -> Void) {
+        let postsQuery = PFQuery(className: "Posts")
+        postsQuery.findObjectsInBackgroundWithBlock {
             (currentPosts: [AnyObject]?, error: NSError?) -> Void in
             
             if error == nil && currentPosts != nil {
-
+                
                 //no error and post isn't empty
                 self.posts.removeAll(keepCapacity: true) //erase old array of posts
                 
@@ -691,19 +709,45 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
                 
-                print("error retrieving posts from Parse")
+                NSLog("error retrieving posts from Parse")
+                completionHandler(success: false)
             }
-        //replaces activity spinner in toolbar with button
-        /*self.buttonsToolbar.setItems([self.refreshButton, self.flexibleSpace, self.linkButton,
-        self.flexibleSpace, self.newPostButton], animated: true)
-        self.activityIndicator.stopAnimating()*/
-
-        self.refresher.endRefreshing() //ends pull to refresh spinner
-            
-            
-        progressView.setProgress(1, animated: true)
-        _ = NSTimer.scheduledTimerWithTimeInterval(0.55, target: self, selector: Selector("resetRefresh"), userInfo: nil, repeats: false)
         }
+        
+        let votesQuery = PFQuery(className: "Votes")
+        votesQuery.findObjectsInBackgroundWithBlock({
+            (currentVotes: [AnyObject]?, error: NSError?) -> Void in
+            if error == nil && currentVotes != nil {
+                
+                //no error and votes isn't empty
+                self.votes.removeAll(keepCapacity: true) //erase old array of posts
+                
+                if let currentVotes = currentVotes as? [PFObject]{
+                    for vote in currentVotes {
+                        //create a post object from Parse then append it
+                        let toAppend = Vote(
+                            id: vote.objectId!,
+                            postId: vote["PostID"] as! String,
+                            confirm: vote["Confirm"] as! Bool,
+                            posted: vote.createdAt!)
+
+                        self.votes.append(toAppend)
+                    }
+                }
+                NSLog(String(self.votes))
+                
+            } else {
+                //give an alert that there was an error loading posts
+                let alert = UIAlertController(title: "Error Retrieving Votes", message: "Could not download vote data from server. Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+                NSLog("error retrieving votes from Parse")
+                completionHandler(success: false)
+            }
+        })
+        
+        completionHandler(success: true)
     }
     
     //resets progress views after reload is complete
@@ -733,7 +777,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             annotation.post = post
             map.addAnnotation(annotation)
         }
-        
         
         centerMap()
     }
@@ -780,7 +823,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     //check if user has authorized location services
     let status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
     if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
-        print("location services denied")
+        NSLog("location services denied")
     } else {
         //location services are allowed
     }

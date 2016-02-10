@@ -136,7 +136,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
             pinView.pinTintColor = UIColor.redColor()
         } else {
             pinView.pinTintColor = UIColor.whiteColor()
-            print("error couloring pin")
+            NSLog("error couloring pin")
         }
         
         return pinView

@@ -86,9 +86,9 @@
 		D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NewPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NearbyPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D85022FD1B3097E500CA1118 /* DefaultSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultSettings.plist; sourceTree = "<group>"; };
-		D899FE531B84CB5A005FD176 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreLocationController.swift; sourceTree = "<group>"; };
+		D899FE531B84CB5A005FD176 /* CoreLocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CoreLocationController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D899FE551B84FFC2005FD176 /* CloudCode */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CloudCode; path = "Free Food App/CloudCode"; sourceTree = "<group>"; };
-		D8AC0B681B92398D00D8779B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		D8AC0B681B92398D00D8779B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PostViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D8AC0B6A1B923C6A00D8779B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Clock Filled-50.png"; sourceTree = "<group>"; };
 		D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Good Quality Filled-50.png"; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		D8B364481C6B832200E097E4 /* Help Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Help Filled-50.png"; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D8D87AFD1AF7F19B00303AB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };

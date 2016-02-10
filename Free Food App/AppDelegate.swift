@@ -69,11 +69,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         currentInstallation.setDeviceTokenFromData(deviceToken)
         currentInstallation.save()
         
-        print("successfully registered for push notifications")
+        NSLog("successfully registered for push notifications")
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        //print("failed to register for remote notifications: \(error)")
+        //NSLog("failed to register for remote notifications: \(error)")
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

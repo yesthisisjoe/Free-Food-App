@@ -94,16 +94,18 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
             }
             
         } else if (indexPath.section == 2 && indexPath.row == 2) {
-            print("app store review link")
+            NSLog("App Store review link")
             
-            //email form for moderation
+            //aknowledgements
         } else if (indexPath.section == 2 && indexPath.row == 3) {
-            let mailComposeViewController = configuredMailComposeViewController("Becoming a Free Food app Moderator")
-            if MFMailComposeViewController.canSendMail() {
-                self.presentViewController(mailComposeViewController, animated: true, completion: nil)
-            } else {
-                self.showSendMailErrorAlert()
-            }
+            let alert = UIAlertController(title: "Acknowledgements", message:"Icons courtesy of Icons8", preferredStyle: .Alert)
+            let icons8Button = UIAlertAction(title: "www.icons8.com", style: .Default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                UIApplication.sharedApplication().openURL(NSURL(string:"http://www.icons8.com/")!)
+            })
+            alert.addAction(icons8Button)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
