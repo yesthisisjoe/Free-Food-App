@@ -19,6 +19,7 @@ TODO:
 -before release, check if there is a bitcode version of parse
 -location doesn't show up when you open the app and have allowed location stuff
 -change font of action sheet
+-create post & cancel & it goes green
 
 MINOR BUGS:
 -toolbar transparency stacks when cancel toolbar is active
@@ -175,15 +176,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             pinView!.canShowCallout = true
             pinView!.animatesDrop = true
             pinView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.InfoDark)
-//            let ratingView = UIView(frame: CGRectMake(0, 0, 80, 40))
-//            let ratingLabel = UILabel(frame: CGRectMake(0, 0, 80, 40))
-//            ratingLabel.text = "Seen 10m ago"
-//            ratingLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 30.0)
-//            ratingView.addSubview(ratingLabel)
-            
-            let imageView = UIImageView(frame: CGRectMake(0, 0, 40, 40))
-            imageView.image = UIImage(named: "gears44.png")
-            pinView!.leftCalloutAccessoryView = imageView
             
             //color pin based on what food type it is
             if let customAnnotation = annotation as? CustomPointAnnotation {
@@ -195,8 +187,30 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                     pinView!.pinTintColor = UIColor.whiteColor()
                     print("error couloring pin")
                 }
+                
+                let statusImage = UIImageView(frame: CGRectMake(0, 0, 50, 50))
+                
+                switch customAnnotation.post.status {
+                case 0:
+                    statusImage.image = UIImage(named: "Help Filled-50.png")
+                    break
+                case 1:
+                    statusImage.image = UIImage(named: "Good Quality Filled-50.png")
+                    break
+                case 2:
+                    statusImage.image = UIImage(named: "Poor Quality Filled-50.png")
+                    break
+                case 3:
+                    statusImage.image = UIImage(named: "Help Filled-50.png")
+                    break
+                default:
+                    NSLog("Unknown status code for post.")
+                }
+                
+                pinView!.leftCalloutAccessoryView = statusImage
             } else {
                 pinView!.pinTintColor = UIColor.greenColor()
+                NSLog("couldn't set pin color")
             }
         } else {
             //set up annotation
@@ -336,7 +350,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     //populates each cell of the table
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let tableCell:cell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! cell
-        var fade: CGFloat
+        //var fade: CGFloat
         
         //sets up formatted string for last confirmed
         let lastConfirmed = dateSimplifier(posts[indexPath.row].confirmed)
@@ -362,63 +376,34 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             boldTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.0, green: 0.75, blue: 1.0, alpha: 1.0), range: NSRange(location: title.characters.count + 2, length: type.characters.count))
         }
         
-        
         //sets values for strings in cells
         tableCell.titleLabel.attributedText = boldTitle
         tableCell.lastConfirmedLabel.attributedText = boldLastConfirmed
         tableCell.postedLabel.attributedText = boldPosted
-        tableCell.ratingLabel.text = String(posts[indexPath.row].rating)
         
-        //color cell based on rating
-        if (posts[indexPath.row].rating > 0) {
-            fade = min(0.2 + (CGFloat(posts[indexPath.row].rating) * 0.1), 0.9)
-            //tableCell.contentView.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
-            
-            tableCell.titleLabel.alpha = 1.0
-            tableCell.lastConfirmedLabel.alpha = 1.0
-            tableCell.postedLabel.alpha = 1.0
-            tableCell.ratingLabel.alpha = 1.0
-            tableCell.ratingLabel.textColor = UIColor(red: 0.2, green: fade, blue: 0.2, alpha: 1.0)
-        } else {
-            fade = 0.5//max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
-            //tableCell.contentView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            
-            //fade out text
-            tableCell.titleLabel.alpha = fade
-            tableCell.lastConfirmedLabel.alpha = fade
-            tableCell.postedLabel.alpha = fade
-            tableCell.ratingLabel.alpha = fade
-            tableCell.ratingLabel.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
+        switch posts[indexPath.row].status {
+        case 0:
+            tableCell.statusImage.image = UIImage(named: "Help Filled-50.png")
+            break
+        case 1:
+            tableCell.statusImage.image = UIImage(named: "Good Quality Filled-50.png")
+            break
+        case 2:
+            tableCell.statusImage.image = UIImage(named: "Poor Quality Filled-50.png")
+            break
+        case 3:
+            tableCell.statusImage.image = UIImage(named: "Help Filled-50.png")
+            break
+        default:
+            NSLog("Unknown status code for post.")
         }
         
         return tableCell
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        //color cell based on rating
-        var _: CGFloat //this is fade. change back if you use fade
-        
-        if (posts[indexPath.row].rating > 0) {
-            /*
-            //positive rating
-            fade = max((1.0 - CGFloat(posts[indexPath.row].rating) * 0.01), 0.8)
-            cell.backgroundColor = UIColor(red: fade, green: 1.0, blue: fade, alpha: 1.0)
-            */
-        } else {
-            /*
-            //negative rating
-            fade = max((1.0 + CGFloat(posts[indexPath.row].rating) * 0.1), 0.3)
-            */
-            cell.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            
-            /*
-            //fade out text
-            cell.titleLabel.alpha = fade
-            cell.lastConfirmedLabel.alpha = fade
-            tableCell.ratingLabel.alpha = fade
-            */
-        }
-
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.postToPass = posts[indexPath.row]
+        self.performSegueWithIdentifier("postViewSegue", sender: self)
     }
     
     //called when the first view appears
@@ -678,7 +663,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 if let currentPosts = currentPosts as? [PFObject]{
                     for post in currentPosts {
                         //create a post object from Parse then append it
-                        if ((NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == false || post["FoodType"] as! String == "free") && (post["Approved"] as! Bool == true)) { //check if post is approved and if user wants only free food
+                        if ((NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == false || post["FoodType"] as! String == "free")) { //check if user wants only free food
                             let toAppend = Post(
                                 id: post.objectId!,
                                 title: post["Title"] as! String,
@@ -688,7 +673,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                                 confirmed: post["LastConfirmed"] as! NSDate,
                                 latitude: post["Latitude"] as! Double,
                                 longitude: post["Longitude"] as! Double,
-                                rating: post["Rating"] as! Int,
+                                status: post["Status"] as! Int,
                                 price: post["Price"] as! String
                             )
                             self.posts.append(toAppend)
@@ -696,7 +681,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                     }
                 }
                 //decides the order of the posts in list view
-                self.posts.sortInPlace({$0.rating > $1.rating})
+                self.posts.sortInPlace({$0.status > $1.status})
                 
                 self.populateMap()
                 self.tableView.reloadData()
@@ -851,7 +836,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             
         } else if button == "Submit" {
             //success submitting, notify of approval
-            let alert = UIAlertController(title: "Post Submitted!", message: "Thanks for your submission! Your post has been received and will be made public once it has been approved.", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Post Submitted!", message: "Thanks for your contribution!", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
             

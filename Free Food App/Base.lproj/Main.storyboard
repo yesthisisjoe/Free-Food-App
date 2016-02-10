@@ -9,7 +9,6 @@
         <mutableArray key="AvenirNext.ttc">
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-Italic</string>
             <string>AvenirNext-Italic</string>
             <string>AvenirNext-Regular</string>
@@ -27,15 +26,15 @@
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
-            <string>AvenirNext-Regular</string>
-            <string>AvenirNext-Italic</string>
-            <string>AvenirNext-Regular</string>
-            <string>AvenirNext-Italic</string>
             <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-DemiBold</string>
-            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Regular</string>
             <string>AvenirNext-Regular</string>
             <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Italic</string>
+            <string>AvenirNext-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -143,12 +142,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="102.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="60" translatesAutoresizingMaskIntoConstraints="NO" id="fmN-tB-obg" userLabel="Rating">
-                                                    <rect key="frame" x="8" y="30" width="55" height="42"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="31"/>
-                                                    <color key="textColor" red="0.28596511990000001" green="0.28596511990000001" blue="0.28596511990000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXb-Qz-Bmr" userLabel="Title">
                                                     <rect key="frame" x="73" y="8" width="36" height="25"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
@@ -166,23 +159,23 @@
                                                     <color key="textColor" red="0.28596511990000001" green="0.28596511990000001" blue="0.28596511990000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fvr-Cq-d38">
+                                                    <rect key="frame" x="8" y="17" width="50" height="50"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="RQn-Q1-rk9" firstAttribute="leading" secondItem="Z7x-YU-Jdo" secondAttribute="leadingMargin" constant="65" id="4FO-9B-xvj"/>
                                                 <constraint firstItem="K7b-HL-ba9" firstAttribute="top" secondItem="Z7x-YU-Jdo" secondAttribute="topMargin" constant="45" id="7VM-1k-9kl"/>
                                                 <constraint firstItem="K7b-HL-ba9" firstAttribute="leading" secondItem="Z7x-YU-Jdo" secondAttribute="leadingMargin" constant="65" id="Lwv-7t-Kdm"/>
-                                                <constraint firstItem="RQn-Q1-rk9" firstAttribute="leading" secondItem="fmN-tB-obg" secondAttribute="trailing" constant="10" id="QYa-Jh-Pf9"/>
-                                                <constraint firstAttribute="centerY" secondItem="fmN-tB-obg" secondAttribute="centerY" id="Uad-Kl-Vm9"/>
                                                 <constraint firstItem="fXb-Qz-Bmr" firstAttribute="top" secondItem="Z7x-YU-Jdo" secondAttribute="topMargin" id="fUq-s4-xFH"/>
                                                 <constraint firstItem="fXb-Qz-Bmr" firstAttribute="leading" secondItem="Z7x-YU-Jdo" secondAttribute="leadingMargin" constant="65" id="imd-Hb-C4Q"/>
                                                 <constraint firstItem="RQn-Q1-rk9" firstAttribute="top" secondItem="Z7x-YU-Jdo" secondAttribute="topMargin" constant="24" id="inl-e9-Vx3"/>
-                                                <constraint firstItem="fmN-tB-obg" firstAttribute="leading" secondItem="Z7x-YU-Jdo" secondAttribute="leadingMargin" id="um8-KJ-qYY"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="lastConfirmedLabel" destination="RQn-Q1-rk9" id="tIR-6Y-WsW"/>
                                             <outlet property="postedLabel" destination="K7b-HL-ba9" id="Rv6-pN-x3U"/>
-                                            <outlet property="ratingLabel" destination="fmN-tB-obg" id="3PQ-be-f5T"/>
+                                            <outlet property="statusImage" destination="fvr-Cq-d38" id="gmP-sW-CKe"/>
                                             <outlet property="titleLabel" destination="fXb-Qz-Bmr" id="7Ry-4B-UyZ"/>
                                         </connections>
                                     </tableViewCell>
@@ -832,14 +825,19 @@
                                         <state key="normal" title=" Report Missing" image="Poor Quality Filled-50.png">
                                             <color key="titleColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="reportMissingButton:" destination="d9v-1R-gIe" eventType="touchUpInside" id="DCb-Jr-MBU"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Gxi-re-dFk">
                                         <rect key="frame" x="21" y="193" width="150" height="50"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                         <state key="normal" title=" Confirm This Post" image="Good Quality Filled-50.png">
                                             <color key="titleColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </state>
+                                        <connections>
+                                            <action selector="confirmPostButton:" destination="d9v-1R-gIe" eventType="touchUpInside" id="2ra-3k-oY0"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Free!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJD-bR-abb">
                                         <rect key="frame" x="54" y="11" width="153" height="24"/>
@@ -923,7 +921,15 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="backButton" destination="gm0-S5-7z1" id="gT9-13-eKf"/>
+                        <outlet property="confirmPostButton" destination="Gxi-re-dFk" id="2gK-fQ-kED"/>
+                        <outlet property="descriptionLabel" destination="lgh-uV-M6b" id="QC2-MZ-liW"/>
                         <outlet property="map" destination="ggp-Pn-vNu" id="9eD-ZA-eB1"/>
+                        <outlet property="postedTimeLabel" destination="A3O-T8-7ke" id="IAI-5A-FOE"/>
+                        <outlet property="priceImage" destination="XNB-KR-id9" id="PSv-Rp-1gp"/>
+                        <outlet property="priceLabel" destination="lJD-bR-abb" id="S20-ji-vhb"/>
+                        <outlet property="reportMissingButton" destination="wfl-lF-jzx" id="3Oi-Kz-M6c"/>
+                        <outlet property="statusImage" destination="w8w-e7-ieO" id="zve-zY-gwB"/>
+                        <outlet property="statusLabel" destination="7NE-cq-2F4" id="IDG-Rk-qAi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nfQ-86-JJg" userLabel="First Responder" sceneMemberID="firstResponder"/>

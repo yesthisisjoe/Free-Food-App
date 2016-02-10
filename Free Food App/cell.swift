@@ -9,7 +9,7 @@
 import UIKit
 
 class cell: UITableViewCell {
-    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var statusImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var lastConfirmedLabel: UILabel!
     @IBOutlet weak var postedLabel: UILabel!

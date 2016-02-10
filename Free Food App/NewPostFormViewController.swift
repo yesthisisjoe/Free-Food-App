@@ -29,9 +29,8 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
     var newPostLat: Double?
     var newPostLon: Double?
     var foodType = "free"
-    var rating = 0
+    var status = 0
     var lastConfirmed = NSDate(timeIntervalSinceReferenceDate: 0)
-    var approved = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,9 +112,8 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
         newPost["Price"] = price.text!
         newPost["Latitude"] = newPostLat!
         newPost["Longitude"] = newPostLon!
-        newPost["Rating"] = rating
+        newPost["Status"] = status
         newPost["LastConfirmed"] = lastConfirmed
-        newPost["Approved"] = approved
         
         newPost.saveInBackgroundWithBlock {
             (success, error) -> Void in

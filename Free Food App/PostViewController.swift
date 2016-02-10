@@ -8,29 +8,61 @@
 
 import UIKit
 import MapKit
+import Parse
 
 class PostViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet var reportMissingButton: UIButton!
+    @IBOutlet var confirmPostButton: UIButton!
+    @IBOutlet var priceImage: UIImageView!
+    @IBOutlet var priceLabel: UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet var statusImage: UIImageView!
+    @IBOutlet var statusLabel: UILabel!
+    @IBOutlet var postedTimeLabel: UILabel!
     
-    var post = Post!()
-    var dataSourceArray = []
+    var post = Post!(nil)
     var delegate: PostViewControllerDelegate?
     var postChanged = true //we know to reload the map/table if something changed in this view
     
     override func viewDidLoad() {
-        //populate fields of table
-        dataSourceArray = [
-            post.description,
-            String(post.price),
-            "last confirmed: \(dateSimplifier(post.confirmed))",
-            "posted \(dateSimplifier(post.posted))",
-            //post.title,
-            post.type,
-            "rating: \(String(post.rating))"
-        ]
-    
+        //set text & images so they match the post's attributes
         self.title = post.title
+        
+        if post.type == "free" {
+            priceLabel.text = "Free!"
+        } else {
+            priceLabel.text = post.price
+        }
+        
+        descriptionLabel.text = post.description
+       
+        switch post.status {
+        case 0:
+            statusImage.image = UIImage(named: "Help Filled-50.png")
+            statusLabel.text = "Never confirmed"
+            break
+        case 1:
+            statusImage.image = UIImage(named: "Good Quality Filled-50.png")
+            statusLabel.text = "Likely still there"
+            break
+        case 2:
+            statusImage.image = UIImage(named: "Poor Quality Filled-50.png")
+            statusLabel.text = "Likely missing"
+            break
+        case 3:
+            statusImage.image = UIImage(named: "Help Filled-50.png")
+            statusLabel.text = "May be missing"
+            break
+        default:
+            NSLog("Unknown status code for post.")
+        }
+        
+        postedTimeLabel.text = "\(dateSimplifier(post.posted)): posted"
+        
+        confirmPostButton.setTitle(" Confirm\n This Post", forState: .Normal)
+        reportMissingButton.setTitle(" Report\n Missing", forState: .Normal)
         
         map.delegate = self
         
@@ -58,13 +90,40 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     @IBAction func backButton(sender: AnyObject) {
         delegate!.postViewDidFinish(self, changed: postChanged)
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func confirmPostButton(sender: AnyObject) {
+        sendVote(true)
+    }
+    
+    @IBAction func reportMissingButton(sender: AnyObject) {
+        sendVote(false)
+    }
+    
+    func sendVote(confirm: Bool) {
+        let vote = PFObject(className: "Votes")
+        vote["Confirm"] = confirm
+        vote["PostID"] = post.id
+        
+        vote.saveInBackgroundWithBlock( {
+            (success, error) -> Void in
+            if (success) {
+                if confirm {
+                    self.confirmPostButton.enabled = false
+                } else {
+                    self.reportMissingButton.enabled = false
+                }
+            } else {
+                //failure, notify of error
+                NSLog(String(error))
+                let alert = UIAlertController(title: "Error Submitting Vote", message: "Could not submit your vote. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        })
     }
     
     //colour pins based on their type

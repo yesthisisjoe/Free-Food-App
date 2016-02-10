@@ -12,10 +12,10 @@ struct Post {
     var id, title, description, type, price: String
     var posted, confirmed: NSDate
     var latitude, longitude: Double
-    var rating: Int
+    var status: Int
     
     //initializer for when we download from the server
-    init(id: String, title: String, description: String, type: String, posted: NSDate, confirmed: NSDate, latitude: Double, longitude: Double, rating: Int, price: String) {
+    init(id: String, title: String, description: String, type: String, posted: NSDate, confirmed: NSDate, latitude: Double, longitude: Double, status: Int, price: String) {
         self.id = id
         self.title = title
         self.description = description
@@ -24,7 +24,7 @@ struct Post {
         self.confirmed = confirmed
         self.latitude = latitude
         self.longitude = longitude
-        self.rating = rating
+        self.status = status
         self.price = price
     }
 }
