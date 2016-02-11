@@ -8,9 +8,14 @@
 
 import UIKit
 
-class cell: UITableViewCell {
+class postTableCell: UITableViewCell {
     @IBOutlet weak var statusImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var lastConfirmedLabel: UILabel!
     @IBOutlet weak var postedLabel: UILabel!
+}
+
+class voteTableCell: UITableViewCell {
+    @IBOutlet weak var voteCellLabel: UILabel!
+    @IBOutlet weak var voteCellImage: UIImageView!
 }

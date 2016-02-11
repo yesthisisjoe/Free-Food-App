@@ -350,7 +350,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     
     //populates each cell of the table
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let tableCell:cell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! cell
+        let tableCell:postTableCell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! postTableCell
         //var fade: CGFloat
         
         //sets up formatted string for last confirmed
@@ -715,6 +715,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 }
                 
                 let votesQuery = PFQuery(className: "Votes")
+                votesQuery.orderByDescending("createdAt")
+                
                 votesQuery.findObjectsInBackgroundWithBlock({
                     (currentVotes: [AnyObject]?, error: NSError?) -> Void in
                     if error == nil && currentVotes != nil {

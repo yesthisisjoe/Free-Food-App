@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import Parse
 
-class PostViewController: UIViewController, MKMapViewDelegate {
+class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate {
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet var reportMissingButton: UIButton!
@@ -20,8 +20,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var statusImage: UIImageView!
     @IBOutlet var statusLabel: UILabel!
-    @IBOutlet var postedTimeLabel: UILabel!
-    @IBOutlet weak var detailsView: UIView!
+    @IBOutlet weak var votesTableView: UITableView!
     
     var post = Post!(nil)
     var delegate: PostViewControllerDelegate?
@@ -61,12 +60,8 @@ class PostViewController: UIViewController, MKMapViewDelegate {
             NSLog("Unknown status code for post.")
         }
         
-        postedTimeLabel.text = "\(dateSimplifier(post.posted)): posted"
-        
         confirmPostButton.setTitle(" Confirm\n This Post", forState: .Normal)
         reportMissingButton.setTitle(" Report\n Missing", forState: .Normal)
-        
-        dynamicVoteLog(post.votes.count)
         
         map.delegate = self
         
@@ -94,25 +89,29 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
     }
     
-    func dynamicVoteLog(numberOfVotes: Int) {
-        let voteImage = UIImageView(frame: CGRectMake(0, 0, 16, 16))
-        voteImage.image = UIImage(named: "Help Filled-50.png")
-        
-        let voteLabel = UILabel(frame: CGRectMake(0, 0, 200, 21))
-        voteLabel.text = "3h ago: confirmed"
-        
-        
-        
-        switch numberOfVotes {
-        case 0:
-            break
-        case 1:
-            break
-        case 2:
-            break
-        default:
-            break
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return post.votes.count + 1
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let tableCell: voteTableCell = self.votesTableView.dequeueReusableCellWithIdentifier("tableCell") as! voteTableCell
+                
+        if indexPath.row == post.votes.count {
+            tableCell.voteCellLabel.text = "\(dateSimplifier(post.posted)): posted"
+            tableCell.voteCellImage.image = UIImage(named: "Clock Filled-50.png")
+        } else {
+            //sets image & label of vote cell
+            let thisVote = post.votes[indexPath.row]
+            let confirmOrReportText = thisVote.confirm ? "confirmed" : "reported missing"
+            tableCell.voteCellLabel.text = "\(dateSimplifier(post.votes[indexPath.row].posted)): " + confirmOrReportText
+            tableCell.voteCellImage.image = thisVote.confirm ? UIImage(named: "Good Quality Filled-50.png") : UIImage(named: "Poor Quality Filled-50.png")
         }
+
+        return tableCell
     }
     
     @IBAction func backButton(sender: AnyObject) {
