@@ -21,6 +21,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var statusImage: UIImageView!
     @IBOutlet var statusLabel: UILabel!
     @IBOutlet var postedTimeLabel: UILabel!
+    @IBOutlet weak var detailsView: UIView!
     
     var post = Post!(nil)
     var delegate: PostViewControllerDelegate?
@@ -28,6 +29,7 @@ class PostViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         //set text & images so they match the post's attributes
+        
         self.title = post.title
         
         if post.type == "free" {
@@ -64,6 +66,8 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         confirmPostButton.setTitle(" Confirm\n This Post", forState: .Normal)
         reportMissingButton.setTitle(" Report\n Missing", forState: .Normal)
         
+        dynamicVoteLog(post.votes.count)
+        
         map.delegate = self
         
         //add post pin to map
@@ -88,6 +92,27 @@ class PostViewController: UIViewController, MKMapViewDelegate {
         navigationItem.setHidesBackButton(false, animated: false)
         
         super.viewDidLoad()
+    }
+    
+    func dynamicVoteLog(numberOfVotes: Int) {
+        let voteImage = UIImageView(frame: CGRectMake(0, 0, 16, 16))
+        voteImage.image = UIImage(named: "Help Filled-50.png")
+        
+        let voteLabel = UILabel(frame: CGRectMake(0, 0, 200, 21))
+        voteLabel.text = "3h ago: confirmed"
+        
+        
+        
+        switch numberOfVotes {
+        case 0:
+            break
+        case 1:
+            break
+        case 2:
+            break
+        default:
+            break
+        }
     }
     
     @IBAction func backButton(sender: AnyObject) {

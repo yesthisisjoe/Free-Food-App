@@ -923,6 +923,7 @@
                         <outlet property="backButton" destination="gm0-S5-7z1" id="gT9-13-eKf"/>
                         <outlet property="confirmPostButton" destination="Gxi-re-dFk" id="2gK-fQ-kED"/>
                         <outlet property="descriptionLabel" destination="lgh-uV-M6b" id="QC2-MZ-liW"/>
+                        <outlet property="detailsView" destination="jMy-Lk-mr4" id="ZxA-yL-hhP"/>
                         <outlet property="map" destination="ggp-Pn-vNu" id="9eD-ZA-eB1"/>
                         <outlet property="postedTimeLabel" destination="A3O-T8-7ke" id="IAI-5A-FOE"/>
                         <outlet property="priceImage" destination="XNB-KR-id9" id="PSv-Rp-1gp"/>

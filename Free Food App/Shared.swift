@@ -13,6 +13,7 @@ struct Post {
     var posted, confirmed: NSDate
     var latitude, longitude: Double
     var status: Int
+    var votes: [Vote]
     
     //initializer for when we download from the server
     init(id: String, title: String, description: String, type: String, posted: NSDate, confirmed: NSDate, latitude: Double, longitude: Double, status: Int, price: String) {
@@ -26,6 +27,7 @@ struct Post {
         self.longitude = longitude
         self.status = status
         self.price = price
+        self.votes = []
     }
 }
 

@@ -655,6 +655,21 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         parseQueries({
             (success:Bool) -> Void in
             
+            //attach votes to posts
+            for index in 0..<self.posts.count {
+                for vote in self.votes {
+                    if self.posts[index].id == vote.postId {
+                        self.posts[index].votes.append(vote)
+                    }
+                }
+            }
+            
+            //decides the order of the posts in list view
+            self.posts.sortInPlace({$0.status > $1.status})
+            
+            self.populateMap()
+            self.tableView.reloadData()
+            
             //replaces activity spinner in toolbar with button
             /*self.buttonsToolbar.setItems([self.refreshButton, self.flexibleSpace, self.linkButton,
              self.flexibleSpace, self.newPostButton], animated: true)
@@ -698,11 +713,38 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                         }
                     }
                 }
-                //decides the order of the posts in list view
-                self.posts.sortInPlace({$0.status > $1.status})
                 
-                self.populateMap()
-                self.tableView.reloadData()
+                let votesQuery = PFQuery(className: "Votes")
+                votesQuery.findObjectsInBackgroundWithBlock({
+                    (currentVotes: [AnyObject]?, error: NSError?) -> Void in
+                    if error == nil && currentVotes != nil {
+                        
+                        //no error and votes isn't empty
+                        self.votes.removeAll(keepCapacity: true) //erase old array of posts
+                        
+                        if let currentVotes = currentVotes as? [PFObject]{
+                            for vote in currentVotes {
+                                //create a post object from Parse then append it
+                                let toAppend = Vote(
+                                    id: vote.objectId!,
+                                    postId: vote["PostID"] as! String,
+                                    confirm: vote["Confirm"] as! Bool,
+                                    posted: vote.createdAt!)
+                                
+                                self.votes.append(toAppend)
+                            }
+                        }
+                        completionHandler(success: true)
+                    } else {
+                        //give an alert that there was an error loading votes
+                        let alert = UIAlertController(title: "Error Retrieving Votes", message: "Could not download vote data from server. Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        
+                        NSLog("error retrieving votes from Parse")
+                        completionHandler(success: false)
+                    }
+                })
             } else {
                 //give an alert that there was an error loading posts
                 let alert = UIAlertController(title: "Error Retrieving Posts", message: "Could not download posts from server. Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -713,41 +755,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 completionHandler(success: false)
             }
         }
-        
-        let votesQuery = PFQuery(className: "Votes")
-        votesQuery.findObjectsInBackgroundWithBlock({
-            (currentVotes: [AnyObject]?, error: NSError?) -> Void in
-            if error == nil && currentVotes != nil {
-                
-                //no error and votes isn't empty
-                self.votes.removeAll(keepCapacity: true) //erase old array of posts
-                
-                if let currentVotes = currentVotes as? [PFObject]{
-                    for vote in currentVotes {
-                        //create a post object from Parse then append it
-                        let toAppend = Vote(
-                            id: vote.objectId!,
-                            postId: vote["PostID"] as! String,
-                            confirm: vote["Confirm"] as! Bool,
-                            posted: vote.createdAt!)
-
-                        self.votes.append(toAppend)
-                    }
-                }
-                NSLog(String(self.votes))
-                
-            } else {
-                //give an alert that there was an error loading posts
-                let alert = UIAlertController(title: "Error Retrieving Votes", message: "Could not download vote data from server. Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-                
-                NSLog("error retrieving votes from Parse")
-                completionHandler(success: false)
-            }
-        })
-        
-        completionHandler(success: true)
     }
     
     //resets progress views after reload is complete
