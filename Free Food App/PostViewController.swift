@@ -114,7 +114,6 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
         postQuery.fetchInBackgroundWithBlock {
             (success, error) in
             if success != nil {
-                NSLog("fetched new posts")
                 self.post = Post(
                     id: postQuery.objectId!,
                     title: postQuery["Title"] as! String,
@@ -130,6 +129,7 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
             } else {
                 NSLog(String(error))
             }
+            
             let votesQuery = PFQuery(className: "Votes")
             votesQuery.orderByDescending("createdAt")
             
@@ -207,28 +207,68 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
     
     @IBAction func confirmPostButton(sender: AnyObject) {
         if confirmedByUser {
-            removeVote(true)
+            removeVote(true) { (success:Bool) -> Void in
+                NSLog("removed vote")
+                self.reloadPost(self.postId) { (success:Bool) -> Void in
+                    NSLog("got new post data")
+                    self.votesTableView.reloadData()
+                }
+            }
         } else {
             if reportedByUser {
-                removeVote(false)
+                removeVote(false) { (success:Bool) -> Void in
+                    NSLog("removed vote")
+                    self.sendVote(true) { (success:Bool) -> Void in
+                        NSLog("added vote")
+                        self.reloadPost(self.postId) { (success:Bool) -> Void in
+                            NSLog("got new post data")
+                            self.votesTableView.reloadData()
+                        }
+                    }
+                }
             }
-            sendVote(true)
+            sendVote(true) { (success:Bool) -> Void in
+                NSLog("added vote")
+                self.reloadPost(self.postId) { (success:Bool) -> Void in
+                    NSLog("got new post data")
+                    self.votesTableView.reloadData()
+                }
+            }
         }
     }
     
     @IBAction func reportMissingButton(sender: AnyObject) {
         if reportedByUser {
-            removeVote(false)
+            removeVote(false) { (success:Bool) -> Void in
+                NSLog("removed vote")
+                self.reloadPost(self.postId) { (success:Bool) -> Void in
+                    NSLog("got new post data")
+                    self.votesTableView.reloadData()
+                }
+            }
         } else {
             if confirmedByUser {
-                removeVote(true)
+                removeVote(true) { (success:Bool) -> Void in
+                    NSLog("removed vote")
+                    self.sendVote(false) { (success:Bool) -> Void in
+                        self.reloadPost(self.postId) {
+                            (success:Bool) -> Void in
+                            self.votesTableView.reloadData()
+                        }
+                    }
+                }
             }
-            sendVote(false)
+            sendVote(false) { (success:Bool) -> Void in
+                self.reloadPost(self.postId) {
+                    (success:Bool) -> Void in
+                    self.votesTableView.reloadData()
+                }
+            }
         }
     }
     
     //sends the user's vote to Parse
-    func sendVote(confirm: Bool) {
+    func sendVote(confirm: Bool, completionHandler:(success:Bool) -> Void) {
         let vote = PFObject(className: "Votes")
         vote["Confirm"] = confirm
         vote["PostID"] = post.id
@@ -244,44 +284,46 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
                 }
                 
                 self.usersVoteId = vote.objectId!
-                NSLog("new latest vote ID: \(self.usersVoteId)")
-                
-                self.reloadPost(self.postId) {
-                    (success:Bool) -> Void in
-                    self.votesTableView.reloadData()
-                }
+                completionHandler(success: true)
             } else {
                 //failure, notify of error
                 NSLog(String(error))
                 let alert = UIAlertController(title: "Error Submitting Vote", message: "Could not submit your vote. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
+                
+                completionHandler(success: false)
             }
         })
     }
     
-    //removes the user's vote from Parse
-    func removeVote(confirm: Bool) {
-        NSLog("removing vote with: \(usersVoteId)")
-        
-        let voteToRemove = PFObject(outDataWithClassName: "Votes", objectId: usersVoteId)
-        voteToRemove.deleteInBackgroundWithBlock {
-            (success, error) in
-            if (success) {
-                if confirm {
-                    self.confirmedByUser(false)
-                } else {
-                    self.reportedByUser(false)
-                }
-                self.reloadPost(self.postId) {
-                    (success:Bool) -> Void in
-                    self.votesTableView.reloadData()
-                }
-            } else {
+    //removes the user's existing votes from Parse
+    func removeVote(confirm: Bool, completionHandler:(success:Bool) -> Void) {
+        let removalQuery = PFQuery(className: "Votes")
+        removalQuery.whereKey("objectId", equalTo: usersVoteId)
+        removalQuery.getFirstObjectInBackgroundWithBlock { (object, error) in
+            if (object == nil) {
                 NSLog(String(error))
-                let alert = UIAlertController(title: "Error Removing Vote", message: "Could not remove your vote. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                completionHandler(success: false)
+            } else {
+                object!.deleteInBackgroundWithBlock {
+                (success, error) -> Void in
+                if (success) {
+                    if confirm {
+                        self.confirmedByUser(false)
+                    } else {
+                        self.reportedByUser(false)
+                    }
+                    
+                    completionHandler(success: true)
+                } else {
+                    NSLog(String(error))
+                    let alert = UIAlertController(title: "Error Removing Vote", message: "Could not remove your vote. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                    completionHandler(success: false)
+                }
             }
         }
     }
