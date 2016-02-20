@@ -731,7 +731,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                                     id: vote.objectId!,
                                     postId: vote["PostID"] as! String,
                                     confirm: vote["Confirm"] as! Bool,
-                                    posted: vote.createdAt!)
+                                    posted: vote.createdAt!,
+                                    userId: vote["UserID"] as! String)
                                 
                                 self.votes.append(toAppend)
                             }

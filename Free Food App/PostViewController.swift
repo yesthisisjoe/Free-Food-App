@@ -22,13 +22,20 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
     @IBOutlet var statusLabel: UILabel!
     @IBOutlet weak var votesTableView: UITableView!
     
-    var post = Post!(nil)
+    let uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
+    
     var delegate: PostViewControllerDelegate?
+    var post = Post!(nil)
+    var postId = ""
     var postChanged = true //we know to reload the map/table if something changed in this view
+    var usersVoteId = "" //stores the object ID of the user's vote in parse if they have one
+    var confirmedByUser = false
+    var reportedByUser = false
     
     override func viewDidLoad() {
-        //set text & images so they match the post's attributes
+        postId = post.id
         
+        //set text & images so they match the post's attributes
         self.title = post.title
         
         if post.type == "free" {
@@ -63,6 +70,19 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
         confirmPostButton.setTitle(" Confirm\n This Post", forState: .Normal)
         reportMissingButton.setTitle(" Report\n Missing", forState: .Normal)
         
+        //check if our user cast a vote and disable the proper vote button if so
+        for vote in post.votes {
+            if vote.userId == uuid {
+                usersVoteId = vote.id
+                if vote.confirm {
+                    confirmedByUser(true)
+                } else {
+                    reportedByUser(true)
+                }
+                break
+            }
+        }
+        
         map.delegate = self
         
         //add post pin to map
@@ -87,6 +107,72 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
         navigationItem.setHidesBackButton(false, animated: false)
         
         super.viewDidLoad()
+    }
+    
+    func reloadPost(id: String, completionHandler:(success:Bool) -> Void) {
+        let postQuery = PFObject(outDataWithClassName: "Posts", objectId: id)
+        postQuery.fetchInBackgroundWithBlock {
+            (success, error) in
+            if success != nil {
+                NSLog("fetched new posts")
+                self.post = Post(
+                    id: postQuery.objectId!,
+                    title: postQuery["Title"] as! String,
+                    description: postQuery["Description"] as! String,
+                    type: postQuery["FoodType"] as! String,
+                    posted: postQuery.createdAt!,
+                    confirmed: postQuery["LastConfirmed"] as! NSDate,
+                    latitude: postQuery["Latitude"] as! Double,
+                    longitude: postQuery["Longitude"] as! Double,
+                    status: postQuery["Status"] as! Int,
+                    price: postQuery["Price"] as! String)
+                self.postId = postQuery.objectId!
+            } else {
+                NSLog(String(error))
+            }
+            let votesQuery = PFQuery(className: "Votes")
+            votesQuery.orderByDescending("createdAt")
+            
+            votesQuery.findObjectsInBackgroundWithBlock {
+                (currentVotes: [AnyObject]?, error: NSError?) -> Void in
+                if error == nil && currentVotes != nil {
+                    self.post.votes.removeAll(keepCapacity: true) //erase old array of posts
+                    
+                    if let currentVotes = currentVotes as? [PFObject]{
+                        for vote in currentVotes {
+                            //create a post object from Parse then append it
+                            let toAppend = Vote(
+                                id: vote.objectId!,
+                                postId: vote["PostID"] as! String,
+                                confirm: vote["Confirm"] as! Bool,
+                                posted: vote.createdAt!,
+                                userId: vote["UserID"] as! String)
+                            
+                            self.post.votes.append(toAppend)
+                        }
+                    }
+                    completionHandler(success: true)
+                } else {
+                    //give an alert that there was an error loading votes
+                    let alert = UIAlertController(title: "Error Retrieving Votes", message: "Could not download vote data from server. Please check your internet connection.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                    NSLog("error retrieving votes from Parse")
+                    completionHandler(success: false)
+                }
+            }
+        }
+    }
+    
+    func confirmedByUser(hasBeenConfirmed: Bool) {
+        confirmedByUser = hasBeenConfirmed
+        confirmPostButton.alpha = hasBeenConfirmed ? 0.5 : 1.0
+    }
+    
+    func reportedByUser(hasBeenReported: Bool) {
+        reportedByUser = hasBeenReported
+        reportMissingButton.alpha = hasBeenReported ? 0.5 : 1.0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -120,25 +206,49 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
     }
     
     @IBAction func confirmPostButton(sender: AnyObject) {
-        sendVote(true)
+        if confirmedByUser {
+            removeVote(true)
+        } else {
+            if reportedByUser {
+                removeVote(false)
+            }
+            sendVote(true)
+        }
     }
     
     @IBAction func reportMissingButton(sender: AnyObject) {
-        sendVote(false)
+        if reportedByUser {
+            removeVote(false)
+        } else {
+            if confirmedByUser {
+                removeVote(true)
+            }
+            sendVote(false)
+        }
     }
     
+    //sends the user's vote to Parse
     func sendVote(confirm: Bool) {
         let vote = PFObject(className: "Votes")
         vote["Confirm"] = confirm
         vote["PostID"] = post.id
+        vote["UserID"] = uuid
         
         vote.saveInBackgroundWithBlock( {
             (success, error) -> Void in
             if (success) {
                 if confirm {
-                    self.confirmPostButton.enabled = false
+                    self.confirmedByUser(true)
                 } else {
-                    self.reportMissingButton.enabled = false
+                    self.reportedByUser(true)
+                }
+                
+                self.usersVoteId = vote.objectId!
+                NSLog("new latest vote ID: \(self.usersVoteId)")
+                
+                self.reloadPost(self.postId) {
+                    (success:Bool) -> Void in
+                    self.votesTableView.reloadData()
                 }
             } else {
                 //failure, notify of error
@@ -148,6 +258,32 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         })
+    }
+    
+    //removes the user's vote from Parse
+    func removeVote(confirm: Bool) {
+        NSLog("removing vote with: \(usersVoteId)")
+        
+        let voteToRemove = PFObject(outDataWithClassName: "Votes", objectId: usersVoteId)
+        voteToRemove.deleteInBackgroundWithBlock {
+            (success, error) in
+            if (success) {
+                if confirm {
+                    self.confirmedByUser(false)
+                } else {
+                    self.reportedByUser(false)
+                }
+                self.reloadPost(self.postId) {
+                    (success:Bool) -> Void in
+                    self.votesTableView.reloadData()
+                }
+            } else {
+                NSLog(String(error))
+                let alert = UIAlertController(title: "Error Removing Vote", message: "Could not remove your vote. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     //colour pins based on their type

@@ -32,15 +32,16 @@ struct Post {
 }
 
 struct Vote {
-    var id, postId: String
+    var id, postId, userId: String
     var confirm: Bool
     var posted: NSDate
     
-    init(id: String, postId: String, confirm: Bool, posted: NSDate) {
+    init(id: String, postId: String, confirm: Bool, posted: NSDate, userId: String) {
         self.id = id
         self.postId = postId
         self.confirm = confirm
         self.posted = posted
+        self.userId = userId
     }
 }
 
