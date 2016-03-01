@@ -22,6 +22,7 @@ class CoreLocationController: NSObject, CLLocationManagerDelegate {
         return SharedUserLocation
     }
     
+    //location manager handler functions
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         /*NSLog("Did change authorization status: ")
         

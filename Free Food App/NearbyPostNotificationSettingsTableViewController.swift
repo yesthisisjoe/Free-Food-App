@@ -14,37 +14,33 @@ class NearbyPostNotificationSettingsTableViewController: UITableViewController {
     @IBOutlet weak var cheapFoodSwitch: UISwitch!
     @IBOutlet weak var cheapFoodLabel: UILabel!
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
         //disable cheap food cell if cheap food is disabled
-        if (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree")! as! NSObject == true) {
+        if (defaults.objectForKey("onlyFree")! as! NSObject == true) {
             cheapFoodLabel.enabled = false
             cheapFoodSwitch.enabled = false
         }
         
-        NSUserDefaults.standardUserDefaults().objectForKey("onlyFree")
-        
         //set default switch state
-        freeFoodSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("freeNearbyNotifications") as! Bool, animated: false)
-        cheapFoodSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("cheapNearbyNotifications") as! Bool, animated: false)
+        freeFoodSwitch.setOn(defaults.objectForKey("freeNearbyNotifications") as! Bool, animated: false)
+        cheapFoodSwitch.setOn(defaults.objectForKey("cheapNearbyNotifications") as! Bool, animated: false)
     }
     
+    //free food switch
     @IBAction func freeFoodSwitchAction(sender: AnyObject) {
         let switchOn = freeFoodSwitch.on
-        NSUserDefaults.standardUserDefaults().setObject(switchOn, forKey: "freeNearbyNotifications")
+        defaults.setObject(switchOn, forKey: "freeNearbyNotifications")
     }
     
+    //cheap food switch
     @IBAction func cheapFoodSwitchAction(sender: AnyObject) {
         let switchOn = cheapFoodSwitch.on
-        NSUserDefaults.standardUserDefaults().setObject(switchOn, forKey: "cheapNearbyNotifications")
+        defaults.setObject(switchOn, forKey: "cheapNearbyNotifications")
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 }

@@ -12,14 +12,8 @@
 		D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D811A5FD1B83B3430064ED0C /* ApiKeys.plist */; };
 		D811A6001B83B4D60064ED0C /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */; };
 		D812ED731B06BFEF009287DA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D812ED721B06BFEF009287DA /* SettingsViewController.swift */; };
-		D83412CB1BB8F2B100B367FE /* Images you need in Resources */ = {isa = PBXBuildFile; fileRef = D83412CA1BB8F2B100B367FE /* Images you need */; };
 		D83721401B74FE7600D12167 /* Swift.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D837213F1B74FE7600D12167 /* Swift.gitignore */; };
 		D8427EDB1AF7F5A500B0F004 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */; };
-		D84656411C6AA3CC00D2F690 /* White Clock Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D846563C1C6AA3CC00D2F690 /* White Clock Filled-50.png */; };
-		D84656421C6AA3CC00D2F690 /* White Good Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D846563D1C6AA3CC00D2F690 /* White Good Quality Filled-50.png */; };
-		D84656431C6AA3CC00D2F690 /* White Info Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D846563E1C6AA3CC00D2F690 /* White Info Filled-50.png */; };
-		D84656441C6AA3CC00D2F690 /* White Poor Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D846563F1C6AA3CC00D2F690 /* White Poor Quality Filled-50.png */; };
-		D84656451C6AA3CC00D2F690 /* White US Dollar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D84656401C6AA3CC00D2F690 /* White US Dollar-50.png */; };
 		D8471CAE1B499C7C003C5F70 /* NewPostFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8471CAD1B499C7C003C5F70 /* NewPostFormViewController.swift */; };
 		D85022B81B2F805F00CA1118 /* NewPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */; };
 		D85022BA1B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */; };
@@ -34,7 +28,7 @@
 		D8B364471C6AEFFB00E097E4 /* Poor Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */; };
 		D8B364491C6B832200E097E4 /* Help Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364481C6B832200E097E4 /* Help Filled-50.png */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
-		D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */; };
+		D8D87AFB1AF7F19B00303AB0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* MapViewController.swift */; };
 		D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */; };
 		D8D87B001AF7F19B00303AB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */; };
 		D8D87B031AF7F19B00303AB0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8D87B011AF7F19B00303AB0 /* LaunchScreen.xib */; };
@@ -52,10 +46,6 @@
 		D8F06C051B2F3B500075573C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F06C041B2F3B500075573C /* libsqlite3.dylib */; };
 		D8FC3B591B8BAE4D00217B53 /* gears44.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B581B8BAE4D00217B53 /* gears44.png */; };
 		D8FC3B5B1B8BB08500217B53 /* gears22.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B5A1B8BB08500217B53 /* gears22.png */; };
-		D8FC3B5D1B8BB11000217B53 /* gears30.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B5C1B8BB11000217B53 /* gears30.png */; };
-		D8FC3B5F1B8BB18F00217B53 /* gears28.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B5E1B8BB18F00217B53 /* gears28.png */; };
-		D8FC3B611B8BB45C00217B53 /* gears26.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B601B8BB45C00217B53 /* gears26.png */; };
-		D8FC3B631B8BB4CE00217B53 /* gears24.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B621B8BB4CE00217B53 /* gears24.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,14 +64,8 @@
 		D811A5FD1B83B3430064ED0C /* ApiKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
 		D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
 		D812ED721B06BFEF009287DA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SettingsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		D83412CA1BB8F2B100B367FE /* Images you need */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Images you need"; sourceTree = "<group>"; };
 		D837213F1B74FE7600D12167 /* Swift.gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Swift.gitignore; sourceTree = "<group>"; };
 		D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		D846563C1C6AA3CC00D2F690 /* White Clock Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "White Clock Filled-50.png"; sourceTree = "<group>"; };
-		D846563D1C6AA3CC00D2F690 /* White Good Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "White Good Quality Filled-50.png"; sourceTree = "<group>"; };
-		D846563E1C6AA3CC00D2F690 /* White Info Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "White Info Filled-50.png"; sourceTree = "<group>"; };
-		D846563F1C6AA3CC00D2F690 /* White Poor Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "White Poor Quality Filled-50.png"; sourceTree = "<group>"; };
-		D84656401C6AA3CC00D2F690 /* White US Dollar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "White US Dollar-50.png"; sourceTree = "<group>"; };
 		D8471CAD1B499C7C003C5F70 /* NewPostFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostFormViewController.swift; sourceTree = "<group>"; };
 		D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NewPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NearbyPostNotificationSettingsTableViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -98,7 +82,7 @@
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D8D87AFA1AF7F19B00303AB0 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D8D87AFD1AF7F19B00303AB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D8D87B021AF7F19B00303AB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -116,13 +100,9 @@
 		D8F06BFF1B2F32F10075573C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Free Food App/Parse.framework"; sourceTree = "<group>"; };
 		D8F06C011B2F3ADD0075573C /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		D8F06C041B2F3B500075573C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
-		D8F06C091B2F40EC0075573C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		D8F06C091B2F40EC0075573C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Free Food App/Parse.framework"; sourceTree = "<group>"; };
 		D8FC3B581B8BAE4D00217B53 /* gears44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gears44.png; sourceTree = "<group>"; };
 		D8FC3B5A1B8BB08500217B53 /* gears22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gears22.png; sourceTree = "<group>"; };
-		D8FC3B5C1B8BB11000217B53 /* gears30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gears30.png; sourceTree = "<group>"; };
-		D8FC3B5E1B8BB18F00217B53 /* gears28.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gears28.png; sourceTree = "<group>"; };
-		D8FC3B601B8BB45C00217B53 /* gears26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gears26.png; sourceTree = "<group>"; };
-		D8FC3B621B8BB4CE00217B53 /* gears24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gears24.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,14 +135,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D8D87AE71AF7F19B00303AB0 = {
+		D8198EB91C8641A30053E16D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D8F06C091B2F40EC0075573C /* Parse.framework */,
 				D8AC0B6A1B923C6A00D8779B /* Bolts.framework */,
-				D899FE551B84FFC2005FD176 /* CloudCode */,
-				D837213F1B74FE7600D12167 /* Swift.gitignore */,
-				D8F06C041B2F3B500075573C /* libsqlite3.dylib */,
-				D8F06C011B2F3ADD0075573C /* libz.1.dylib */,
 				D8F06BFF1B2F32F10075573C /* Parse.framework */,
 				D8E864AD1AF84DE7006986B9 /* SystemConfiguration.framework */,
 				D8E864A91AF84DDA006986B9 /* Security.framework */,
@@ -172,6 +149,70 @@
 				D8E864A11AF84DB4006986B9 /* CFNetwork.framework */,
 				D8E8649F1AF84DAE006986B9 /* AudioToolbox.framework */,
 				D8427EDA1AF7F5A500B0F004 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8198EBA1C8641D90053E16D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
+				D8B364481C6B832200E097E4 /* Help Filled-50.png */,
+				D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */,
+				D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */,
+				D8B364421C6AEFFB00E097E4 /* Orange Dollar-50.png */,
+				D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */,
+				D8FC3B5A1B8BB08500217B53 /* gears22.png */,
+				D8FC3B581B8BAE4D00217B53 /* gears44.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D8198EBB1C8641F20053E16D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D85022FD1B3097E500CA1118 /* DefaultSettings.plist */,
+				D811A5FD1B83B3430064ED0C /* ApiKeys.plist */,
+				D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */,
+				D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */,
+				D8E864B81AF95496006986B9 /* Shared.swift */,
+				D8059AFD1B03D8EF00200348 /* cell.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D8198EBC1C8641F80053E16D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */,
+				D8D87B011AF7F19B00303AB0 /* LaunchScreen.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		D8198EBD1C8641FD0053E16D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D812ED721B06BFEF009287DA /* SettingsViewController.swift */,
+				D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */,
+				D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */,
+				D811A5FB1B83AB240064ED0C /* PushNotificationController.swift */,
+				D8AC0B681B92398D00D8779B /* PostViewController.swift */,
+				D8471CAD1B499C7C003C5F70 /* NewPostFormViewController.swift */,
+				D8D87AFA1AF7F19B00303AB0 /* MapViewController.swift */,
+				D899FE531B84CB5A005FD176 /* CoreLocationController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		D8D87AE71AF7F19B00303AB0 = {
+			isa = PBXGroup;
+			children = (
+				D899FE551B84FFC2005FD176 /* CloudCode */,
+				D837213F1B74FE7600D12167 /* Swift.gitignore */,
+				D8F06C041B2F3B500075573C /* libsqlite3.dylib */,
+				D8F06C011B2F3ADD0075573C /* libz.1.dylib */,
+				D8198EB91C8641A30053E16D /* Frameworks */,
 				D8D87AF21AF7F19B00303AB0 /* Free Food App */,
 				D8D87B0B1AF7F19B00303AB0 /* Free Food AppTests */,
 				D8D87AF11AF7F19B00303AB0 /* Products */,
@@ -190,41 +231,10 @@
 		D8D87AF21AF7F19B00303AB0 /* Free Food App */ = {
 			isa = PBXGroup;
 			children = (
-				D8FC3B621B8BB4CE00217B53 /* gears24.png */,
-				D8FC3B5A1B8BB08500217B53 /* gears22.png */,
-				D8FC3B5C1B8BB11000217B53 /* gears30.png */,
-				D8FC3B5E1B8BB18F00217B53 /* gears28.png */,
-				D8FC3B601B8BB45C00217B53 /* gears26.png */,
-				D8F06C091B2F40EC0075573C /* Parse.framework */,
-				D8059AFD1B03D8EF00200348 /* cell.swift */,
-				D8E864B81AF95496006986B9 /* Shared.swift */,
-				D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */,
-				D899FE531B84CB5A005FD176 /* CoreLocationController.swift */,
-				D8D87AFA1AF7F19B00303AB0 /* ViewController.swift */,
-				D8471CAD1B499C7C003C5F70 /* NewPostFormViewController.swift */,
-				D812ED721B06BFEF009287DA /* SettingsViewController.swift */,
-				D85022B71B2F805E00CA1118 /* NewPostNotificationSettingsTableViewController.swift */,
-				D85022B91B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift */,
-				D811A5FB1B83AB240064ED0C /* PushNotificationController.swift */,
-				D8AC0B681B92398D00D8779B /* PostViewController.swift */,
-				D811A5FD1B83B3430064ED0C /* ApiKeys.plist */,
-				D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */,
-				D85022FD1B3097E500CA1118 /* DefaultSettings.plist */,
-				D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */,
-				D8B364481C6B832200E097E4 /* Help Filled-50.png */,
-				D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */,
-				D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */,
-				D8B364421C6AEFFB00E097E4 /* Orange Dollar-50.png */,
-				D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */,
-				D846563C1C6AA3CC00D2F690 /* White Clock Filled-50.png */,
-				D846563D1C6AA3CC00D2F690 /* White Good Quality Filled-50.png */,
-				D846563E1C6AA3CC00D2F690 /* White Info Filled-50.png */,
-				D846563F1C6AA3CC00D2F690 /* White Poor Quality Filled-50.png */,
-				D84656401C6AA3CC00D2F690 /* White US Dollar-50.png */,
-				D83412CA1BB8F2B100B367FE /* Images you need */,
-				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
-				D8FC3B581B8BAE4D00217B53 /* gears44.png */,
-				D8D87B011AF7F19B00303AB0 /* LaunchScreen.xib */,
+				D8198EBA1C8641D90053E16D /* Resources */,
+				D8198EBB1C8641F20053E16D /* Model */,
+				D8198EBC1C8641F80053E16D /* View */,
+				D8198EBD1C8641FD0053E16D /* Controller */,
 				D8D87AF31AF7F19B00303AB0 /* Supporting Files */,
 			);
 			path = "Free Food App";
@@ -346,25 +356,15 @@
 				D8FC3B591B8BAE4D00217B53 /* gears44.png in Resources */,
 				D8FC3B5B1B8BB08500217B53 /* gears22.png in Resources */,
 				D8B364461C6AEFFB00E097E4 /* Orange Dollar-50.png in Resources */,
-				D84656441C6AA3CC00D2F690 /* White Poor Quality Filled-50.png in Resources */,
 				D8B364441C6AEFFB00E097E4 /* Clock Filled-50.png in Resources */,
 				D8B364471C6AEFFB00E097E4 /* Poor Quality Filled-50.png in Resources */,
-				D84656431C6AA3CC00D2F690 /* White Info Filled-50.png in Resources */,
 				D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */,
 				D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */,
 				D8B364451C6AEFFB00E097E4 /* Good Quality Filled-50.png in Resources */,
 				D8D87B031AF7F19B00303AB0 /* LaunchScreen.xib in Resources */,
 				D8D87B001AF7F19B00303AB0 /* Images.xcassets in Resources */,
-				D8FC3B5D1B8BB11000217B53 /* gears30.png in Resources */,
-				D84656451C6AA3CC00D2F690 /* White US Dollar-50.png in Resources */,
-				D8FC3B611B8BB45C00217B53 /* gears26.png in Resources */,
 				D8B364491C6B832200E097E4 /* Help Filled-50.png in Resources */,
-				D84656411C6AA3CC00D2F690 /* White Clock Filled-50.png in Resources */,
-				D8FC3B631B8BB4CE00217B53 /* gears24.png in Resources */,
-				D84656421C6AA3CC00D2F690 /* White Good Quality Filled-50.png in Resources */,
-				D8FC3B5F1B8BB18F00217B53 /* gears28.png in Resources */,
 				D899FE561B84FFC2005FD176 /* CloudCode in Resources */,
-				D83412CB1BB8F2B100B367FE /* Images you need in Resources */,
 				D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,7 +387,7 @@
 				D85022BA1B2F836600CA1118 /* NearbyPostNotificationSettingsTableViewController.swift in Sources */,
 				D811A5FC1B83AB240064ED0C /* PushNotificationController.swift in Sources */,
 				D899FE541B84CB5A005FD176 /* CoreLocationController.swift in Sources */,
-				D8D87AFB1AF7F19B00303AB0 /* ViewController.swift in Sources */,
+				D8D87AFB1AF7F19B00303AB0 /* MapViewController.swift in Sources */,
 				D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */,
 				D811A6001B83B4D60064ED0C /* ApiKeys.swift in Sources */,
 				D8E864B91AF95496006986B9 /* Shared.swift in Sources */,

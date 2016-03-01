@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MapViewController.swift
 //  Free Food App
 //
 //  Created by Joe Peplowski on 2015-05-04.
@@ -20,6 +20,7 @@ TODO:
 -location doesn't show up when you open the app and have allowed location stuff
 -change font of action sheet
 -create post & cancel & it goes green
+-ask for notifications at the right time, not on startup
 
 MINOR BUGS:
 -toolbar transparency stacks when cancel toolbar is active
@@ -33,7 +34,7 @@ import UIKit
 import MapKit
 import Parse
 
-class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate, UIGestureRecognizerDelegate, NewPostFormViewControllerDelegate, PostViewControllerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, SettingsViewDelegate, UIGestureRecognizerDelegate, NewPostFormViewControllerDelegate, PostViewControllerDelegate {
     
     @IBOutlet weak var map: MKMapView!
     
@@ -43,7 +44,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var linkButton: UIBarButtonItem!
     @IBOutlet weak var newPostButton: UIBarButtonItem!
     
@@ -59,7 +60,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     var screenSize: CGRect = UIScreen.mainScreen().bounds
     var statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
     var refresher: UIRefreshControl! //pull to refresh
-    //var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView() //spinner for refresh button
     var flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
     var listActive = false //keeps track of when the list view is active
     var newPostAnywhereActive = false //keeps track of when the user is in the hold to post mode
@@ -110,16 +110,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         backgroundToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
         tableView.frame = CGRectMake(0, screenSize.height, screenSize.width, 0)
         
-        //use this to find font names
-        /*for family in UIFont.familyNames()
-        {
-            NSLog"\(family)")
-            for name in UIFont.fontNamesForFamilyName(family as String)
-            {
-                NSLog"  \(name)")
-            }
-        }*/
-        
         //set font of link button
         if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
             linkButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
@@ -136,9 +126,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         //recognize the drag gesture on the toolbar
         let gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
         buttonsToolbar.addGestureRecognizer(gesture)
-        //backgroundToolbar.addGestureRecognizer(gesture)
         buttonsToolbar.userInteractionEnabled = true
-        //backgroundToolbar.userInteractionEnabled = true
         
         reloadPosts() //initial loading of posts
         
@@ -165,7 +153,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation is MKUserLocation) {
             //if annotation is not an MKPointAnnotation (eg. MKUserLocation),
-            //return nil so map draws d efault view for it (eg. blue dot)...
+            //return nil so map draws default view for it (eg. blue dot)...
             return nil
         }
         
@@ -210,7 +198,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 
                 pinView!.leftCalloutAccessoryView = statusImage
             } else {
-                pinView!.pinTintColor = UIColor.greenColor()
+                pinView!.pinTintColor = UIColor.whiteColor()
                 NSLog("couldn't set pin color")
             }
         } else {
@@ -256,6 +244,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         checkZoom()
     }
     
+    //when we are creating a new post, this decides if we are precise enough to post
     func checkZoom(){
         if self.newPostAnywhereActive && !self.confirmPostLocationActive {
             if self.map.region.span.latitudeDelta > 0.0025 {
@@ -272,6 +261,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         }
     }
     
+    //creates a new annotation and asks the user to confirm the location
     func createAnnotationAndConfirm(coordinate: CLLocationCoordinate2D) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
@@ -322,7 +312,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         }
     }
     
-    //sets number of rows in the table
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
@@ -351,7 +340,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     //populates each cell of the table
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let tableCell:postTableCell = self.tableView.dequeueReusableCellWithIdentifier("tableCell") as! postTableCell
-        //var fade: CGFloat
         
         //sets up formatted string for last confirmed
         let lastConfirmed = dateSimplifier(posts[indexPath.row].confirmed)
@@ -382,6 +370,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         tableCell.lastConfirmedLabel.attributedText = boldLastConfirmed
         tableCell.postedLabel.attributedText = boldPosted
         
+        //sets image based on post's status
         switch posts[indexPath.row].status {
         case 0:
             tableCell.statusImage.image = UIImage(named: "Help Filled-50.png")
@@ -412,10 +401,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         tableView.reloadData()
     }
     
-    //reload button (or settings) TODO: decide which
-    @IBAction func reloadButton(sender: AnyObject) {
+    //go to settings
+    @IBAction func settingsButton(sender: AnyObject) {
         performSegueWithIdentifier("settings", sender: self)
-        //reloadPosts()
     }
     
     //when we hit the new post button we decide if we want to add at our location or on the map
@@ -466,8 +454,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         }
     }
     
+    //cancels the interface mode where we create a new post
     @IBAction func cancelButton(sender: AnyObject) {
-        //cancels new post anywhere
         self.newPostAnywhereActive = false
         self.tapAndHoldActive = false
         
@@ -598,23 +586,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         )
         
         gesture.setTranslation(CGPointZero, inView: self.view) //resets gesture
-        /*
-        //change these variables to change the physics of moving the toolbar
-        let throwingThreshold: CGFloat = 1000
-        let throwingVelocityPadding: CGFloat = 35
-        
-        //velocity stuff
-        var velocity = gesture.velocityInView(self.view)
-        var magnitude = velocity.y
-        
-        if (magnitude > throwingThreshold) {
-            var pushBehavior = UIPushBehavior(items: [buttonsToolbar, backgroundToolbar, tableView], mode: UIPushBehaviorMode.Instantaneous)
-            pushBehavior.pushDirection = CGVectorMake(0, (velocity.y / 10))
-            pushBehavior.magnitude = (magnitude / throwingVelocityPadding)
-            
-            //self.pushBehavior = pushBehavior //not sure about this one
-        }
-        */
         
         if gesture.state == UIGestureRecognizerState.Ended {
             if buttonsToolbar.center.y < (screenSize.height / 2) {
@@ -640,16 +611,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         
         progressView.alpha = 1.0
         progressView.setProgress(0.5, animated: true)
-        //create an activity spinner
-        /*activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
-        activityIndicator.sizeToFit()
-        activityIndicator.autoresizingMask = UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleBottomMargin | UIViewAutoresizing.FlexibleTopMargin
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        activityIndicator.startAnimating()
-        
-        //replace the refresh button with the spinner
-        var loadingView = UIBarButtonItem(customView: activityIndicator)
-        self.buttonsToolbar.setItems([loadingView, flexibleSpace, linkButton, flexibleSpace, newPostButton], animated: true)*/
         
         //parse query
         parseQueries({
@@ -669,11 +630,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
             
             self.populateMap()
             self.tableView.reloadData()
-            
-            //replaces activity spinner in toolbar with button
-            /*self.buttonsToolbar.setItems([self.refreshButton, self.flexibleSpace, self.linkButton,
-             self.flexibleSpace, self.newPostButton], animated: true)
-             self.activityIndicator.stopAnimating()*/
             
             self.refresher.endRefreshing() //ends pull to refresh spinner
             
@@ -831,13 +787,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     
     func mapViewWillStartLocatingUser(map: MKMapView) {
     //check if user has authorized location services
-    let status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
-    if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
-        NSLog("location services denied")
-    } else {
-        //location services are allowed
-    }
-        
+        let status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+        if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
+            NSLog("location services denied")
+        } else {
+            //location services are allowed
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -875,6 +830,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         }
     }
     
+    //reload posts if we changed settings in the settings VC
     func editSettingsDidFinish(settingsChanged:Bool) {
         if (settingsChanged) {
             self.reloadPosts()

@@ -33,6 +33,8 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
     var reportedByUser = false
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         postId = post.id
         
         //set text & images so they match the post's attributes
@@ -105,8 +107,6 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
         map.setRegion(region, animated: true)
         
         navigationItem.setHidesBackButton(false, animated: false)
-        
-        super.viewDidLoad()
     }
     
     func reloadPost(id: String, completionHandler:(success:Bool) -> Void) {
@@ -136,11 +136,11 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
             votesQuery.findObjectsInBackgroundWithBlock {
                 (currentVotes: [AnyObject]?, error: NSError?) -> Void in
                 if error == nil && currentVotes != nil {
-                    self.post.votes.removeAll(keepCapacity: true) //erase old array of posts
+                    self.post.votes.removeAll(keepCapacity: true) //erase old array of votes
                     
                     if let currentVotes = currentVotes as? [PFObject]{
                         for vote in currentVotes {
-                            //create a post object from Parse then append it
+                            //create a vote object from Parse then append it
                             let toAppend = Vote(
                                 id: vote.objectId!,
                                 postId: vote["PostID"] as! String,
@@ -206,65 +206,11 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
     }
     
     @IBAction func confirmPostButton(sender: AnyObject) {
-        if confirmedByUser {
-            removeVote(true) { (success:Bool) -> Void in
-                NSLog("removed vote")
-                self.reloadPost(self.postId) { (success:Bool) -> Void in
-                    NSLog("got new post data")
-                    self.votesTableView.reloadData()
-                }
-            }
-        } else {
-            if reportedByUser {
-                removeVote(false) { (success:Bool) -> Void in
-                    NSLog("removed vote")
-                    self.sendVote(true) { (success:Bool) -> Void in
-                        NSLog("added vote")
-                        self.reloadPost(self.postId) { (success:Bool) -> Void in
-                            NSLog("got new post data")
-                            self.votesTableView.reloadData()
-                        }
-                    }
-                }
-            }
-            sendVote(true) { (success:Bool) -> Void in
-                NSLog("added vote")
-                self.reloadPost(self.postId) { (success:Bool) -> Void in
-                    NSLog("got new post data")
-                    self.votesTableView.reloadData()
-                }
-            }
-        }
+        
     }
     
     @IBAction func reportMissingButton(sender: AnyObject) {
-        if reportedByUser {
-            removeVote(false) { (success:Bool) -> Void in
-                NSLog("removed vote")
-                self.reloadPost(self.postId) { (success:Bool) -> Void in
-                    NSLog("got new post data")
-                    self.votesTableView.reloadData()
-                }
-            }
-        } else {
-            if confirmedByUser {
-                removeVote(true) { (success:Bool) -> Void in
-                    NSLog("removed vote")
-                    self.sendVote(false) { (success:Bool) -> Void in
-                        self.reloadPost(self.postId) {
-                            (success:Bool) -> Void in
-                            self.votesTableView.reloadData()
-                        }
-                    }
-                }
-            }
-            sendVote(false) { (success:Bool) -> Void in
-                self.reloadPost(self.postId) {
-                    (success:Bool) -> Void in
-                    self.votesTableView.reloadData()
-                }
-            }
-        }
+
     }
     
     //sends the user's vote to Parse
@@ -295,37 +241,6 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
                 completionHandler(success: false)
             }
         })
-    }
-    
-    //removes the user's existing votes from Parse
-    func removeVote(confirm: Bool, completionHandler:(success:Bool) -> Void) {
-        let removalQuery = PFQuery(className: "Votes")
-        removalQuery.whereKey("objectId", equalTo: usersVoteId)
-        removalQuery.getFirstObjectInBackgroundWithBlock { (object, error) in
-            if (object == nil) {
-                NSLog(String(error))
-                completionHandler(success: false)
-            } else {
-                object!.deleteInBackgroundWithBlock {
-                (success, error) -> Void in
-                if (success) {
-                    if confirm {
-                        self.confirmedByUser(false)
-                    } else {
-                        self.reportedByUser(false)
-                    }
-                    
-                    completionHandler(success: true)
-                } else {
-                    NSLog(String(error))
-                    let alert = UIAlertController(title: "Error Removing Vote", message: "Could not remove your vote. Please check your internet connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    
-                    completionHandler(success: false)
-                }
-            }
-        }
     }
     
     //colour pins based on their type

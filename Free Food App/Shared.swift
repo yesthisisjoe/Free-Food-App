@@ -15,7 +15,6 @@ struct Post {
     var status: Int
     var votes: [Vote]
     
-    //initializer for when we download from the server
     init(id: String, title: String, description: String, type: String, posted: NSDate, confirmed: NSDate, latitude: Double, longitude: Double, status: Int, price: String) {
         self.id = id
         self.title = title
@@ -45,6 +44,7 @@ struct Vote {
     }
 }
 
+//coverts a date to time since the date
 public func dateSimplifier(sinceDate: NSDate) -> String {
     let elapsedTime = Int(NSDate().timeIntervalSinceDate(sinceDate))
     var simplifiedDate = ""

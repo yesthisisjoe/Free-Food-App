@@ -54,7 +54,7 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
                 return 44
             }
         case 3:
-            return 198
+            return 198 //height of the description cell
         default:
             return 44
         }
@@ -73,6 +73,7 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
             descriptionField.deleteBackward()
         }
     }
+    
     @IBAction func priceFieldChanged(sender: AnyObject) {
         checkTextFieldLength(price, maxLength: 20)
     }
@@ -81,6 +82,7 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
         checkTextFieldLength(titleField, maxLength: 40)
     }
     
+    //ensures that what we type in a text field is not too long
     func checkTextFieldLength(textField: UITextField!, maxLength: Int) {
         if textField.text!.characters.count > maxLength {
             textField.deleteBackward()
@@ -96,7 +98,6 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
         }
         return true
     }
-    
     
     @IBAction func cancelButton(sender: AnyObject) {
         delegate!.finishedWith("Cancel")

@@ -14,6 +14,8 @@ class NewPostNotificationSettingsTableViewController: UITableViewController {
     @IBOutlet weak var freeFoodSwitch: UISwitch!
     @IBOutlet weak var cheapFoodSwitch: UISwitch!
     @IBOutlet weak var cheapFoodLabel: UILabel!
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,15 +23,17 @@ class NewPostNotificationSettingsTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         //disable the cheap food cell if cheap food is disabled
-        if (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == true) {
+        if (defaults.objectForKey("onlyFree") as! Bool == true) {
             cheapFoodLabel.enabled = false
             cheapFoodSwitch.enabled = false
         }
+        
         //set default switch state
-        freeFoodSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("freePostNotifications") as! Bool, animated: false)
-        cheapFoodSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("cheapPostNotifications") as! Bool, animated: false)
+        freeFoodSwitch.setOn(defaults.objectForKey("freePostNotifications") as! Bool, animated: false)
+        cheapFoodSwitch.setOn(defaults.objectForKey("cheapPostNotifications") as! Bool, animated: false)
     }
     
+    //free food switch
     @IBAction func freeFoodSwitchAction(sender: AnyObject) {
         let switchOn = freeFoodSwitch.on
         let currentInstallation = PFInstallation.currentInstallation()
@@ -44,9 +48,10 @@ class NewPostNotificationSettingsTableViewController: UITableViewController {
         
         //save this setting to the phone and Parse
         currentInstallation.saveEventually()
-        NSUserDefaults.standardUserDefaults().setObject(switchOn, forKey: "freePostNotifications")
+        defaults.setObject(switchOn, forKey: "freePostNotifications")
     }
     
+    //cheap food switch
     @IBAction func cheapFoodSwitchAction(sender: AnyObject) {
         let switchOn = cheapFoodSwitch.on
         let currentInstallation = PFInstallation.currentInstallation()
@@ -61,11 +66,6 @@ class NewPostNotificationSettingsTableViewController: UITableViewController {
         
         //save this setting to the phone and Parse
         currentInstallation.saveEventually()
-        NSUserDefaults.standardUserDefaults().setObject(switchOn, forKey: "cheapPostNotifications")
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        defaults.setObject(switchOn, forKey: "cheapPostNotifications")
     }
 }

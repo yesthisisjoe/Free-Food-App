@@ -17,25 +17,22 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     @IBOutlet weak var nearbyPostNotificationText: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
     
-    //DRAG THIS TO THE NAV BAR
-    
     var settingsChanged: Bool? //do we need to refresh pins/list when we exit settings?
     var initialOnlyFree: Bool? //what is the initial only free option?
     var delegate: SettingsViewDelegate?
-    let subscribedChannels = PFInstallation.currentInstallation().channels //checks what channels the user is subscribed to (for notifications)
+    let subscribedChannels = PFInstallation.currentInstallation().channels //checks what channels the user is subscribed to (for push notifications)
+    let defaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //tableView.delegate = self
         
         //make sure the first 2 cells don't get highlighted when they are tapped
         onlyFreeCell.selectionStyle = UITableViewCellSelectionStyle.None
         
         //set the value of buttons to reflect existing values
-        onlyFreeSwitch.setOn(NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool, animated: false)
+        onlyFreeSwitch.setOn(defaults.objectForKey("onlyFree") as! Bool, animated: false)
         
-        //set the version number in the settings
+        //set the version number
         if let versionObject = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = versionObject
         }
@@ -47,28 +44,28 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     //set the right detail of the notifications settings to their state
     func updateRightDetail() {
-        if (NSUserDefaults.standardUserDefaults().objectForKey("freePostNotifications") as! Bool == true) {
-            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapPostNotifications") as! Bool == true) {
+        if (defaults.objectForKey("freePostNotifications") as! Bool == true) {
+            if (defaults.objectForKey("cheapPostNotifications") as! Bool == true) {
                 newPostNotificationText.text = "Free & Cheap"
             } else {
                 newPostNotificationText.text = "Free"
             }
         } else {
-            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapPostNotifications") as! Bool == true) {
+            if (defaults.objectForKey("cheapPostNotifications") as! Bool == true) {
                 newPostNotificationText.text = "Cheap"
             } else {
                 newPostNotificationText.text = "Off"
             }
         }
         
-        if (NSUserDefaults.standardUserDefaults().objectForKey("freeNearbyNotifications") as! Bool == true) {
-            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapNearbyNotifications") as! Bool == true) {
+        if (defaults.objectForKey("freeNearbyNotifications") as! Bool == true) {
+            if (defaults.objectForKey("cheapNearbyNotifications") as! Bool == true) {
                 nearbyPostNotificationText.text = "Free & Cheap"
             } else {
                 nearbyPostNotificationText.text = "Free"
             }
         } else {
-            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapNearbyNotifications") as! Bool == true) {
+            if (defaults.objectForKey("cheapNearbyNotifications") as! Bool == true) {
                 nearbyPostNotificationText.text = "Cheap"
             } else {
                 nearbyPostNotificationText.text = "Off"
@@ -84,7 +81,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
             self.performSegueWithIdentifier("NearbyPost", sender: self)
         }
         
-            //triggers the mail compose view controller for feedback
+        //triggers the mail compose view controller for feedback
         else if (indexPath.section == 2 && indexPath.row == 1) {
             let mailComposeViewController = configuredMailComposeViewController("Feedback for the Free Food app")
             if MFMailComposeViewController.canSendMail() {
@@ -95,18 +92,21 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
             
         } else if (indexPath.section == 2 && indexPath.row == 2) {
             NSLog("App Store review link")
+        }
             
-            //aknowledgements
-        } else if (indexPath.section == 2 && indexPath.row == 3) {
+        //show pop up with acknoledgements
+        else if (indexPath.section == 2 && indexPath.row == 3) {
             let alert = UIAlertController(title: "Acknowledgements", message:"Icons courtesy of Icons8", preferredStyle: .Alert)
             let icons8Button = UIAlertAction(title: "www.icons8.com", style: .Default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 UIApplication.sharedApplication().openURL(NSURL(string:"http://www.icons8.com/")!)
             })
+            
             alert.addAction(icons8Button)
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
@@ -121,23 +121,25 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         return mailComposerVC
     }
     
+    //display an error alert when an email fails to send
     func showSendMailErrorAlert() {
         let alert = UIAlertController(title: "Could Not Send Email", message:"Your email message could not be sent. Please check your email settings and try again.", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    //hides the mail compose controller when we have an error
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
-    //this is the only free food switch
+    
+    //only show free food switch
     @IBAction func onlyFree(sender: AnyObject) {
-        
         //user wants to only see free food
         if (onlyFreeSwitch.on == true) {
             
             //user has cheap food notifications on
-            if (NSUserDefaults.standardUserDefaults().objectForKey("cheapPostNotifications") as! Bool || NSUserDefaults.standardUserDefaults().objectForKey("cheapNearbyNotifications") as! Bool) {
+            if (defaults.objectForKey("cheapPostNotifications") as! Bool || defaults.objectForKey("cheapNearbyNotifications") as! Bool) {
                 
                 //confirm with the user that this will turn off their cheap food notifications
                 let alert = UIAlertController(title: "Turn Off Cheap Food Notifications?", message: "Only showing free food will turn off cheap food notifications. You will have to manually turn these back on if you change your mind later.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -146,9 +148,9 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {
                     (alert: UIAlertAction!) -> Void in
                     //turn off the notifications and turn on only free in core data
-                    NSUserDefaults.standardUserDefaults().setObject(true, forKey: "onlyFree")
-                    NSUserDefaults.standardUserDefaults().setObject(false, forKey: "cheapPostNotifications")
-                    NSUserDefaults.standardUserDefaults().setObject(false, forKey: "cheapNearbyNotifications")
+                    self.defaults.setObject(true, forKey: "onlyFree")
+                    self.defaults.setObject(false, forKey: "cheapPostNotifications")
+                    self.defaults.setObject(false, forKey: "cheapNearbyNotifications")
                     
                     //remove the user from the notification channels in Parse
                     let currentInstallation = PFInstallation.currentInstallation()
@@ -169,29 +171,24 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
                 
             //user doesn't have any cheap food notifications. we turn on only free food
             } else {
-                NSUserDefaults.standardUserDefaults().setObject(true, forKey: "onlyFree")
+                defaults.setObject(true, forKey: "onlyFree")
             }
             
         //user is turning off only free food
         } else {
-            NSUserDefaults.standardUserDefaults().setObject(false, forKey: "onlyFree")
+            defaults.setObject(false, forKey: "onlyFree")
         }
     }
     
     @IBAction func doneButton(sender: AnyObject) {
         //if the only free setting changed we tell the view controller to reload posts
-        if (initialOnlyFree != (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool)) {
+        if (initialOnlyFree != (defaults.objectForKey("onlyFree") as! Bool)) {
             settingsChanged = true
         }
         
         delegate?.editSettingsDidFinish(settingsChanged!)
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
 }
 
 protocol SettingsViewDelegate{
