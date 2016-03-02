@@ -6,30 +6,6 @@
 //  Copyright (c) 2015 Joseph Peplowski. All rights reserved.
 //
 
-/*
-TODO:
--Ratings on posts
--New post notifications apporval interface
--Nearby notifications
--Handle denied location sharing
--Handle in-call status bar
--If progress bar is in middle (airplane mode) and view is switched, it is on the wrong side
--Check layout on all devices
--Add support for uploading photos (also means looking at how you download)
--before release, check if there is a bitcode version of parse
--location doesn't show up when you open the app and have allowed location stuff
--change font of action sheet
--create post & cancel & it goes green
--ask for notifications at the right time, not on startup
-
-MINOR BUGS:
--toolbar transparency stacks when cancel toolbar is active
--cancel button is underneath list view when creating a post from there (rather than moving with the toolbar)
--zooming in and out quickly between the zoom in and tap and hold instructions might cause one to display when it should be the other
-
-CREDITS:
--Settings icon: <div>Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>*/
-
 import UIKit
 import MapKit
 import Parse
