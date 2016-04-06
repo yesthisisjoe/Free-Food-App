@@ -29,25 +29,20 @@ class CoreLocationController: NSObject, CLLocationManagerDelegate {
         switch status {
         case .NotDetermined:
             NSLog("not determined")
-            break
-            
+         
         case .AuthorizedWhenInUse:
             NSLog("authorized when in use")
             self.locationManager.startUpdatingLocation()
-            break
-            
+         
         case .AuthorizedAlways:
             NSLog("authorized always")
             self.locationManager.startUpdatingLocation()
-            break
-            
+         
         case .Denied:
             NSLog("denied")
-            break
-            
+         
         default:
             NSLog("unhandled authorization status")
-            break
         }*/
     }
 }

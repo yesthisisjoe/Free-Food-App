@@ -40,11 +40,13 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
         //set text & images so they match the post's attributes
         self.title = post.title
         
-        if post.type == "free" {
+        priceLabel.text = (post.type == "free") ? "Free!" : post.price
+        
+        /*if post.type == "free" {
             priceLabel.text = "Free!"
         } else {
             priceLabel.text = post.price
-        }
+        }*/
         
         descriptionLabel.text = post.description
        
@@ -52,19 +54,15 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
         case 0:
             statusImage.image = UIImage(named: "Help Filled-50.png")
             statusLabel.text = "Never confirmed"
-            break
         case 1:
             statusImage.image = UIImage(named: "Good Quality Filled-50.png")
             statusLabel.text = "Likely still there"
-            break
         case 2:
             statusImage.image = UIImage(named: "Poor Quality Filled-50.png")
             statusLabel.text = "Likely missing"
-            break
         case 3:
             statusImage.image = UIImage(named: "Help Filled-50.png")
             statusLabel.text = "May be missing"
-            break
         default:
             NSLog("Unknown status code for post.")
         }
@@ -76,11 +74,14 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
         for vote in post.votes {
             if vote.userId == uuid {
                 usersVoteId = vote.id
+                vote.confirm ? confirmedByUser(true) : reportedByUser(true)
+                
+                /*
                 if vote.confirm {
                     confirmedByUser(true)
                 } else {
                     reportedByUser(true)
-                }
+                }*/
                 break
             }
         }
@@ -138,19 +139,21 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
                 if error == nil && currentVotes != nil {
                     self.post.votes.removeAll(keepCapacity: true) //erase old array of votes
                     
-                    if let currentVotes = currentVotes as? [PFObject]{
-                        for vote in currentVotes {
-                            //create a vote object from Parse then append it
-                            let toAppend = Vote(
-                                id: vote.objectId!,
-                                postId: vote["PostID"] as! String,
-                                confirm: vote["Confirm"] as! Bool,
-                                posted: vote.createdAt!,
-                                userId: vote["UserID"] as! String)
-                            
-                            self.post.votes.append(toAppend)
-                        }
+                    guard let currentVotes = currentVotes as? [PFObject]
+                        else { NSLog("Error getting current votes as a PFObject."); return }
+                    
+                    for vote in currentVotes {
+                        //create a vote object from Parse then append it
+                        let toAppend = Vote(
+                            id: vote.objectId!,
+                            postId: vote["PostID"] as! String,
+                            confirm: vote["Confirm"] as! Bool,
+                            posted: vote.createdAt!,
+                            userId: vote["UserID"] as! String)
+                        
+                        self.post.votes.append(toAppend)
                     }
+                    
                     completionHandler(success: true)
                 } else {
                     //give an alert that there was an error loading votes
@@ -223,11 +226,13 @@ class PostViewController: UIViewController, MKMapViewDelegate, UITableViewDelega
         vote.saveInBackgroundWithBlock( {
             (success, error) -> Void in
             if (success) {
+                confirm ? self.confirmedByUser(true) : self.reportedByUser(true)
+                /*
                 if confirm {
                     self.confirmedByUser(true)
                 } else {
                     self.reportedByUser(true)
-                }
+                }*/
                 
                 self.usersVoteId = vote.objectId!
                 completionHandler(success: true)

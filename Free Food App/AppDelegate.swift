@@ -18,27 +18,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var coreLocationController: CoreLocationController?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        // Initialize Parse.
+        //initialize Parse
         Parse.setApplicationId(valueForAPIKey("PARSE_APPLICATION_ID"),
             clientKey: valueForAPIKey("PARSE_CLIENT_KEY"))
-        
-        // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
-        //load default settings from plist
-        var defaultSettings: NSDictionary
-        if let defaultSettingsPath = NSBundle.mainBundle().pathForResource("DefaultSettings", ofType: "plist") {
-            defaultSettings = NSDictionary(contentsOfFile: defaultSettingsPath)!
-            NSUserDefaults.standardUserDefaults().registerDefaults(defaultSettings as! [String : AnyObject])
-        }
+        //set default preferences
+        guard let defaultPrefsFile = NSBundle.mainBundle().pathForResource("DefaultSettings", ofType: "plist")
+            else { NSLog("Error loading default preferences file."); return true }
+        let defaultPreferences = NSDictionary(contentsOfFile: defaultPrefsFile)
+        guard let defaultPreferencesString = defaultPreferences as? [String: AnyObject]
+            else { NSLog("Error converting default preferences to string dictionary."); return true }
+        NSUserDefaults.standardUserDefaults().registerDefaults(defaultPreferencesString)
         
         self.pushNotificationController = PushNotificationController()
         self.coreLocationController = CoreLocationController()
         
         //set up for push notifications
-        if application.respondsToSelector("registerUserNotificationSettings:") {
+        if application.respondsToSelector(#selector(UIApplication.registerUserNotificationSettings(_:))) {
             //for iOS 8
             let notificationType: UIUserNotificationType = [.Alert, .Sound, .Badge]
             let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationType, categories: nil)
@@ -51,19 +48,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //set appearance of navigation bar title in settings
-        if let navBarFont = UIFont(name: "AvenirNext-Bold", size: 18) {
-            UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navBarFont]
-        }
+        guard let navBarFont = UIFont(name: "AvenirNext-Bold", size: 18)
+            else { NSLog("Error setting navigation bar font."); return true }
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: navBarFont]
         
         //same for the buttons in settings
-        if let buttonFont = UIFont(name: "AvenirNext-Bold", size: 18) {
-            UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: buttonFont, NSForegroundColorAttributeName: UIColor(red: 65/255, green: 122/255, blue: 198/255, alpha: 1)], forState: UIControlState.Normal)
-        }
+        guard let buttonFont = UIFont(name: "AvenirNext-Bold", size: 18)
+            else { NSLog("Error setting button font."); return true }
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: buttonFont, NSForegroundColorAttributeName: UIColor(red: 65/255, green: 122/255, blue: 198/255, alpha: 1)], forState: UIControlState.Normal)
         
         return true
     }
     
-    //notifications stuff
+    //notifications setup
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let currentInstallation:PFInstallation = PFInstallation.currentInstallation()
         currentInstallation.setDeviceTokenFromData(deviceToken)
@@ -73,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        //NSLog("failed to register for remote notifications: \(error)")
+        NSLog(error.localizedDescription)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

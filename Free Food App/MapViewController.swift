@@ -79,7 +79,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
 
         //location button setup
         //add buttons & flexible space
-        let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "reloadPosts")
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: #selector(MapViewController.reloadPosts))
         refreshButton.tintColor = UIColor(red: 65/255, green: 122/255, blue: 198/255, alpha: 1)
         let trackingButton = MKUserTrackingBarButtonItem(mapView: self.map)
         trackingButton.customView!.tintColor = UIColor(red: 65/255, green: 122/255, blue: 198/255, alpha: 1)
@@ -110,31 +110,30 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
         backgroundToolbar.frame = CGRectMake(0, screenSize.height - buttonsToolbar.frame.height, buttonsToolbar.frame.width, buttonsToolbar.frame.height)
         tableView.frame = CGRectMake(0, screenSize.height, screenSize.width, 0)
         
-        //set font of link button
-        if let font = UIFont(name: "AvenirNext-Bold", size: 18) {
-            linkButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-            cancelButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-        } else {
-            NSLog("error setting fonts of buttons")
-        }
+        //set font of link & cancel buttons
+        guard let font = UIFont(name: "AvenirNext-Bold", size: 18)
+            else { NSLog("Error getting font for buttons."); return }
+        
+        linkButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+        cancelButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         
         //creates pull to refresh for the table
         refresher = UIRefreshControl()
-        refresher.addTarget(self, action: "reloadPosts", forControlEvents: UIControlEvents.ValueChanged)
+        refresher.addTarget(self, action: #selector(MapViewController.reloadPosts), forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refresher)
         
         //recognize the drag gesture on the toolbar
-        let gesture = UIPanGestureRecognizer(target: self, action: Selector("wasDragged:"))
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(MapViewController.wasDragged(_:)))
         buttonsToolbar.addGestureRecognizer(gesture)
         buttonsToolbar.userInteractionEnabled = true
         
         reloadPosts() //initial loading of posts
         
         //create the gestures that we will recognize on the map
-        let pinch = UIPinchGestureRecognizer(target: self, action: "checkZoomGesture:")
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(MapViewController.checkZoomGesture(_:)))
         pinch.delegate = self
         
-        let uilpgr = UILongPressGestureRecognizer(target: self, action: "longPress:")
+        let uilpgr = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.longPress(_:)))
         uilpgr.minimumPressDuration = 0.5
         
         //add these gestures
@@ -152,8 +151,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if (annotation is MKUserLocation) {
-            //if annotation is not an MKPointAnnotation (eg. MKUserLocation),
-            //return nil so map draws default view for it (eg. blue dot)...
             return nil
         }
         
@@ -182,16 +179,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
                 switch customAnnotation.post.status {
                 case 0:
                     statusImage.image = UIImage(named: "Help Filled-50.png")
-                    break
                 case 1:
                     statusImage.image = UIImage(named: "Good Quality Filled-50.png")
-                    break
                 case 2:
                     statusImage.image = UIImage(named: "Poor Quality Filled-50.png")
-                    break
                 case 3:
                     statusImage.image = UIImage(named: "Help Filled-50.png")
-                    break
                 default:
                     NSLog("Unknown status code for post.")
                 }
@@ -218,12 +211,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
         calloutAccessoryControlTapped control: UIControl) {
         
         if control == view.rightCalloutAccessoryView {
-            if let cpa = view.annotation as? CustomPointAnnotation {
-                self.postToPass = cpa.post
-                self.performSegueWithIdentifier("postViewSegue", sender: self)
-            } else {
-                NSLog("error, this is not a custom pin")
-            }
+            guard let cpa = view.annotation as? CustomPointAnnotation
+                else { NSLog("Error retreiving custom point annotation."); return }
+            self.postToPass = cpa.post
+            self.performSegueWithIdentifier("postViewSegue", sender: self)
         }
         
     }
@@ -374,16 +365,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
         switch posts[indexPath.row].status {
         case 0:
             tableCell.statusImage.image = UIImage(named: "Help Filled-50.png")
-            break
         case 1:
             tableCell.statusImage.image = UIImage(named: "Good Quality Filled-50.png")
-            break
         case 2:
             tableCell.statusImage.image = UIImage(named: "Poor Quality Filled-50.png")
-            break
         case 3:
             tableCell.statusImage.image = UIImage(named: "Help Filled-50.png")
-            break
         default:
             NSLog("Unknown status code for post.")
         }
@@ -415,7 +402,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
             (alert: UIAlertAction!) -> Void in
             
             //go to map mode if we are in list mode
-            if self.listActive == true {
+            if self.listActive {
                 self.toolbarDown()
             }
             
@@ -429,7 +416,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
             (alert: UIAlertAction!) -> Void in
             
             //go to map mode if we are in list mode
-            if self.listActive == true {
+            if self.listActive {
                 self.toolbarDown()
             }
             self.newPostAnywhere()
@@ -449,7 +436,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
         self.newPostAnywhereActive = true
         checkZoom()
         
-        if self.cancelToolbar.hidden == true {
+        if self.cancelToolbar.hidden {
             switchToolbars(self.buttonsToolbar, to: self.cancelToolbar)
         }
     }
@@ -483,7 +470,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
     //fade the instructions label when it changes text
     func changeInstructionLabel(instruction: String){
         //we are fading in for the first time, not chaning the text
-        if self.instructionsLabel.hidden == true || self.instructionsLabel.alpha == 0 {
+        if self.instructionsLabel.hidden || self.instructionsLabel.alpha == 0 {
             showInstructionLabel(instruction)
         } else {
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
@@ -526,12 +513,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
     
     //used to switch between map & list view
     @IBAction func linkButton(sender: AnyObject) {
-        if !listActive { //we transition from map view to list view
-            toolbarUp()
-            //toolbarUp()
-        } else { //we transition from list view to map view
+        listActive ? toolbarDown() : toolbarUp()
+        /*
+        if listActive { //we transition from map view to list view
             toolbarDown()
-        }
+        } else { //we transition from list view to map view
+            toolbarUp()
+
+        }*/
     }
     
     //animates the toolbar up (map->list)
@@ -601,13 +590,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
     //reloads the arrays of posts
     func reloadPosts() {
         var progressView: UIProgressView
-        
         //decide which progress view to use
-        if (listActive == true) {
+        progressView = listActive ? progressViewBottom : progressViewTop
+        
+        /*
+        if listActive {
             progressView = progressViewBottom
         } else {
             progressView = progressViewTop
-        }
+        }*/
         
         progressView.alpha = 1.0
         progressView.setProgress(0.5, animated: true)
@@ -635,7 +626,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
             
             
             progressView.setProgress(1, animated: true)
-            _ = NSTimer.scheduledTimerWithTimeInterval(0.55, target: self, selector: Selector("resetRefresh"), userInfo: nil, repeats: false)
+            _ = NSTimer.scheduledTimerWithTimeInterval(0.55, target: self, selector: #selector(MapViewController.resetRefresh), userInfo: nil, repeats: false)
         })
     }
     
@@ -649,24 +640,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
                 //no error and post isn't empty
                 self.posts.removeAll(keepCapacity: true) //erase old array of posts
                 
-                if let currentPosts = currentPosts as? [PFObject]{
-                    for post in currentPosts {
-                        //create a post object from Parse then append it
-                        if ((NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool == false || post["FoodType"] as! String == "free")) { //check if user wants only free food
-                            let toAppend = Post(
-                                id: post.objectId!,
-                                title: post["Title"] as! String,
-                                description: post["Description"] as! String,
-                                type: post["FoodType"] as! String,
-                                posted: post.createdAt!,
-                                confirmed: post["LastConfirmed"] as! NSDate,
-                                latitude: post["Latitude"] as! Double,
-                                longitude: post["Longitude"] as! Double,
-                                status: post["Status"] as! Int,
-                                price: post["Price"] as! String
-                            )
-                            self.posts.append(toAppend)
-                        }
+                guard let currentPosts = currentPosts as? [PFObject]
+                    else { NSLog("Could not get current posts as PFObjects"); return }
+                
+                for post in currentPosts {
+                    //create a post object from Parse then append it
+                    if ((NSUserDefaults.standardUserDefaults().boolForKey("onlyFree") == false || post["FoodType"] as! String == "free")) { //check if user wants only free food
+                        let toAppend = Post(
+                            id: post.objectId!,
+                            title: post["Title"] as! String,
+                            description: post["Description"] as! String,
+                            type: post["FoodType"] as! String,
+                            posted: post.createdAt!,
+                            confirmed: post["LastConfirmed"] as! NSDate,
+                            latitude: post["Latitude"] as! Double,
+                            longitude: post["Longitude"] as! Double,
+                            status: post["Status"] as! Int,
+                            price: post["Price"] as! String
+                        )
+                        self.posts.append(toAppend)
                     }
                 }
                 
@@ -680,19 +672,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
                         //no error and votes isn't empty
                         self.votes.removeAll(keepCapacity: true) //erase old array of posts
                         
-                        if let currentVotes = currentVotes as? [PFObject]{
-                            for vote in currentVotes {
-                                //create a post object from Parse then append it
-                                let toAppend = Vote(
-                                    id: vote.objectId!,
-                                    postId: vote["PostID"] as! String,
-                                    confirm: vote["Confirm"] as! Bool,
-                                    posted: vote.createdAt!,
-                                    userId: vote["UserID"] as! String)
-                                
-                                self.votes.append(toAppend)
-                            }
+                        guard let currentVotes = currentVotes as? [PFObject]
+                            else { "Error getting current votes as PFObjects."; return }
+                        
+                        for vote in currentVotes {
+                            //create a post object from Parse then append it
+                            let toAppend = Vote(
+                                id: vote.objectId!,
+                                postId: vote["PostID"] as! String,
+                                confirm: vote["Confirm"] as! Bool,
+                                posted: vote.createdAt!,
+                                userId: vote["UserID"] as! String)
+                            
+                            self.votes.append(toAppend)
                         }
+                        
                         completionHandler(success: true)
                     } else {
                         //give an alert that there was an error loading votes
@@ -790,8 +784,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
         let status:CLAuthorizationStatus = CLLocationManager.authorizationStatus()
         if (status == CLAuthorizationStatus.Denied || status == CLAuthorizationStatus.NotDetermined || status == CLAuthorizationStatus.Restricted) {
             NSLog("location services denied")
-        } else {
-            //location services are allowed
         }
     }
     
@@ -808,7 +800,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UITableViewDelegat
             
             //pass some variables to the settings view controller before it opens
             vc.settingsChanged = false
-            vc.initialOnlyFree = (NSUserDefaults.standardUserDefaults().objectForKey("onlyFree") as! Bool)
+            vc.initialOnlyFree = (NSUserDefaults.standardUserDefaults().boolForKey("onlyFree"))
             vc.delegate = self
         } else if (segue.identifier == "newPost") {
             //used in new post view controller

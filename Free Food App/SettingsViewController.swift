@@ -30,12 +30,12 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         onlyFreeCell.selectionStyle = UITableViewCellSelectionStyle.None
         
         //set the value of buttons to reflect existing values
-        onlyFreeSwitch.setOn(defaults.objectForKey("onlyFree") as! Bool, animated: false)
+        onlyFreeSwitch.setOn(defaults.boolForKey("onlyFree"), animated: false)
         
         //set the version number
-        if let versionObject = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
-            versionLabel.text = versionObject
-        }
+        guard let versionObject = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String
+            else { NSLog("Could not get version number."); return }
+        versionLabel.text = versionObject
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -44,32 +44,22 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     //set the right detail of the notifications settings to their state
     func updateRightDetail() {
-        if (defaults.objectForKey("freePostNotifications") as! Bool == true) {
-            if (defaults.objectForKey("cheapPostNotifications") as! Bool == true) {
-                newPostNotificationText.text = "Free & Cheap"
-            } else {
-                newPostNotificationText.text = "Free"
-            }
+        let newFreeNotificationsOn = defaults.boolForKey("freePostNotifications")
+        let newCheapNotificationsOn = defaults.boolForKey("cheapPostNotifications")
+        
+        if newFreeNotificationsOn {
+            newPostNotificationText.text = newCheapNotificationsOn ? "Free & Cheap" : "Free"
         } else {
-            if (defaults.objectForKey("cheapPostNotifications") as! Bool == true) {
-                newPostNotificationText.text = "Cheap"
-            } else {
-                newPostNotificationText.text = "Off"
-            }
+            newPostNotificationText.text = newCheapNotificationsOn ? "Cheap" : "Off"
         }
         
-        if (defaults.objectForKey("freeNearbyNotifications") as! Bool == true) {
-            if (defaults.objectForKey("cheapNearbyNotifications") as! Bool == true) {
-                nearbyPostNotificationText.text = "Free & Cheap"
-            } else {
-                nearbyPostNotificationText.text = "Free"
-            }
+        let nearbyFreeNotificationsOn = defaults.boolForKey("freeNearbyNotifications")
+        let nearbyCheapNotificationsOn = defaults.boolForKey("cheapNearbyNotifications")
+        
+        if nearbyFreeNotificationsOn {
+            nearbyPostNotificationText.text = nearbyCheapNotificationsOn ? "Free & Cheap" : "Free"
         } else {
-            if (defaults.objectForKey("cheapNearbyNotifications") as! Bool == true) {
-                nearbyPostNotificationText.text = "Cheap"
-            } else {
-                nearbyPostNotificationText.text = "Off"
-            }
+            nearbyPostNotificationText.text = nearbyCheapNotificationsOn ? "Cheap" : "Off"
         }
     }
     
@@ -136,10 +126,10 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     //only show free food switch
     @IBAction func onlyFree(sender: AnyObject) {
         //user wants to only see free food
-        if (onlyFreeSwitch.on == true) {
+        if onlyFreeSwitch.on {
             
             //user has cheap food notifications on
-            if (defaults.objectForKey("cheapPostNotifications") as! Bool || defaults.objectForKey("cheapNearbyNotifications") as! Bool) {
+            if (defaults.boolForKey("cheapPostNotifications") || defaults.boolForKey("cheapNearbyNotifications")) {
                 
                 //confirm with the user that this will turn off their cheap food notifications
                 let alert = UIAlertController(title: "Turn Off Cheap Food Notifications?", message: "Only showing free food will turn off cheap food notifications. You will have to manually turn these back on if you change your mind later.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -182,7 +172,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     @IBAction func doneButton(sender: AnyObject) {
         //if the only free setting changed we tell the view controller to reload posts
-        if (initialOnlyFree != (defaults.objectForKey("onlyFree") as! Bool)) {
+        if (initialOnlyFree != (defaults.boolForKey("onlyFree"))) {
             settingsChanged = true
         }
         

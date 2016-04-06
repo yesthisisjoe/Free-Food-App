@@ -12,6 +12,8 @@ func valueForAPIKey(keyname:String) -> String {
     let filePath = NSBundle.mainBundle().pathForResource("ApiKeys", ofType:"plist")
     let plist = NSDictionary(contentsOfFile:filePath!)
     
-    let value:String = plist?.objectForKey(keyname) as! String
+    guard let value = plist?.objectForKey(keyname) as? String
+        else { NSLog("Could not get String keyname."); return "" }
+    
     return value
 }

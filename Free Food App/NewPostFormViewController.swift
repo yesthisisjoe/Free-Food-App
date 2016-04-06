@@ -48,11 +48,13 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
         switch indexPath.row {
             //shows or hides the price cell based on whether the post is free or cheap
         case 1:
-            if priceCell.hidden == true {
+            return priceCell.hidden ? 0 : 44
+            /*
+            if priceCell.hidden {
                 return 0
             } else {
                 return 44
-            }
+            }*/
         case 3:
             return 198 //height of the description cell
         default:
@@ -62,11 +64,15 @@ class NewPostFormViewController: UITableViewController, UITextViewDelegate, UITe
     
     //hide the placeholder text when we start typing in the description
     func textViewDidChange(textView: UITextView) {
+        
+        descriptionPlaceholder.text = descriptionField.text.isEmpty ? "Description" : ""
+        
+        /*
         if descriptionField.text.isEmpty == false {
             descriptionPlaceholder.text = ""
         } else {
             descriptionPlaceholder.text = "Description"
-        }
+        }*/
         
         //max length of the description field
         if descriptionField.text!.characters.count > 300 {

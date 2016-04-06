@@ -23,14 +23,14 @@ class NewPostNotificationSettingsTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         //disable the cheap food cell if cheap food is disabled
-        if (defaults.objectForKey("onlyFree") as! Bool == true) {
+        if defaults.boolForKey("onlyFree") {
             cheapFoodLabel.enabled = false
             cheapFoodSwitch.enabled = false
         }
         
         //set default switch state
-        freeFoodSwitch.setOn(defaults.objectForKey("freePostNotifications") as! Bool, animated: false)
-        cheapFoodSwitch.setOn(defaults.objectForKey("cheapPostNotifications") as! Bool, animated: false)
+        freeFoodSwitch.setOn(defaults.boolForKey("freePostNotifications"), animated: false)
+        cheapFoodSwitch.setOn(defaults.boolForKey("cheapPostNotifications"), animated: false)
     }
     
     //free food switch
@@ -38,7 +38,7 @@ class NewPostNotificationSettingsTableViewController: UITableViewController {
         let switchOn = freeFoodSwitch.on
         let currentInstallation = PFInstallation.currentInstallation()
         
-        if (switchOn) {
+        if switchOn {
             //subscribe to the new free post notifications parse channel
             currentInstallation.addUniqueObject("FreePostNotifications", forKey: "channels")
         } else {

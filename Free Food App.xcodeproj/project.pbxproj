@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		D8059AFE1B03D8EF00200348 /* cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8059AFD1B03D8EF00200348 /* cell.swift */; };
+		D80BF55C1CB45E6700A3691B /* Clock Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D80BF5551CB45E6700A3691B /* Clock Filled-50.png */; };
+		D80BF55D1CB45E6700A3691B /* gears22.png in Resources */ = {isa = PBXBuildFile; fileRef = D80BF5561CB45E6700A3691B /* gears22.png */; };
+		D80BF55E1CB45E6700A3691B /* gears44.png in Resources */ = {isa = PBXBuildFile; fileRef = D80BF5571CB45E6700A3691B /* gears44.png */; };
+		D80BF55F1CB45E6700A3691B /* Good Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D80BF5581CB45E6700A3691B /* Good Quality Filled-50.png */; };
+		D80BF5601CB45E6700A3691B /* Help Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D80BF5591CB45E6700A3691B /* Help Filled-50.png */; };
+		D80BF5611CB45E6700A3691B /* Orange Dollar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D80BF55A1CB45E6700A3691B /* Orange Dollar-50.png */; };
+		D80BF5621CB45E6700A3691B /* Poor Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D80BF55B1CB45E6700A3691B /* Poor Quality Filled-50.png */; };
 		D811A5FC1B83AB240064ED0C /* PushNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D811A5FB1B83AB240064ED0C /* PushNotificationController.swift */; };
 		D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D811A5FD1B83B3430064ED0C /* ApiKeys.plist */; };
 		D811A6001B83B4D60064ED0C /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */; };
@@ -22,11 +29,6 @@
 		D899FE561B84FFC2005FD176 /* CloudCode in Resources */ = {isa = PBXBuildFile; fileRef = D899FE551B84FFC2005FD176 /* CloudCode */; };
 		D8AC0B691B92398D00D8779B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AC0B681B92398D00D8779B /* PostViewController.swift */; };
 		D8AC0B6B1B923C6A00D8779B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8AC0B6A1B923C6A00D8779B /* Bolts.framework */; };
-		D8B364441C6AEFFB00E097E4 /* Clock Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */; };
-		D8B364451C6AEFFB00E097E4 /* Good Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */; };
-		D8B364461C6AEFFB00E097E4 /* Orange Dollar-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364421C6AEFFB00E097E4 /* Orange Dollar-50.png */; };
-		D8B364471C6AEFFB00E097E4 /* Poor Quality Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */; };
-		D8B364491C6B832200E097E4 /* Help Filled-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B364481C6B832200E097E4 /* Help Filled-50.png */; };
 		D8D87AF61AF7F19B00303AB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */; };
 		D8D87AFB1AF7F19B00303AB0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D87AFA1AF7F19B00303AB0 /* MapViewController.swift */; };
 		D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8D87AFC1AF7F19B00303AB0 /* Main.storyboard */; };
@@ -44,8 +46,6 @@
 		D8F06C001B2F32F10075573C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F06BFF1B2F32F10075573C /* Parse.framework */; };
 		D8F06C031B2F3B240075573C /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F06C011B2F3ADD0075573C /* libz.1.dylib */; };
 		D8F06C051B2F3B500075573C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F06C041B2F3B500075573C /* libsqlite3.dylib */; };
-		D8FC3B591B8BAE4D00217B53 /* gears44.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B581B8BAE4D00217B53 /* gears44.png */; };
-		D8FC3B5B1B8BB08500217B53 /* gears22.png in Resources */ = {isa = PBXBuildFile; fileRef = D8FC3B5A1B8BB08500217B53 /* gears22.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +60,13 @@
 
 /* Begin PBXFileReference section */
 		D8059AFD1B03D8EF00200348 /* cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cell.swift; sourceTree = "<group>"; };
+		D80BF5551CB45E6700A3691B /* Clock Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Clock Filled-50.png"; path = "ImageResources/Clock Filled-50.png"; sourceTree = "<group>"; };
+		D80BF5561CB45E6700A3691B /* gears22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gears22.png; path = ImageResources/gears22.png; sourceTree = "<group>"; };
+		D80BF5571CB45E6700A3691B /* gears44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gears44.png; path = ImageResources/gears44.png; sourceTree = "<group>"; };
+		D80BF5581CB45E6700A3691B /* Good Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Good Quality Filled-50.png"; path = "ImageResources/Good Quality Filled-50.png"; sourceTree = "<group>"; };
+		D80BF5591CB45E6700A3691B /* Help Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Help Filled-50.png"; path = "ImageResources/Help Filled-50.png"; sourceTree = "<group>"; };
+		D80BF55A1CB45E6700A3691B /* Orange Dollar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Orange Dollar-50.png"; path = "ImageResources/Orange Dollar-50.png"; sourceTree = "<group>"; };
+		D80BF55B1CB45E6700A3691B /* Poor Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Poor Quality Filled-50.png"; path = "ImageResources/Poor Quality Filled-50.png"; sourceTree = "<group>"; };
 		D811A5FB1B83AB240064ED0C /* PushNotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationController.swift; sourceTree = "<group>"; };
 		D811A5FD1B83B3430064ED0C /* ApiKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
 		D811A5FF1B83B4D60064ED0C /* ApiKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
@@ -74,11 +81,6 @@
 		D899FE551B84FFC2005FD176 /* CloudCode */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CloudCode; path = "Free Food App/CloudCode"; sourceTree = "<group>"; };
 		D8AC0B681B92398D00D8779B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PostViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		D8AC0B6A1B923C6A00D8779B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Clock Filled-50.png"; sourceTree = "<group>"; };
-		D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Good Quality Filled-50.png"; sourceTree = "<group>"; };
-		D8B364421C6AEFFB00E097E4 /* Orange Dollar-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Orange Dollar-50.png"; sourceTree = "<group>"; };
-		D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Poor Quality Filled-50.png"; sourceTree = "<group>"; };
-		D8B364481C6B832200E097E4 /* Help Filled-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Help Filled-50.png"; sourceTree = "<group>"; };
 		D8D87AF01AF7F19B00303AB0 /* Free Food App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Free Food App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D87AF41AF7F19B00303AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8D87AF51AF7F19B00303AB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -101,8 +103,6 @@
 		D8F06C011B2F3ADD0075573C /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		D8F06C041B2F3B500075573C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		D8F06C091B2F40EC0075573C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Free Food App/Parse.framework"; sourceTree = "<group>"; };
-		D8FC3B581B8BAE4D00217B53 /* gears44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gears44.png; sourceTree = "<group>"; };
-		D8FC3B5A1B8BB08500217B53 /* gears22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gears22.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,13 +157,13 @@
 			isa = PBXGroup;
 			children = (
 				D8D87AFF1AF7F19B00303AB0 /* Images.xcassets */,
-				D8B364481C6B832200E097E4 /* Help Filled-50.png */,
-				D8B364401C6AEFFB00E097E4 /* Clock Filled-50.png */,
-				D8B364411C6AEFFB00E097E4 /* Good Quality Filled-50.png */,
-				D8B364421C6AEFFB00E097E4 /* Orange Dollar-50.png */,
-				D8B364431C6AEFFB00E097E4 /* Poor Quality Filled-50.png */,
-				D8FC3B5A1B8BB08500217B53 /* gears22.png */,
-				D8FC3B581B8BAE4D00217B53 /* gears44.png */,
+				D80BF5551CB45E6700A3691B /* Clock Filled-50.png */,
+				D80BF5561CB45E6700A3691B /* gears22.png */,
+				D80BF5571CB45E6700A3691B /* gears44.png */,
+				D80BF5581CB45E6700A3691B /* Good Quality Filled-50.png */,
+				D80BF5591CB45E6700A3691B /* Help Filled-50.png */,
+				D80BF55A1CB45E6700A3691B /* Orange Dollar-50.png */,
+				D80BF55B1CB45E6700A3691B /* Poor Quality Filled-50.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -352,19 +352,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D80BF55E1CB45E6700A3691B /* gears44.png in Resources */,
 				D83721401B74FE7600D12167 /* Swift.gitignore in Resources */,
-				D8FC3B591B8BAE4D00217B53 /* gears44.png in Resources */,
-				D8FC3B5B1B8BB08500217B53 /* gears22.png in Resources */,
-				D8B364461C6AEFFB00E097E4 /* Orange Dollar-50.png in Resources */,
-				D8B364441C6AEFFB00E097E4 /* Clock Filled-50.png in Resources */,
-				D8B364471C6AEFFB00E097E4 /* Poor Quality Filled-50.png in Resources */,
+				D80BF55C1CB45E6700A3691B /* Clock Filled-50.png in Resources */,
+				D80BF5611CB45E6700A3691B /* Orange Dollar-50.png in Resources */,
+				D80BF55D1CB45E6700A3691B /* gears22.png in Resources */,
 				D8D87AFE1AF7F19B00303AB0 /* Main.storyboard in Resources */,
+				D80BF55F1CB45E6700A3691B /* Good Quality Filled-50.png in Resources */,
 				D85022FE1B3097E500CA1118 /* DefaultSettings.plist in Resources */,
-				D8B364451C6AEFFB00E097E4 /* Good Quality Filled-50.png in Resources */,
 				D8D87B031AF7F19B00303AB0 /* LaunchScreen.xib in Resources */,
 				D8D87B001AF7F19B00303AB0 /* Images.xcassets in Resources */,
-				D8B364491C6B832200E097E4 /* Help Filled-50.png in Resources */,
+				D80BF5621CB45E6700A3691B /* Poor Quality Filled-50.png in Resources */,
 				D899FE561B84FFC2005FD176 /* CloudCode in Resources */,
+				D80BF5601CB45E6700A3691B /* Help Filled-50.png in Resources */,
 				D811A5FE1B83B3430064ED0C /* ApiKeys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

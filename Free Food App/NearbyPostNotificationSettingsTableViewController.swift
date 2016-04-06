@@ -22,14 +22,14 @@ class NearbyPostNotificationSettingsTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         //disable cheap food cell if cheap food is disabled
-        if (defaults.objectForKey("onlyFree")! as! NSObject == true) {
+        if defaults.boolForKey("onlyFree") {
             cheapFoodLabel.enabled = false
             cheapFoodSwitch.enabled = false
         }
         
         //set default switch state
-        freeFoodSwitch.setOn(defaults.objectForKey("freeNearbyNotifications") as! Bool, animated: false)
-        cheapFoodSwitch.setOn(defaults.objectForKey("cheapNearbyNotifications") as! Bool, animated: false)
+        freeFoodSwitch.setOn(defaults.boolForKey("freeNearbyNotifications"), animated: false)
+        cheapFoodSwitch.setOn(defaults.boolForKey("cheapNearbyNotifications"), animated: false)
     }
     
     //free food switch
